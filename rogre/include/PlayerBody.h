@@ -12,12 +12,13 @@ Class it to be used as parent node to the Oculus handling system by Kojack.
 #include <Ogre.h>
 #include <OIS.h>
 #include <sensor_msgs/Joy.h>
+#include "Robot.h"
 
 // Axes for LOGITECH RumblePad2
-#define ROS_LJOY_X 0
-#define ROS_LJOY_Y 1
-#define ROS_RJOY_X 2
-#define ROS_RJOY_Y 3
+#define ROS_RJOY_X 0
+#define ROS_RJOY_Y 1
+#define ROS_LJOY_X 2
+#define ROS_LJOY_Y 3
 #define ROS_POV_X 5
 #define ROS_POV_Y 6
 
@@ -28,6 +29,7 @@ class PlayerBody {
   float turnX, turnY;
   Ogre::SceneNode* mStereoCameraParent;
   Ogre::Quaternion quad;
+  bool firstPerson;
 
  public:
   static const int JOY_TRIGGER_LIMIT = 256; //PlusMinus
@@ -49,6 +51,9 @@ class PlayerBody {
   void injectButtonUp( const OIS::JoyStickEvent &e, int button );
   void injectROSJoy( const sensor_msgs::Joy::ConstPtr &joy );
   void frameRenderingQueued(const Ogre::FrameEvent& evt);
+  void frameRenderingQueued(Robot *robot);
+  void toggleFirstPersonMode();
+  bool isFirstPerson();
 };
 
 #endif

@@ -1,3 +1,6 @@
+#ifndef _SNAPSHOT_H_
+#define _SNAPSHOT_H_
+
 #include <OgreImage.h>
 #include <OgreTexture.h>
 #include <OgreSceneNode.h>
@@ -28,3 +31,5 @@ protected:
 	Ogre::SceneNode *targetSceneNode;
 	bool attached;
 };
+
+#endif

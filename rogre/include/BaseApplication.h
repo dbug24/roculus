@@ -71,6 +71,7 @@ This source file is part of the
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
 #include <sensor_msgs/CompressedImage.h>
+#include <nav_msgs/OccupancyGrid.h>
 #include <message_filters/subscriber.h>
 #include <message_filters/synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
@@ -126,6 +127,7 @@ protected:
 	virtual void initROS();
 	virtual void destroyROS();
 	virtual void joyCallback(const sensor_msgs::Joy::ConstPtr& );
+	virtual void mapCallback(const nav_msgs::OccupancyGrid::ConstPtr& );
 	virtual void syncCallback(const sensor_msgs::CompressedImageConstPtr&, const sensor_msgs::CompressedImageConstPtr&);
 	virtual void syncVideoCallback(const sensor_msgs::CompressedImageConstPtr&, const sensor_msgs::CompressedImageConstPtr&);
  
@@ -165,21 +167,21 @@ protected:
 	//ROS connection
 	ros::AsyncSpinner* hRosSpinner;
 	ros::NodeHandle* hRosNode;
-	ros::Subscriber *hRosSubJoy;
+	ros::Subscriber *hRosSubJoy, *hRosSubMap;
 	message_filters::Subscriber<sensor_msgs::CompressedImage> *hRosSubRGB, *hRosSubDepth, *hRosSubRGBVid, *hRosSubDepthVid;
 	message_filters::Synchronizer<ApproximateTimePolicy> *rosMsgSync, *rosVideoSync;
 	tf::TransformListener *tfListener;
 	tf::StampedTransform snTransform, vdTransform;
 	Robot *robotModel;
 
-	Ogre::ManualObject *mPCRender;
-	Ogre::Image depImage, texImage, depVideo, texVideo;
+	Ogre::ManualObject *mPCRender, *mPCMap;
+	Ogre::Image depImage, texImage, depVideo, texVideo, mapImage;
 	Lock lockRendering;
-	SnapshotLibrary *snLib;
+	SnapshotLibrary *snLib, *rsLib;
 	Video3D *vdVideo;
 	Ogre::Vector3 snPos, vdPos;
 	Ogre::Quaternion snOri, vdOri;
-	bool syncedUpdate, videoUpdate, takeSnapshot;
+	bool syncedUpdate, videoUpdate, takeSnapshot, mapArrived;
 	
 	// Added for Mac compatibility
 	Ogre::String                 m_ResourcePath;

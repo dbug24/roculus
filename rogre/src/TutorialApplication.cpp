@@ -39,7 +39,7 @@ void TutorialApplication::createScene(void)
 	// Loading two dummy textures for the validity of the standard material
 	// Actually the textures can be reused for the video stream
 	TexturePtr pT_RGB = Ogre::TextureManager::getSingleton().createManual(
-		"DefaultTexture", 				// name
+		"VideoRGBTexture", 				// name
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		TEX_TYPE_2D,      // type
 		640, 480,         		// width & height
@@ -48,23 +48,33 @@ void TutorialApplication::createScene(void)
 		TU_DYNAMIC_WRITE_ONLY_DISCARDABLE);  
 		
 	TexturePtr pT_Depth = Ogre::TextureManager::getSingleton().createManual(
-		"DefaultDepthTexture", 				// name
+		"VideoDepthTexture", 				// name
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		TEX_TYPE_2D,      // type
 		640, 480,         		// width & height
 		0,                		// number of mipmaps
 		PF_DEPTH,     // pixel format
 		TU_DYNAMIC_WRITE_ONLY_DISCARDABLE); 
-		
+	
+	//~ TexturePtr pT_GlobalMap = Ogre::TextureManager::getSingleton().createManual(
+		//~ "GlobalMapTexture", 				// name
+		//~ ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		//~ TEX_TYPE_2D,      // type
+		//~ 1024, 1024,         		// width & height
+		//~ 0,                		// number of mipmaps
+		//~ PF_L8,     // pixel format
+		//~ TU_STATIC);
+			
 	Ogre::Image imDefault;
 	imDefault.load("KAMEN320x240.jpg","Popular");
 	pT_RGB->loadImage(imDefault);
 	pT_Depth->loadImage(imDefault);
+	//~ pT_GlobalMap->loadImage(imDefault);
 
 	mPCRender= mSceneMgr->createManualObject();
 	mPCRender->estimateVertexCount(cam.x * cam.y);
 	mPCRender->estimateIndexCount(4 * cam.x * cam.y);
-	mPCRender->begin("Rogre/DynamicTextureMaterial", RenderOperation::OT_TRIANGLE_LIST);
+	mPCRender->begin("roculus3D/DynamicTextureMaterial", RenderOperation::OT_TRIANGLE_LIST);
 
 	for (int w=0; w<cam.x; w++) {
 		for (int h=0; h<cam.y; h++) {
@@ -81,7 +91,7 @@ void TutorialApplication::createScene(void)
 	mPCRender->convertToMesh("DefGeometry");
 	
 	mPCRender= mSceneMgr->createManualObject();
-	mPCRender->begin("Rogre/BlankMaterial", RenderOperation::OT_LINE_LIST);
+	mPCRender->begin("roculus3D/BlankMaterial", RenderOperation::OT_LINE_LIST);
 
 	mPCRender->position(0.0f,0.0f,0.0f);
 	mPCRender->colour(Ogre::ColourValue(1.0f, 1.0f, 1.0f, 1.0f));
@@ -105,7 +115,23 @@ void TutorialApplication::createScene(void)
 	
 	vdVideo = new Video3D(mSceneMgr->createEntity("DefGeometry"), mSceneMgr->getRootSceneNode()->createChildSceneNode(), pT_Depth, pT_RGB);
 	// PREallocate and manage memory
-	snLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("Rogre/DynamicTextureMaterial"), 10);
+	snLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterial"), 10);
+	rsLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterial"), 10);
+	
+	//~ mPCMap = mSceneMgr->createManualObject();
+	//~ mPCMap->estimateVertexCount(4);
+	//~ mPCMap->estimateIndexCount(6);
+	//~ mPCMap->begin("roculus3D/DynamicTextureMaterial", Ogre::RenderOperation::OT_TRIANGLE_LIST);
+	//~ mPCMap->position(Ogre::Vector3(-200, 0, 200));
+	//~ mPCMap->textureCoord(0,1);
+	//~ mPCMap->position(Ogre::Vector3(200, 0, 200));
+	//~ mPCMap->textureCoord(1,1);
+	//~ mPCMap->position(Ogre::Vector3(200, 0, -200));
+	//~ mPCMap->textureCoord(1,0);
+	//~ mPCMap->position(Ogre::Vector3(-200, 0, -200));
+	//~ mPCMap->textureCoord(0,0);
+	//~ mPCMap->quad(0,1,2,3);
+	//~ mPCMap->end();
 }
 
 

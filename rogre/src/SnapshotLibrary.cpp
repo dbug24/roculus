@@ -7,6 +7,7 @@ SnapshotLibrary::SnapshotLibrary(Ogre::SceneManager *mSceneMgr, const Ogre::Stri
 	this->mSceneMgr = mSceneMgr;
 	this->EntityPrototype = EntityPrototype;
 	this->MaterialPrototype = MaterialPrototype;
+	this->mMasterSceneNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	this->allocate(initSize);
 }
 
@@ -68,7 +69,7 @@ void SnapshotLibrary::allocate(int nr) {
 		
 		pEntity->setMaterial(pMat); // override all submaterials to pMat
 				
-		Ogre::SceneNode* pSceneNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		Ogre::SceneNode* pSceneNode = mMasterSceneNode->createChildSceneNode();
 		pSceneNode->attachObject(mSceneMgr->createEntity("CoordSystem")); //good for debugging (!)
 		
 		Snapshot *pSnap = new Snapshot(pEntity, pSceneNode, pT_Depth, pT_RGB);
@@ -86,4 +87,8 @@ bool SnapshotLibrary::placeInScene(const Ogre::Image &depth, const Ogre::Image &
 		SnapshotLibrary::allocate(10);
 		return library[currentSnapshot++]->placeInScene(depth, rgb, pos, ori);
 	}
+}
+
+void SnapshotLibrary::flipVisibility() {
+	mMasterSceneNode->flipVisibility(); // do not cascade to subrenderables
 }

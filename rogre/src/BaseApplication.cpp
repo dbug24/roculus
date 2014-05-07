@@ -15,6 +15,8 @@ This source file is part of the
 -----------------------------------------------------------------------------
 */
 #include "BaseApplication.h"
+#include <boost/date_time/posix_time/posix_time_types.hpp>
+#include <boost/thread/thread.hpp>
 #include <iostream>
 #include <stdio.h>
 #include <exception>
@@ -49,6 +51,7 @@ BaseApplication::BaseApplication(void)
 	  syncedUpdate(false),
 	  takeSnapshot(false),
 	  videoUpdate(false),
+	  mapArrived(false),
 	  snPos(Ogre::Vector3::ZERO),
 	  snOri(Ogre::Quaternion::IDENTITY),
 	  vdPos(Ogre::Vector3::ZERO),
@@ -72,6 +75,7 @@ BaseApplication::~BaseApplication(void)
 	if (mCameraMan) delete mCameraMan;
 	if (mOverlaySystem) delete mOverlaySystem;
 	if (snLib) delete snLib;
+	if (rsLib) delete rsLib;
  
 	//Remove ourself as a Window listener
 	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
@@ -108,7 +112,7 @@ void BaseApplication::chooseSceneManager(void)
 	mOverlaySystem = new Ogre::OverlaySystem();
 	mSceneMgr->addRenderQueueListener(mOverlaySystem);
 }
-//-------------------------------------------------------------------------------------
+//---NOT USED FOR ROSCULUS APPLICATION-------------------------------------------------
 void BaseApplication::createCamera(void)
 {
   	// Create the camera
@@ -153,7 +157,7 @@ void BaseApplication::createFrameListener(void)
  
 	mInputContext.mKeyboard = mKeyboard;
 	mInputContext.mMouse = mMouse;
-	//	mInputContext.mJoyStick = mJoyStick;
+	//~ mInputContext.mJoyStick = mJoyStick;
 	mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mInputContext, this);
 	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
 	mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
@@ -325,7 +329,7 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 		return false;
 	
 	if (syncedUpdate) {
-		snLib->placeInScene(depImage, texImage, snPos, snOri);
+		rsLib->placeInScene(depImage, texImage, snPos, snOri);
 		syncedUpdate = false;
 	}
 	
@@ -338,6 +342,15 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 		videoUpdate = false;
 	}
 	
+	//~ if (mapArrived) {
+		//~ std::cout << "loading image" << std::endl;
+		//~ Ogre::TextureManager::getSingleton().getByName("GlobalMapTexture")->unload();
+		//~ Ogre::TextureManager::getSingleton().getByName("GlobalMapTexture")->loadImage(mapImage);
+		//~ std::cout << "attaching obj" << std::endl;
+		//~ mSceneMgr->getRootSceneNode()->createChildSceneNode("GlobalMap")->attachObject(mPCMap);
+		//~ mapArrived = false;
+	//~ }
+	
 	return true;
 }
 
@@ -348,9 +361,14 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
   //~ mJoyStick->capture(); //OIS Joystick was deactivated and replaced by ROS
 
   mTrayMgr->frameRenderingQueued(evt);
-  mPlayer->frameRenderingQueued(evt); // Apply player(~body) movement
+  
   robotModel->updateFrom(tfListener); // Update the robot as well
-
+  if (mPlayer->isFirstPerson()) {
+	mPlayer->frameRenderingQueued(robotModel);  
+  } else {
+	mPlayer->frameRenderingQueued(evt); // Apply player(~body) movement
+  }
+  
   if (mDetailsPanel->isVisible()) {
       mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedPosition().x));
       mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedPosition().y));
@@ -366,7 +384,11 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 }
 
 bool BaseApplication::frameEnded(const Ogre::FrameEvent& evt) {
-  return true;
+	int dt = 25000 - int(1000000.0*evt.timeSinceLastFrame);
+	if (dt < 0) dt = 0;
+	boost::posix_time::microseconds wait(dt);
+	boost::this_thread::sleep(wait);
+	return true;
 }
 
 //---------------------------Event Management------------------------------------------
@@ -423,29 +445,6 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 		Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(tfo);
 		Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(aniso);
 		mDetailsPanel->setParamValue(9, newVal);
-	}
-	else if (arg.key == OIS::KC_R)   // cycle polygon rendering mode
-	{
-		Ogre::String newVal;
-		Ogre::PolygonMode pm;
- 
-		switch (mCamera->getPolygonMode())
-		{
-		case Ogre::PM_SOLID:
-			newVal = "Wireframe";
-			pm = Ogre::PM_WIREFRAME;
-			break;
-		case Ogre::PM_WIREFRAME:
-			newVal = "Points";
-			pm = Ogre::PM_POINTS;
-			break;
-		default:
-			newVal = "Solid";
-			pm = Ogre::PM_SOLID;
-		}
- 
-		mCamera->setPolygonMode(pm);
-		mDetailsPanel->setParamValue(10, newVal);
 	}
 	else if(arg.key == OIS::KC_F5)   // refresh all textures
 	{
@@ -671,12 +670,73 @@ void BaseApplication::syncVideoCallback(const sensor_msgs::CompressedImageConstP
 }
 
 void BaseApplication::joyCallback(const sensor_msgs::Joy::ConstPtr &joy ) {
-	static bool l_button0 = false;
+	/*
+	 * the static variables prevent jitter and repetitive commands
+	 * */
+	static bool l_button0 = false; 
+	static bool l_button1 = false;
+	static bool l_button2 = false;
+	static bool l_button3 = false;
+	static bool l_button5 = false;
+	
+	// pass input on to player movements
 	mPlayer->injectROSJoy(joy);
+	
 	if (l_button0 == false && joy->buttons[0] != 0 && takeSnapshot == false) {
 		takeSnapshot = true;
 	}
+	else if (l_button1 == false && joy->buttons[1] != 0) {
+		snLib->flipVisibility();
+		//~ Ogre::LogManager::getSingletonPtr()->logMessage("Button 2; toggle Snapshot visibility");
+	}
+	else if (l_button2 == false && joy->buttons[2] != 0) {
+		rsLib->flipVisibility();
+		//~ Ogre::LogManager::getSingletonPtr()->logMessage("Button 3; toggle RoomScan visibility");
+	}
+	else if (l_button3 == false && joy->buttons[3] != 0) {
+		// Trigger Room Scan
+		Ogre::LogManager::getSingletonPtr()->logMessage("Button 4; trigger RoomScan...");
+	}
+	else if (l_button5 == false && joy->buttons[5] != 0) {
+		mPlayer->toggleFirstPersonMode();
+		//~ Ogre::LogManager::getSingletonPtr()->logMessage("Button 6; toggle first-person view");
+	}
+	else if (joy->buttons[7] != 0) {
+		oculus->resetOrientation();
+	}
+
 	l_button0 = (joy->buttons[0] != 0);
+	l_button1 = (joy->buttons[1] != 0);
+	l_button2 = (joy->buttons[2] != 0);
+	l_button3 = (joy->buttons[3] != 0);
+	l_button5 = (joy->buttons[5] != 0);
+}
+
+void BaseApplication::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr& map) {
+	//~ Ogre::MemoryDataStream dataStream(map->data.size(), false, false);
+	//~ 
+	//~ Ogre::uint8 value(0);
+	//~ for (int i=0; i<map->data.size(); i++) {
+		//~ if (map->data[i] == -1) {
+			//~ value = 40;
+		//~ } else {
+			//~ value = 2*map->data[i];
+		//~ }
+		//~ dataStream.write(&value, sizeof(Ogre::uint8));
+	//~ }
+	//~ dataStream.seek(0);
+	//~ 
+	//~ Ogre::uint32 w(map->info.width);
+	//~ Ogre::uint32 h(map->info.height);
+	//~ float res(map->info.resolution);
+	//~ float dx(map->info.origin.position.x);
+	//~ float dy(map->info.origin.position.y);
+//~ 
+//~ 
+	//~ Ogre::DataStreamPtr *pMap = new Ogre::DataStreamPtr(&dataStream);
+	//~ mapImage.loadRawData(*pMap, w, h, Ogre::PF_L8);
+	//~ 
+	//~ mapArrived = true;
 }
 
 void BaseApplication::initROS() {
@@ -685,8 +745,13 @@ void BaseApplication::initROS() {
   ros::init(argc, argv, "ROculus");
   hRosNode = new ros::NodeHandle();
   
+  // Subscribe to the joystick input
   hRosSubJoy = new ros::Subscriber(hRosNode->subscribe<sensor_msgs::Joy>
 				("/joy/visualization", 10, boost::bind(&BaseApplication::joyCallback, this, _1)));
+				
+  //~ // Subscribe for the map topic (Published Once per Subscriber)
+  //~ hRosSubJoy = new ros::Subscriber(hRosNode->subscribe<nav_msgs::OccupancyGrid>
+				//~ ("/map", 1, boost::bind(&BaseApplication::mapCallback, this, _1)));
 				
 	// Subscription and binding for the 360deg images
   hRosSubRGB = new message_filters::Subscriber<sensor_msgs::CompressedImage>
@@ -729,6 +794,10 @@ void BaseApplication::destroyROS() {
 	delete hRosSubJoy;
 	hRosSubJoy = NULL;
   }
+  //~ if (hRosSubMap) {
+	//~ delete hRosSubMap;
+	//~ hRosSubMap = NULL;
+  //~ }
   if (hRosSubRGB) {
     delete hRosSubRGB;
     hRosSubRGB = NULL;

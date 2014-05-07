@@ -10,6 +10,7 @@ PlayerBody::PlayerBody(Ogre::SceneNode* mStereoCameraParent)
     dt(0.0f),
     turnX(0.0f),
     turnY(0.0f),
+    firstPerson(false),
     quad(Ogre::Quaternion::IDENTITY)
 {
   this->mStereoCameraParent = mStereoCameraParent;
@@ -123,9 +124,23 @@ void PlayerBody::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 	mStereoCameraParent->yaw(Ogre::Radian(Ogre::Real(-turnY*dt)));
 }
 
+void PlayerBody::frameRenderingQueued(Robot *robot) {
+	static Ogre::Quaternion qRot(Ogre::Degree(-90), Ogre::Vector3::UNIT_Y);
+	mStereoCameraParent->setPosition(Ogre::Vector3::UNIT_Y*0.7+robot->getSceneNode()->getPosition());
+	mStereoCameraParent->setOrientation(qRot*robot->getSceneNode()->getOrientation());
+}
+
 void PlayerBody::injectROSJoy( const sensor_msgs::Joy::ConstPtr &joy ) {
 	lrSpeed = -joy->axes[ROS_LJOY_X];
 	udSpeed = joy->axes[ROS_LJOY_Y];
 	fwdSpeed = -joy->axes[ROS_RJOY_Y];
 	turnY = -joy->axes[ROS_RJOY_X]*2.0f;
+}
+
+void PlayerBody::toggleFirstPersonMode() {
+	firstPerson = !firstPerson;
+}
+
+bool PlayerBody::isFirstPerson() {
+	return firstPerson;
 }

@@ -1,3 +1,7 @@
+#ifndef _ROBOT_H_
+#define _ROBOT_H_
+
+
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 #include <tf/transform_listener.h>
@@ -12,3 +16,4 @@ public:
 protected:
 	Ogre::SceneNode *robot;
 };
+ #endif

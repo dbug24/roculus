@@ -79,6 +79,6 @@ void JoystickRemapper::joyCallback( const Joy::ConstPtr &joy ) {
 }
 
 int main(int argc, char **argv) {
-	JoystickRemapper jr(6, argc, argv);
+	JoystickRemapper jr(4, argc, argv);
 	return jr.spin();
 }
