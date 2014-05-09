@@ -57,9 +57,13 @@ BaseApplication::BaseApplication(void)
 	  vdPos(Ogre::Vector3::ZERO),
 	  vdOri(Ogre::Quaternion::IDENTITY),
 	  hRosSubJoy(NULL),
+	  hRosSubMap(NULL),
 	  hRosSubRGB(NULL),
 	  hRosSubDepth(NULL),
-	  rosMsgSync(NULL)
+	  rosMsgSync(NULL),
+	  rosPTUClient(NULL),
+	  ptuSweep(NULL),
+	  globalMap(NULL)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -76,7 +80,8 @@ BaseApplication::~BaseApplication(void)
 	if (mOverlaySystem) delete mOverlaySystem;
 	if (snLib) delete snLib;
 	if (rsLib) delete rsLib;
- 
+	if (globalMap) delete globalMap;
+
 	//Remove ourself as a Window listener
 	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	windowClosed(mWindow);
@@ -312,9 +317,9 @@ bool BaseApplication::setup(void)
 	oculus->setupOculus();
 	oculus->setupOgre(mSceneMgr, mWindow, mPlayerBodyNode);
 	mPlayer = new PlayerBody(mPlayerBodyNode);
-	
 	robotModel = new Robot(mSceneMgr);
-
+	globalMap = new GlobalMap(mSceneMgr);
+	
 	initROS();
 
 	return true;
@@ -342,14 +347,10 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 		videoUpdate = false;
 	}
 	
-	//~ if (mapArrived) {
-		//~ std::cout << "loading image" << std::endl;
-		//~ Ogre::TextureManager::getSingleton().getByName("GlobalMapTexture")->unload();
-		//~ Ogre::TextureManager::getSingleton().getByName("GlobalMapTexture")->loadImage(mapImage);
-		//~ std::cout << "attaching obj" << std::endl;
-		//~ mSceneMgr->getRootSceneNode()->createChildSceneNode("GlobalMap")->attachObject(mPCMap);
-		//~ mapArrived = false;
-	//~ }
+	if (mapArrived) {
+		globalMap->includeMap(mapImage);
+		mapArrived = false;
+	}
 	
 	return true;
 }
@@ -542,6 +543,29 @@ bool BaseApplication::buttonReleased( const OIS::JoyStickEvent &arg, int button 
   return true;
 }
 
+void BaseApplication::triggerPanoramaPTUScan() {
+	if (rosPTUClient) {
+		rosPTUClient->waitForServer();
+		scitos_ptu::PanTiltGoal goal;
+		// Fill in goal here
+		goal.pan_start= -150;
+		goal.pan_end= 151;
+		goal.pan_step= 50;
+		goal.tilt_start= -25;	// OR: -30
+		goal.tilt_step= 50;		// 30
+		goal.tilt_end= 26;		// 31
+		rosPTUClient->sendGoal(goal);
+		rosPTUClient->waitForResult(ros::Duration(120.0));
+		if (rosPTUClient->getState() == actionlib::SimpleClientGoalState::SUCCEEDED) {
+			Ogre::LogManager::getSingletonPtr()->logMessage("Successfully triggered room panorama.");
+		} else {
+			Ogre::LogManager::getSingletonPtr()->logMessage("[ERR] Failed to trigger room panorama (!)");
+		}
+	} else {
+		Ogre::LogManager::getSingletonPtr()->logMessage("[ERR] Client not set (!)");
+	}
+}
+
 
 /*
   Connection to the ROS system
@@ -582,27 +606,31 @@ void BaseApplication::syncCallback(const sensor_msgs::CompressedImageConstPtr& d
 		rgbStr.seek(0); // Reset stream position
 		Ogre::DataStreamPtr *pRstr = new Ogre::DataStreamPtr(&rgbStr);
 		
-		tfListener->lookupTransform("map", "head_xtion_depth_optical_frame", depthImg->header.stamp, snTransform);
-		
 		using namespace Ogre;
 		static Quaternion qRot = Quaternion(-sqrt(0.5), 0.0f, sqrt(0.5), 0.0f)*Quaternion(-sqrt(0.5), sqrt(0.5), 0.0f, 0.0f);
 		static tfScalar yaw,pitch,roll;
 		static Matrix3 mRot;
 		
-		snPos.x = snTransform.getOrigin().x();
-		snPos.y = snTransform.getOrigin().y();
-		snPos.z = snTransform.getOrigin().z();
-		snPos = qRot*snPos;
-		
-		snTransform.getBasis().getEulerYPR(yaw,pitch,roll);
-		mRot.FromEulerAnglesZYX(Radian(yaw),Radian(pitch),Radian(roll));
-		snOri.FromRotationMatrix(mRot);
-		snOri = qRot*snOri;
-		
-		depImage.load(*pDstr, "png");
-		texImage.load(*pRstr, "jpeg");
+		try {
+			tfListener->lookupTransform("map", "head_xtion_depth_optical_frame", depthImg->header.stamp, snTransform);
+			
+			snPos.x = snTransform.getOrigin().x();
+			snPos.y = snTransform.getOrigin().y();
+			snPos.z = snTransform.getOrigin().z();
+			snPos = qRot*snPos;
+			
+			snTransform.getBasis().getEulerYPR(yaw,pitch,roll);
+			mRot.FromEulerAnglesZYX(Radian(yaw),Radian(pitch),Radian(roll));
+			snOri.FromRotationMatrix(mRot);
+			snOri = qRot*snOri;
+			
+			depImage.load(*pDstr, "png");
+			texImage.load(*pRstr, "jpeg");
 
-		syncedUpdate = true;
+			syncedUpdate = true;
+		} catch (tf::TransformException ex) {
+			ROS_ERROR("%s",ex.what());
+		}		
 	}
 }
 
@@ -678,6 +706,7 @@ void BaseApplication::joyCallback(const sensor_msgs::Joy::ConstPtr &joy ) {
 	static bool l_button2 = false;
 	static bool l_button3 = false;
 	static bool l_button5 = false;
+	static bool l_button9 = false;
 	
 	// pass input on to player movements
 	mPlayer->injectROSJoy(joy);
@@ -694,8 +723,8 @@ void BaseApplication::joyCallback(const sensor_msgs::Joy::ConstPtr &joy ) {
 		//~ Ogre::LogManager::getSingletonPtr()->logMessage("Button 3; toggle RoomScan visibility");
 	}
 	else if (l_button3 == false && joy->buttons[3] != 0) {
-		// Trigger Room Scan
-		Ogre::LogManager::getSingletonPtr()->logMessage("Button 4; trigger RoomScan...");
+		boost::thread tmpThread(boost::bind(&BaseApplication::triggerPanoramaPTUScan, this));
+		//~ Ogre::LogManager::getSingletonPtr()->logMessage("[ERR] Failed to trigger room panorama (!)");
 	}
 	else if (l_button5 == false && joy->buttons[5] != 0) {
 		mPlayer->toggleFirstPersonMode();
@@ -704,54 +733,56 @@ void BaseApplication::joyCallback(const sensor_msgs::Joy::ConstPtr &joy ) {
 	else if (joy->buttons[7] != 0) {
 		oculus->resetOrientation();
 	}
-
+	else if (l_button9 == false && joy->buttons[9] != 0) {
+		globalMap->flipVisibility();
+	}
+	
 	l_button0 = (joy->buttons[0] != 0);
 	l_button1 = (joy->buttons[1] != 0);
 	l_button2 = (joy->buttons[2] != 0);
 	l_button3 = (joy->buttons[3] != 0);
 	l_button5 = (joy->buttons[5] != 0);
+	l_button9 = (joy->buttons[9] != 0);
 }
 
 void BaseApplication::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr& map) {
-	//~ Ogre::MemoryDataStream dataStream(map->data.size(), false, false);
-	//~ 
-	//~ Ogre::uint8 value(0);
-	//~ for (int i=0; i<map->data.size(); i++) {
-		//~ if (map->data[i] == -1) {
-			//~ value = 40;
-		//~ } else {
-			//~ value = 2*map->data[i];
-		//~ }
-		//~ dataStream.write(&value, sizeof(Ogre::uint8));
-	//~ }
-	//~ dataStream.seek(0);
-	//~ 
-	//~ Ogre::uint32 w(map->info.width);
-	//~ Ogre::uint32 h(map->info.height);
-	//~ float res(map->info.resolution);
-	//~ float dx(map->info.origin.position.x);
-	//~ float dy(map->info.origin.position.y);
-//~ 
-//~ 
-	//~ Ogre::DataStreamPtr *pMap = new Ogre::DataStreamPtr(&dataStream);
-	//~ mapImage.loadRawData(*pMap, w, h, Ogre::PF_L8);
-	//~ 
-	//~ mapArrived = true;
+	Ogre::MemoryDataStream dataStream(map->data.size(), false, false);
+	
+	Ogre::uint8 value(0);
+	for (int i=0; i<map->data.size(); i++) {
+		if (map->data[i] == -1) {
+			value = 40;
+		} else {
+			value = 2*map->data[i];
+		}
+		dataStream.write(&value, sizeof(Ogre::uint8));
+	}
+	dataStream.seek(0);
+	
+	globalMap->insertWHR(map->info.width, map->info.height, map->info.resolution);
+	globalMap->setOrigin(Vector3(-map->info.origin.position.y, map->info.origin.position.z, -map->info.origin.position.x));
+
+	Ogre::DataStreamPtr *pMap = new Ogre::DataStreamPtr(&dataStream);
+	mapImage.loadRawData(*pMap, map->info.width, map->info.height, Ogre::PF_L8);
+	mapImage.resize(2048,2048);
+	//~ mapImage.save("./media/globalMap.png");
+	hRosSubMap->shutdown();
+	mapArrived = true;
 }
 
 void BaseApplication::initROS() {
   int argc = 0;
   char** argv = NULL;
-  ros::init(argc, argv, "ROculus");
+  ros::init(argc, argv, "roculus");
   hRosNode = new ros::NodeHandle();
   
   // Subscribe to the joystick input
   hRosSubJoy = new ros::Subscriber(hRosNode->subscribe<sensor_msgs::Joy>
 				("/joy/visualization", 10, boost::bind(&BaseApplication::joyCallback, this, _1)));
 				
-  //~ // Subscribe for the map topic (Published Once per Subscriber)
-  //~ hRosSubJoy = new ros::Subscriber(hRosNode->subscribe<nav_msgs::OccupancyGrid>
-				//~ ("/map", 1, boost::bind(&BaseApplication::mapCallback, this, _1)));
+  // Subscribe for the map topic (Published Once per Subscriber)
+  hRosSubMap = new ros::Subscriber(hRosNode->subscribe<nav_msgs::OccupancyGrid>
+				("/map", 1, boost::bind(&BaseApplication::mapCallback, this, _1)));
 				
 	// Subscription and binding for the 360deg images
   hRosSubRGB = new message_filters::Subscriber<sensor_msgs::CompressedImage>
@@ -772,6 +803,7 @@ void BaseApplication::initROS() {
   rosVideoSync->registerCallback(boost::bind(&BaseApplication::syncVideoCallback, this, _1, _2));
   
 	// Setting up the tfListener and initialize the AsyncSpinner ROS
+  rosPTUClient = new Client("ptu_pan_tilt_metric_map", true);
   tfListener = new tf::TransformListener(); 
   hRosSpinner = new ros::AsyncSpinner(1);
 }
@@ -794,10 +826,10 @@ void BaseApplication::destroyROS() {
 	delete hRosSubJoy;
 	hRosSubJoy = NULL;
   }
-  //~ if (hRosSubMap) {
-	//~ delete hRosSubMap;
-	//~ hRosSubMap = NULL;
-  //~ }
+  if (hRosSubMap) {
+	delete hRosSubMap;
+	hRosSubMap = NULL;
+  }
   if (hRosSubRGB) {
     delete hRosSubRGB;
     hRosSubRGB = NULL;
@@ -818,5 +850,8 @@ void BaseApplication::destroyROS() {
     delete hRosNode;
     hRosNode = NULL;
   }
+  if (rosPTUClient) {
+	delete rosPTUClient;
+	rosPTUClient = NULL;
+  }
 }
-

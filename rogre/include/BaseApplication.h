@@ -69,21 +69,27 @@ This source file is part of the
 #include "PlayerBody.h"
 #include "Robot.h"
 #include <ros/ros.h>
-#include <sensor_msgs/Joy.h>
-#include <sensor_msgs/CompressedImage.h>
-#include <nav_msgs/OccupancyGrid.h>
-#include <message_filters/subscriber.h>
+#include <sensor_msgs/Joy.h>			// Input handling
+#include <sensor_msgs/CompressedImage.h>// Image and Video streams
+#include <nav_msgs/OccupancyGrid.h>		// GlobalMap
+#include <message_filters/subscriber.h>	// Sychronized Message Handling
 #include <message_filters/synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
-#include <tf/transform_listener.h>
+#include <tf/transform_listener.h>		// Transforms
+#include <scitos_ptu/PanTiltAction.h>	// Headers for the PTU panorama scan
+#include <scitos_ptu/PanTiltGoal.h>
+#include <actionlib/client/simple_action_client.h>
 
-#include <boost/thread/locks.hpp>
+#include <boost/thread/thread.hpp>
+
 
 #include "SnapshotLibrary.h"
 #include "Video3D.h"
+#include "GlobalMap.h"
 
-typedef boost::mutex Lock;
+//~ typedef boost::mutex Lock;
 typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::CompressedImage, sensor_msgs::CompressedImage> ApproximateTimePolicy;
+typedef actionlib::SimpleActionClient<scitos_ptu::PanTiltAction> Client;
 
 class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener, public OIS::JoyStickListener, OgreBites::SdkTrayListener
 {
@@ -126,6 +132,7 @@ protected:
 	//ROS system and callbacks
 	virtual void initROS();
 	virtual void destroyROS();
+	virtual void triggerPanoramaPTUScan();
 	virtual void joyCallback(const sensor_msgs::Joy::ConstPtr& );
 	virtual void mapCallback(const nav_msgs::OccupancyGrid::ConstPtr& );
 	virtual void syncCallback(const sensor_msgs::CompressedImageConstPtr&, const sensor_msgs::CompressedImageConstPtr&);
@@ -165,6 +172,8 @@ protected:
 	Oculus* oculus;
 
 	//ROS connection
+	Client *rosPTUClient;
+	boost::thread *ptuSweep;
 	ros::AsyncSpinner* hRosSpinner;
 	ros::NodeHandle* hRosNode;
 	ros::Subscriber *hRosSubJoy, *hRosSubMap;
@@ -173,10 +182,11 @@ protected:
 	tf::TransformListener *tfListener;
 	tf::StampedTransform snTransform, vdTransform;
 	Robot *robotModel;
+	GlobalMap *globalMap;
 
-	Ogre::ManualObject *mPCRender, *mPCMap;
+	Ogre::ManualObject *mPCRender;
 	Ogre::Image depImage, texImage, depVideo, texVideo, mapImage;
-	Lock lockRendering;
+	//~ Lock lockRendering;
 	SnapshotLibrary *snLib, *rsLib;
 	Video3D *vdVideo;
 	Ogre::Vector3 snPos, vdPos;

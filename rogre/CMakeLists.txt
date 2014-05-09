@@ -117,7 +117,16 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-add_executable(rogre_node src/PlayerBody.cpp src/BaseApplication.cpp src/OgreOculus.cpp src/TutorialApplication.cpp src/Snapshot.cpp src/SnapshotLibrary.cpp src/Robot.cpp src/Video3D.cpp)
+add_executable(rogre_node src/PlayerBody.cpp
+ src/BaseApplication.cpp
+  src/OgreOculus.cpp
+   src/TutorialApplication.cpp
+    src/Snapshot.cpp
+     src/SnapshotLibrary.cpp
+      src/Robot.cpp
+       src/Video3D.cpp
+        src/GlobalMap.cpp
+)
 
 add_executable(joy_remap src/JoystickRemapper.cpp)
 

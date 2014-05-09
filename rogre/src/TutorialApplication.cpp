@@ -56,20 +56,20 @@ void TutorialApplication::createScene(void)
 		PF_DEPTH,     // pixel format
 		TU_DYNAMIC_WRITE_ONLY_DISCARDABLE); 
 	
-	//~ TexturePtr pT_GlobalMap = Ogre::TextureManager::getSingleton().createManual(
-		//~ "GlobalMapTexture", 				// name
-		//~ ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		//~ TEX_TYPE_2D,      // type
-		//~ 1024, 1024,         		// width & height
-		//~ 0,                		// number of mipmaps
-		//~ PF_L8,     // pixel format
-		//~ TU_STATIC);
+	TexturePtr pT_GlobalMap = Ogre::TextureManager::getSingleton().createManual(
+		"GlobalMapTexture", 				// name
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		TEX_TYPE_2D,      // type
+		2048, 2048,         		// width & height
+		0,                		// number of mipmaps
+		PF_BYTE_RGBA,     // pixel format
+		TU_STATIC);
 			
 	Ogre::Image imDefault;
 	imDefault.load("KAMEN320x240.jpg","Popular");
 	pT_RGB->loadImage(imDefault);
 	pT_Depth->loadImage(imDefault);
-	//~ pT_GlobalMap->loadImage(imDefault);
+	pT_GlobalMap->loadImage(imDefault);
 
 	mPCRender= mSceneMgr->createManualObject();
 	mPCRender->estimateVertexCount(cam.x * cam.y);
@@ -117,21 +117,6 @@ void TutorialApplication::createScene(void)
 	// PREallocate and manage memory
 	snLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterial"), 10);
 	rsLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterial"), 10);
-	
-	//~ mPCMap = mSceneMgr->createManualObject();
-	//~ mPCMap->estimateVertexCount(4);
-	//~ mPCMap->estimateIndexCount(6);
-	//~ mPCMap->begin("roculus3D/DynamicTextureMaterial", Ogre::RenderOperation::OT_TRIANGLE_LIST);
-	//~ mPCMap->position(Ogre::Vector3(-200, 0, 200));
-	//~ mPCMap->textureCoord(0,1);
-	//~ mPCMap->position(Ogre::Vector3(200, 0, 200));
-	//~ mPCMap->textureCoord(1,1);
-	//~ mPCMap->position(Ogre::Vector3(200, 0, -200));
-	//~ mPCMap->textureCoord(1,0);
-	//~ mPCMap->position(Ogre::Vector3(-200, 0, -200));
-	//~ mPCMap->textureCoord(0,0);
-	//~ mPCMap->quad(0,1,2,3);
-	//~ mPCMap->end();
 }
 
 
