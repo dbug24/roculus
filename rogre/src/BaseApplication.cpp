@@ -387,6 +387,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 bool BaseApplication::frameEnded(const Ogre::FrameEvent& evt) {
 	int dt = 25000 - int(1000000.0*evt.timeSinceLastFrame);
 	if (dt < 0) dt = 0;
+	if (dt > 25000) dt = 25000;
 	boost::posix_time::microseconds wait(dt);
 	boost::this_thread::sleep(wait);
 	return true;
