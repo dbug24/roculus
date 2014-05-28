@@ -1,0 +1,77 @@
+vertex_program roculus3D/resort3d cg {
+	source projection3D.cg
+	entry_point main_vp
+	profiles vp40 vp20 vs_4_0 vs_2_0 arbvp1
+
+	default_params {
+		param_named_auto worldViewProj worldviewproj_matrix
+	}
+}
+
+fragment_program roculus3D/texture3d cg {
+	source projection3D.cg
+	entry_point main_fp
+	profiles fp40 fp20 ps_4_0 ps_2_0 arbfp1
+
+	default_params {
+		// find suitable steps (dx,dy) to test for depth changes
+		param_named invResolution float2 0.005f 0.005f
+		param_named lim float 0.05f
+	}
+}
+
+material roculus3D/DynamicTextureMaterial
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref roculus3D/texture3d
+				{
+				}
+
+			vertex_program_ref roculus3D/resort3d 
+				{
+				}
+				
+			texture_unit {
+				texture VideoRGBTexture
+				tex_coord_set 0
+			}
+			
+			texture_unit {
+				texture VideoDepthTexture
+				tex_coord_set 0
+			}
+			
+			lighting off
+		}
+	}
+}
+
+
+material roculus3D/BlankMaterial
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+		}
+	}
+}
+
+material roculus3D/GlobalMapMaterial
+{
+	technique
+	{
+		pass
+		{
+			texture_unit {
+				texture GlobalMapTexture
+				tex_coord_set 0
+			}
+			lighting off
+		}
+	}
+}

@@ -135,6 +135,7 @@ protected:
 	virtual void triggerPanoramaPTUScan();
 	virtual void joyCallback(const sensor_msgs::Joy::ConstPtr& );
 	virtual void mapCallback(const nav_msgs::OccupancyGrid::ConstPtr& );
+    virtual void poseCallback(const geometry_msgs::Pose::ConstPtr& );
 	virtual void syncCallback(const sensor_msgs::CompressedImageConstPtr&, const sensor_msgs::CompressedImageConstPtr&);
 	virtual void syncVideoCallback(const sensor_msgs::CompressedImageConstPtr&, const sensor_msgs::CompressedImageConstPtr&);
  
@@ -142,6 +143,8 @@ protected:
 	virtual void windowResized(Ogre::RenderWindow* rw);
 	//Unattach OIS before window shutdown (very important under Linux)
 	virtual void windowClosed(Ogre::RenderWindow* rw);
+
+    virtual void loadSavedMap();
  
 	Ogre::Root *mRoot;
 	Ogre::Camera* mCamera;
@@ -176,7 +179,7 @@ protected:
 	boost::thread *ptuSweep;
 	ros::AsyncSpinner* hRosSpinner;
 	ros::NodeHandle* hRosNode;
-	ros::Subscriber *hRosSubJoy, *hRosSubMap;
+    ros::Subscriber *hRosSubJoy, *hRosSubMap, *hRosSubPose;
 	message_filters::Subscriber<sensor_msgs::CompressedImage> *hRosSubRGB, *hRosSubDepth, *hRosSubRGBVid, *hRosSubDepthVid;
 	message_filters::Synchronizer<ApproximateTimePolicy> *rosMsgSync, *rosVideoSync;
 	tf::TransformListener *tfListener;
@@ -192,6 +195,8 @@ protected:
 	Ogre::Vector3 snPos, vdPos;
 	Ogre::Quaternion snOri, vdOri;
 	bool syncedUpdate, videoUpdate, takeSnapshot, mapArrived;
+
+    bool m_bBufferSnapshotData;
 	
 	// Added for Mac compatibility
 	Ogre::String                 m_ResourcePath;

@@ -1,7 +1,9 @@
 #include "SnapshotLibrary.h"
 #include <boost/lexical_cast.hpp>
+#include <stdio.h>
 
-SnapshotLibrary::SnapshotLibrary(Ogre::SceneManager *mSceneMgr, const Ogre::String &EntityPrototype, const Ogre::String &MaterialPrototype, int initSize) {
+SnapshotLibrary::SnapshotLibrary(Ogre::SceneManager *mSceneMgr, const Ogre::String &EntityPrototype, const Ogre::String &MaterialPrototype, int initSize, bool bufferSnapshotData) :
+    m_bBufferSnapshotData(bufferSnapshotData){
 	currentSnapshot = 0;
 	maxSnapshots = 0;
 	this->mSceneMgr = mSceneMgr;
@@ -70,7 +72,7 @@ void SnapshotLibrary::allocate(int nr) {
 		pEntity->setMaterial(pMat); // override all submaterials to pMat
 				
 		Ogre::SceneNode* pSceneNode = mMasterSceneNode->createChildSceneNode();
-		pSceneNode->attachObject(mSceneMgr->createEntity("CoordSystem")); //good for debugging (!)
+		//pSceneNode->attachObject(mSceneMgr->createEntity("CoordSystem")); //good for debugging (!)
 		
 		Snapshot *pSnap = new Snapshot(pEntity, pSceneNode, pT_Depth, pT_RGB);
 		library[cnt] = pSnap;
@@ -81,6 +83,7 @@ void SnapshotLibrary::allocate(int nr) {
 }
 
 bool SnapshotLibrary::placeInScene(const Ogre::Image &depth, const Ogre::Image &rgb, const Ogre::Vector3 &pos, const Ogre::Quaternion &ori) {
+
 	if (currentSnapshot < maxSnapshots) {
 		return library[currentSnapshot++]->placeInScene(depth, rgb, pos, ori);
 	} else {
@@ -91,4 +94,9 @@ bool SnapshotLibrary::placeInScene(const Ogre::Image &depth, const Ogre::Image &
 
 void SnapshotLibrary::flipVisibility() {
 	mMasterSceneNode->flipVisibility(); // do not cascade to subrenderables
+}
+
+void SnapshotLibrary::saveMap()
+{
+    std::cout<<"Saving "<<library.size()<<" snapshots"<<std::endl;
 }

@@ -1,0 +1,47 @@
+void main_vp (float4 position : POSITION, 
+				float2 texDep : TEXCOORD0,
+				out float4 oPosition : POSITION,
+				out float2 oTexDep: TEXCOORD0,
+				uniform float4x4 worldViewProj,
+				uniform sampler2D depthMap : register(s0))
+{
+	float depth = tex2D(depthMap, texDep)*65.535f; 
+	
+	position[0] = depth*position[0]; // pos.x should hold tan(alpha)
+	position[1] = -depth*position[1]; // pos.y should hold tan(beta)
+	position[2] = depth;
+		
+	oPosition = mul(worldViewProj, position);
+	oTexDep = texDep;
+}
+
+float4 main_fp (float2 texPos : TEXCOORD0,
+				uniform float2 invResolution,
+				uniform sampler2D scene : register(s1),
+				uniform sampler2D depthMap : register(s0),
+				uniform float lim) : COLOR
+{	
+	float d0 = float(tex2D(depthMap, texPos));
+	if (d0 < 0.005f || d0 > 0.05f)
+		discard;
+		
+	const float2 u1 = {invResolution[0], 0.0f};
+	const float2 u2 = {0.0f, invResolution[1]};
+
+	float d1,d2,d3,d4,d5,d6,d7,d8; // image has 8-connectivity
+	d1 = abs(float(tex2D(depthMap, texPos + u1))-d0);
+	d2 = abs(float(tex2D(depthMap, texPos - u1))-d0);
+	d3 = abs(float(tex2D(depthMap, texPos + u2))-d0);
+	d4 = abs(float(tex2D(depthMap, texPos - u2))-d0);
+	d5 = abs(float(tex2D(depthMap, texPos + u1 +u2))-d0);
+	d6 = abs(float(tex2D(depthMap, texPos - u1 +u2))-d0);
+	d7 = abs(float(tex2D(depthMap, texPos + u1 -u2))-d0);
+	d8 = abs(float(tex2D(depthMap, texPos - u1 -u2))-d0);
+	
+	float localLim = lim*d0;
+	
+	if (d1 > localLim || d2 > localLim || d2 > localLim || d4 > localLim || d5 > localLim || d6 > localLim || d7 > localLim || d8 > localLim)
+		discard;
+
+	return tex2D(scene, texPos);
+}

@@ -89,7 +89,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES rogre 
-  CATKIN_DEPENDS openni_launch roscpp std_msgs sensor_msgs message_filters tf cv_bridge image_transport opencv2
+  CATKIN_DEPENDS openni_launch roscpp std_msgs sensor_msgs message_filters tf cv_bridge image_transport opencv2 scitos_ptu
   DEPENDS system_lib
 )
 
@@ -106,7 +106,7 @@ include_directories(
  /usr/local/include/OGRE
  /usr/local/include/OGRE/Overlay
  /usr/include/OIS
- /home/ghost/Development/OculusSDK/LibOVR/Include
+ /home/rares/code/OculusSDK/LibOVR/Include
  /usr/include/pcl-1.7
  /usr/include/eigen3
 )
@@ -138,7 +138,7 @@ add_executable(sobelDepthImage src/SobelDepthImage.cpp)
 
 link_directories(
  /usr/local/lib/OGRE
- /home/ghost/Development/OculusSDK/LibOVR/Lib/Linux/Release/x86_64
+ /home/rares/code/OculusSDK/LibOVR/Lib/Linux/Debug/x86_64
 )
 
 #find_library(OVR_LIB ovr)

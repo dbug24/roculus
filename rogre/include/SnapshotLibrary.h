@@ -12,7 +12,8 @@ public:
 	void allocate(int);
 	bool placeInScene(const Ogre::Image&, const Ogre::Image&, const Ogre::Vector3& , const Ogre::Quaternion&);
 	void flipVisibility();
-	SnapshotLibrary(Ogre::SceneManager*, const Ogre::String&, const Ogre::String&, int);
+    void saveMap();
+    SnapshotLibrary(Ogre::SceneManager*, const Ogre::String&, const Ogre::String&, int, bool bufferSnapshotData=false);
 	~SnapshotLibrary();
 protected:
 	std::vector<Snapshot*> library;
@@ -22,6 +23,8 @@ protected:
 	Ogre::String MaterialPrototype;
 	Ogre::SceneManager *mSceneMgr;
 	Ogre::SceneNode *mMasterSceneNode;
+    bool        m_bBufferSnapshotData;
+//    std::vector<const Ogre::Image&> m_DepthBuffer;
 };
 
 #endif

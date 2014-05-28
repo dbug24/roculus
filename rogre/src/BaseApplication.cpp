@@ -22,6 +22,9 @@ This source file is part of the
 #include <exception>
 #include <math.h>
 
+#include <fstream>
+using namespace std;
+
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #include <macUtils.h>
 #endif
@@ -48,7 +51,7 @@ BaseApplication::BaseApplication(void)
 	  mOverlaySystem(0),
 	  mPCRender(0),
 	  robotModel(0),
-	  syncedUpdate(false),
+      syncedUpdate(false), // was false # Rares
 	  takeSnapshot(false),
 	  videoUpdate(false),
 	  mapArrived(false),
@@ -58,6 +61,7 @@ BaseApplication::BaseApplication(void)
 	  vdOri(Ogre::Quaternion::IDENTITY),
 	  hRosSubJoy(NULL),
 	  hRosSubMap(NULL),
+      hRosSubPose(NULL),
 	  hRosSubRGB(NULL),
 	  hRosSubDepth(NULL),
 	  rosMsgSync(NULL),
@@ -70,6 +74,8 @@ BaseApplication::BaseApplication(void)
 #else
     m_ResourcePath = "";
 #endif
+
+    m_bBufferSnapshotData = false;
 }
  
 //-------------------------------------------------------------------------------------
@@ -127,7 +133,7 @@ void BaseApplication::createCamera(void)
 	mCamera->setPosition(Ogre::Vector3(0,0,80));
 	// Look back along -Z
 	mCamera->lookAt(Ogre::Vector3(0,0,-300));
-	mCamera->setNearClipDistance(1.5f);
+    mCamera->setNearClipDistance(0.0f);
 	mCamera->setFarClipDistance(3000.0f);	
 
 	mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
@@ -336,6 +342,29 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 	if (syncedUpdate) {
 		rsLib->placeInScene(depImage, texImage, snPos, snOri);
 		syncedUpdate = false;
+
+        static int index = 160;
+
+        if (m_bBufferSnapshotData)
+        {
+            std::cout<<"Saving depth and rgb textures"<<std::endl;
+            char filename_rgb[50];
+            sprintf(filename_rgb,"snap_rgb%d.jpg",index);
+            texImage.save(filename_rgb);
+
+            char filename_depth[50];
+            sprintf(filename_depth,"snap_depth%d.png",index);
+            depImage.save(filename_depth);
+
+            ofstream myfile;
+            char filename_pos[50];
+            sprintf(filename_pos,"snap_pos%d.txt",index);
+            myfile.open (filename_pos);
+            myfile<<Ogre::StringConverter::toString(snPos)<<"\n"<<Ogre::StringConverter::toString(snOri);
+            myfile.close();
+
+            index++;
+        }
 	}
 	
 	if (videoUpdate) {
@@ -451,7 +480,29 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 	else if(arg.key == OIS::KC_F5)   // refresh all textures
 	{
 		Ogre::TextureManager::getSingleton().reloadAll();
+        syncedUpdate = true;
+        std::cout<<"Starting to receive sweep frames"<<std::endl;
 	}
+    else if(arg.key == OIS::KC_F6)   // refresh all textures
+    {
+        m_bBufferSnapshotData = !m_bBufferSnapshotData;
+
+        if (m_bBufferSnapshotData)
+        {
+            std::cout<<"Saving map"<<std::endl;
+        } else {
+            std::cout<<"Stopped saving map"<<std::endl;
+        }
+    }
+    else if(arg.key == OIS::KC_F7)   // refresh all textures
+    {
+        loadSavedMap();
+    }
+    else if(arg.key == OIS::KC_P)   // refresh all textures
+    {
+        mPlayer->toggleFirstPersonMode();
+        globalMap->flipVisibility();
+    }
 	else if (arg.key == OIS::KC_SYSRQ)   // take a screenshot
 	{
 		mWindow->writeContentsToTimestampedFile("screenshot", ".jpg");
@@ -771,6 +822,11 @@ void BaseApplication::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr& map) 
 	mapArrived = true;
 }
 
+void BaseApplication::poseCallback(const geometry_msgs::Pose::ConstPtr& pose)
+{
+    cout<<"Pose received "<<pose<<endl;
+}
+
 void BaseApplication::initROS() {
   int argc = 0;
   char** argv = NULL;
@@ -784,7 +840,11 @@ void BaseApplication::initROS() {
   // Subscribe for the map topic (Published Once per Subscriber)
   hRosSubMap = new ros::Subscriber(hRosNode->subscribe<nav_msgs::OccupancyGrid>
 				("/map", 1, boost::bind(&BaseApplication::mapCallback, this, _1)));
-				
+
+  hRosSubPose = new ros::Subscriber(hRosNode->subscribe<geometry_msgs::Pose>
+                ("/robot_pose", 1, boost::bind(&BaseApplication::poseCallback, this, _1)));
+
+
 	// Subscription and binding for the 360deg images
   hRosSubRGB = new message_filters::Subscriber<sensor_msgs::CompressedImage>
 				(*hRosNode, "/local_metric_map/rgb/rgb_filtered/compressed", 1);
@@ -855,4 +915,51 @@ void BaseApplication::destroyROS() {
 	delete rosPTUClient;
 	rosPTUClient = NULL;
   }
+}
+
+void BaseApplication::loadSavedMap()
+{
+    cout<<"Loading saved map"<<endl;
+
+    bool fileFound = true;
+    int counter = 0;
+
+
+
+
+
+    while (fileFound)
+    {
+        char filename_pos[50];
+        sprintf(filename_pos,"snap_pos%d.txt",counter);
+        ifstream pos_file(filename_pos);
+        char filename_rgb[50];
+        sprintf(filename_rgb,"snap_rgb%d.jpg",counter);
+        char filename_depth[50];
+        sprintf(filename_depth,"snap_depth%d.png",counter);
+
+        if (pos_file)
+        {
+            cout<<"Loading texture "<<counter<<endl;
+            Ogre::Image depthImage;
+            depthImage.load(filename_depth, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+            Ogre::Image rgbImage;
+            rgbImage.load(filename_rgb, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+            string vec, quat;
+            getline(pos_file,vec);
+            getline(pos_file,quat);
+
+            Ogre::Vector3 vector = Ogre::StringConverter::parseVector3(vec);
+            Ogre::Quaternion quaternion = Ogre::StringConverter::parseQuaternion(quat);
+
+            rsLib->placeInScene(depthImage, rgbImage, vector, quaternion);
+
+            counter++;
+        } else {
+            fileFound = false;
+        }
+    }
+
 }

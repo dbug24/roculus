@@ -116,7 +116,7 @@ void TutorialApplication::createScene(void)
 	vdVideo = new Video3D(mSceneMgr->createEntity("DefGeometry"), mSceneMgr->getRootSceneNode()->createChildSceneNode(), pT_Depth, pT_RGB);
 	// PREallocate and manage memory
 	snLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterial"), 10);
-	rsLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterial"), 10);
+    rsLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterial"), 10,true);
 }
 
 

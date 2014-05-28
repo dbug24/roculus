@@ -1,0 +1,8 @@
+<launch>
+	<node name="JoyStick_Input" pkg="joy" type="joy_node">
+		<remap from="joy" to ="joy/original"/>
+		<param name="autorepeat_rate" value="10.0" type="double"/>
+	</node>
+	<node name="JoyStick_Remapping" pkg="rogre" type="joy_remap">
+	</node>
+</launch>
