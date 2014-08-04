@@ -1,12 +1,15 @@
 #include "Video3D.h"
+//~ #include <OgreHardwarePixelBuffer.h>
+//~ #include <OgreHardwareBuffer.h>
 
 Video3D::Video3D(Ogre::Entity *pSnapshot, Ogre::SceneNode *pSceneNode, const Ogre::TexturePtr &depthTexture, const Ogre::TexturePtr &rgbTexture) {
 	this->snapshot = pSnapshot;
 	this->targetSceneNode = pSceneNode;
+	this->targetSceneNode->setInheritOrientation(false);
 	this->depthTexture = depthTexture;
 	this->rgbTexture = rgbTexture;
 	this->attached = false;
-	//~ this->depthMask = depthMask;
+	this->snapshot->setMaterialName("roculus3D/DynamicTextureMaterialNoSepia");
 }
 
 Video3D::~Video3D() {
@@ -17,10 +20,20 @@ bool Video3D::update(const Ogre::Image &depth, const Ogre::Image &rgb, const Ogr
 	depthTexture->loadImage(depth);
 	rgbTexture->unload();
 	rgbTexture->loadImage(rgb);
-	//~ depthMask->unload();
-	//~ depthMask->loadImage(depthMask)
+	//~ Ogre::HardwarePixelBufferSharedPtr dBuff = depthTexture->getBuffer(0,0);
+	//~ dBuff->lock(Ogre::HardwareBuffer::HBL_DISCARD);
+	//~ depthTexture->getBuffer(0,0)->blitFromMemory(depth.getPixelBox(0,0));
+	//~ dBuff->unlock();
+	//~ Ogre::HardwarePixelBufferSharedPtr rgbBuff = rgbTexture->getBuffer(0,0);
+	//~ rgbBuff->lock(Ogre::HardwareBuffer::HBL_DISCARD);
+	//~ rgbTexture->getBuffer(0,0)->blitFromMemory(rgb.getPixelBox(0,0));
+	//~ rgbBuff->unlock();
+		//~ depthMask->unload();
+		//~ depthMask->loadImage(depthMask)
 	targetSceneNode->setPosition(pos);
 	targetSceneNode->setOrientation(orientation);
+	targetSceneNode->yaw(Ogre::Degree(-90));
+	targetSceneNode->roll(Ogre::Degree(180));
 	if (!attached) {
 		targetSceneNode->attachObject(snapshot);
 		attached = true;

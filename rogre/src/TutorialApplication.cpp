@@ -33,7 +33,7 @@ void TutorialApplication::createScene(void)
 	
 	// Set camera resolution (X, Y, f) here
 	Vector3 cam(640.0f, 480.0f, 574.0f);
-	cam = cam/4; // Lower number of vertices (!), comment out for full resolution
+	cam = cam/2.0f; // Lower number of vertices (!), comment out for full resolution
 	// For better results adapt the invResolution parameter in vertexColours.material (!)
 
 	// Loading two dummy textures for the validity of the standard material
@@ -51,7 +51,7 @@ void TutorialApplication::createScene(void)
 		"VideoDepthTexture", 				// name
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		TEX_TYPE_2D,      // type
-		640, 480,         		// width & height
+		320, 240,         		// width & height
 		0,                		// number of mipmaps
 		PF_DEPTH,     // pixel format
 		TU_DYNAMIC_WRITE_ONLY_DISCARDABLE); 
@@ -60,7 +60,7 @@ void TutorialApplication::createScene(void)
 		"GlobalMapTexture", 				// name
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		TEX_TYPE_2D,      // type
-		2048, 2048,         		// width & height
+		1024, 1024,         		// width & height
 		0,                		// number of mipmaps
 		PF_BYTE_RGBA,     // pixel format
 		TU_STATIC);
@@ -76,9 +76,11 @@ void TutorialApplication::createScene(void)
 	mPCRender->estimateIndexCount(4 * cam.x * cam.y);
 	mPCRender->begin("roculus3D/DynamicTextureMaterial", RenderOperation::OT_TRIANGLE_LIST);
 
+	float fake_z = 0.0f;
 	for (int w=0; w<cam.x; w++) {
 		for (int h=0; h<cam.y; h++) {
-			mPCRender->position(float(w - (cam.x-1.0f)/2.0f)/cam.z, float((cam.y-1.0f)/2.0f - h)/cam.z,0.0f);
+			if (fake_z < 4.1f) fake_z += 1.0f;
+			mPCRender->position(float(w - (cam.x-1.0f)/2.0f)/cam.z, float((cam.y-1.0f)/2.0f - h)/cam.z, fake_z);
 			mPCRender->textureCoord(float(w)/(cam.x-1.0f),float(h)/(cam.y-1.0f));
 			if (w>0 && h>0) {
 				//mPCRender->quad(w*cam.y+h, (w-1)*cam.y+h, (w-1)*cam.y+h-1, w*cam.y+h-1);
@@ -113,7 +115,35 @@ void TutorialApplication::createScene(void)
 	
 	mPCRender->convertToMesh("CoordSystem");
 	
-	vdVideo = new Video3D(mSceneMgr->createEntity("DefGeometry"), mSceneMgr->getRootSceneNode()->createChildSceneNode(), pT_Depth, pT_RGB);
+	mPCRender= mSceneMgr->createManualObject();
+	mPCRender->begin("roculus3D/BlankMaterial", RenderOperation::OT_LINE_STRIP);
+	
+	float const radius = 0.3;
+    float const accuracy = 35; 
+    unsigned point_index = 0;
+    
+    for(float theta = 0; theta <= 2 * Math::PI; theta += Math::PI / accuracy) {
+        mPCRender->position(radius * cos(theta), 0.0f, radius * sin(theta));
+        mPCRender->colour(Ogre::ColourValue(0.0f, 1.0f, 0.0f, 1.0f));
+        mPCRender->index(point_index++);
+    }
+    mPCRender->index(0); // Rejoins the last point to the first.
+ 
+	mPCRender->end();
+	mPCRender->convertToMesh("CircleCursor");
+
+	cursor = mSceneMgr->getRootSceneNode()->createChildSceneNode("CircleCursor");
+	cursor->attachObject(mSceneMgr->createEntity("CircleCursor"));
+	Entity *wpMarker = mSceneMgr->createEntity("Cylinder.mesh");
+	wpMarker->setMaterialName("roculus3D/WayPointMarkerTransparent");
+	cursor->attachObject(wpMarker);
+	
+	mSceneMgr->getRootSceneNode()->createChildSceneNode("SysOrigin")->attachObject(mSceneMgr->createEntity("CoordSystem"));
+	//~ mSceneMgr->getRootSceneNode()->createChildSceneNode("TTtest")->attachObject(mSceneMgr->createEntity("Torus.001.mesh"));
+	mSceneMgr->getSceneNode("SysOrigin")->scale(Ogre::Vector3(2.0f,2.0f,2.0f));
+	
+	vdVideo = new Video3D(mSceneMgr->createEntity("DefGeometry"), mSceneMgr->getRootSceneNode()->createChildSceneNode(), pT_Depth, pT_RGB);	
+	vdVideo->getTargetSceneNode()->attachObject(mSceneMgr->createEntity("CoordSystem"));
 	// PREallocate and manage memory
 	snLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterial"), 10);
     rsLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterial"), 10,true);

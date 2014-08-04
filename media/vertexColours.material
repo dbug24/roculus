@@ -16,6 +16,7 @@ fragment_program roculus3D/texture3d cg {
 	default_params {
 		// find suitable steps (dx,dy) to test for depth changes
 		param_named invResolution float2 0.005f 0.005f
+		param_named sepia float 1.0f
 		param_named lim float 0.05f
 	}
 }
@@ -42,8 +43,41 @@ material roculus3D/DynamicTextureMaterial
 			texture_unit {
 				texture VideoDepthTexture
 				tex_coord_set 0
+				filtering anisotropic
 			}
 			
+			lighting off
+		}
+	}
+}
+
+material roculus3D/DynamicTextureMaterialNoSepia
+{
+	technique
+	{
+		pass
+		{
+			fragment_program_ref roculus3D/texture3d
+				{
+					param_named sepia float 0.0f
+				}
+
+			vertex_program_ref roculus3D/resort3d 
+				{
+				}
+				
+			texture_unit {
+				texture VideoRGBTexture
+				tex_coord_set 0
+			}
+			
+			texture_unit {
+				texture VideoDepthTexture
+				tex_coord_set 0
+				filtering anisotropic
+			}
+			
+			depth_func always_pass
 			lighting off
 		}
 	}

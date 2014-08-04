@@ -25,7 +25,7 @@ using namespace OVR;
 namespace
 {
 	const float g_defaultNearClip = 0.05f;
-    const float g_defaultFarClip = /*200.0f;*/ 5.0f;
+    const float g_defaultFarClip = 50.0f;
 	const float g_defaultIPD = 0.064f;
         const Ogre::ColourValue g_defaultViewportColour(97/255.0f, 97/255.0f, 200/255.0f, 1.0f);
 	const float g_defaultProjectionCentreOffset = 0.14529906f;

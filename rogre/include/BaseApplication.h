@@ -80,12 +80,21 @@ This source file is part of the
 #include <scitos_ptu/PanTiltGoal.h>
 #include <actionlib/client/simple_action_client.h>
 
+// for the game:
+#include <visualization_msgs/InteractiveMarkerInit.h>
+#include <std_msgs/String.h>
+#include <actionlib/client/simple_action_client.h>
+#include <actionlib/client/terminal_state.h>
+#include <topological_navigation/GotoNodeAction.h>
+
 #include <boost/thread/thread.hpp>
 
 
 #include "SnapshotLibrary.h"
 #include "Video3D.h"
 #include "GlobalMap.h"
+#include "WayPoint.h"
+#include "Game.h"
 
 //~ typedef boost::mutex Lock;
 typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::CompressedImage, sensor_msgs::CompressedImage> ApproximateTimePolicy;
@@ -114,6 +123,7 @@ protected:
 	virtual bool frameStarted(const Ogre::FrameEvent& evt);
 	virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 	virtual bool frameEnded(const Ogre::FrameEvent& evt);
+	virtual void cleanUp(void);
 	
 	//Keyboard Listener:
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
@@ -138,6 +148,9 @@ protected:
     virtual void poseCallback(const geometry_msgs::Pose::ConstPtr& );
 	virtual void syncCallback(const sensor_msgs::CompressedImageConstPtr&, const sensor_msgs::CompressedImageConstPtr&);
 	virtual void syncVideoCallback(const sensor_msgs::CompressedImageConstPtr&, const sensor_msgs::CompressedImageConstPtr&);
+	// Callbacks added for the demo game:
+	virtual void topoNodesCB(const visualization_msgs::InteractiveMarkerInit::ConstPtr& );
+	virtual void closestWayPointCB(const std_msgs::String::ConstPtr& );
  
 	//Adjust mouse clipping area
 	virtual void windowResized(Ogre::RenderWindow* rw);
@@ -179,7 +192,7 @@ protected:
 	boost::thread *ptuSweep;
 	ros::AsyncSpinner* hRosSpinner;
 	ros::NodeHandle* hRosNode;
-    ros::Subscriber *hRosSubJoy, *hRosSubMap, *hRosSubPose;
+    ros::Subscriber *hRosSubJoy, *hRosSubMap, *hRosSubPose, *hRosSubNodes, *hRosSubCloseWP;
 	message_filters::Subscriber<sensor_msgs::CompressedImage> *hRosSubRGB, *hRosSubDepth, *hRosSubRGBVid, *hRosSubDepthVid;
 	message_filters::Synchronizer<ApproximateTimePolicy> *rosMsgSync, *rosVideoSync;
 	tf::TransformListener *tfListener;
@@ -194,12 +207,18 @@ protected:
 	Video3D *vdVideo;
 	Ogre::Vector3 snPos, vdPos;
 	Ogre::Quaternion snOri, vdOri;
-	bool syncedUpdate, videoUpdate, takeSnapshot, mapArrived;
+	bool syncedUpdate, videoUpdate, takeSnapshot, mapArrived, receivedWPs;
+	// for the game	
+	Game *demoGame;
+	SceneNode* cursor;
+	WayPoint* selectedWP;
+	int closestWP; //interally using ids only
+	actionlib::SimpleActionClient<topological_navigation::GotoNodeAction> *rosieActionClient;
 
     bool m_bBufferSnapshotData;
 	
 	// Added for Mac compatibility
-	Ogre::String                 m_ResourcePath;
+	Ogre::String m_ResourcePath;
  
 #ifdef OGRE_STATIC_LIB
 	Ogre::StaticPluginLoader m_StaticPluginLoader;

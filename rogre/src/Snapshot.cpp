@@ -20,7 +20,9 @@ bool Snapshot::placeInScene(const Ogre::Image &depth, const Ogre::Image &rgb, co
 	//~ depthMask->unload();
 	//~ depthMask->loadImage(depthMask)
 	targetSceneNode->setPosition(pos);
-	targetSceneNode->rotate(orientation, Ogre::SceneNode::TS_LOCAL);
+	targetSceneNode->setOrientation(orientation);
+	targetSceneNode->yaw(Ogre::Degree(-90));
+	targetSceneNode->roll(Ogre::Degree(180));
 	if (!attached) {
 		targetSceneNode->attachObject(snapshot);
 		attached = true;

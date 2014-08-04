@@ -55,6 +55,8 @@ BaseApplication::BaseApplication(void)
 	  takeSnapshot(false),
 	  videoUpdate(false),
 	  mapArrived(false),
+	  receivedWPs(false),
+	  closestWP(-1),
 	  snPos(Ogre::Vector3::ZERO),
 	  snOri(Ogre::Quaternion::IDENTITY),
 	  vdPos(Ogre::Vector3::ZERO),
@@ -64,10 +66,15 @@ BaseApplication::BaseApplication(void)
       hRosSubPose(NULL),
 	  hRosSubRGB(NULL),
 	  hRosSubDepth(NULL),
+	  hRosSubNodes(NULL),
+	  hRosSubCloseWP(NULL),
 	  rosMsgSync(NULL),
 	  rosPTUClient(NULL),
 	  ptuSweep(NULL),
-	  globalMap(NULL)
+	  globalMap(NULL),
+	  demoGame(NULL),
+	  rosieActionClient(NULL),
+	  selectedWP(NULL)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -187,9 +194,11 @@ void BaseApplication::createFrameListener(void)
 	items.push_back("");
 	items.push_back("Filtering");
 	items.push_back("Poly Mode");
+	items.push_back("closestWP");
+	items.push_back("RobotYaw");
  
 	mDetailsPanel = mTrayMgr->createParamsPanel(OgreBites::TL_NONE, "DetailsPanel", 200, items);
-	mDetailsPanel->setParamValue(9, "Bilinear");
+	mDetailsPanel->setParamValue(9, "Anisotropic");
 	mDetailsPanel->setParamValue(10, "Solid");
 	mDetailsPanel->hide();
  
@@ -200,6 +209,11 @@ void BaseApplication::destroyScene(void)
 {
 }
 //-------------------------------------------------------------------------------------
+
+void BaseApplication::cleanUp(void) {
+	delete demoGame;
+}
+
 void BaseApplication::createViewports(void)
 {
 	// Create one viewport, entire window
@@ -291,6 +305,7 @@ void BaseApplication::go(void)
 	oculus = NULL;
 
 	destroyROS();
+	cleanUp();
 }
 
 //-------------------------------------------------------------------------------------
@@ -318,6 +333,8 @@ bool BaseApplication::setup(void)
  
 	createFrameListener();
 	
+	demoGame = new Game(mSceneMgr, 24);
+	
 	mPlayerBodyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	oculus = new Oculus();
 	oculus->setupOculus();
@@ -343,7 +360,7 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 		rsLib->placeInScene(depImage, texImage, snPos, snOri);
 		syncedUpdate = false;
 
-        static int index = 160;
+        static int index = 0;
 
         if (m_bBufferSnapshotData)
         {
@@ -378,6 +395,7 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 	
 	if (mapArrived) {
 		globalMap->includeMap(mapImage);
+		globalMap->flipVisibility();
 		mapArrived = false;
 	}
 	
@@ -385,35 +403,46 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 }
 
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
-  //Need to capture/update each device
-  mKeyboard->capture();
-  mMouse->capture();
-  //~ mJoyStick->capture(); //OIS Joystick was deactivated and replaced by ROS
+	//Need to capture/update each device
+	mKeyboard->capture();
+	mMouse->capture();
+	//~ mJoyStick->capture(); //OIS Joystick was deactivated and replaced by ROS
 
-  mTrayMgr->frameRenderingQueued(evt);
-  
-  robotModel->updateFrom(tfListener); // Update the robot as well
-  if (mPlayer->isFirstPerson()) {
-	mPlayer->frameRenderingQueued(robotModel);  
-  } else {
-	mPlayer->frameRenderingQueued(evt); // Apply player(~body) movement
-  }
-  
-  if (mDetailsPanel->isVisible()) {
-      mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedPosition().x));
-      mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedPosition().y));
-      mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedPosition().z));
-      mDetailsPanel->setParamValue(4, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().w));
-      mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().x));
-      mDetailsPanel->setParamValue(6, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().y));
-      mDetailsPanel->setParamValue(7, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().z));
-    }
-	
-  oculus->update(); // Set OCULUS orientation
-  return true;
+	mTrayMgr->frameRenderingQueued(evt);
+
+	robotModel->updateFrom(tfListener); // Update the robot as well
+	if (mPlayer->isFirstPerson()) {
+		mPlayer->frameRenderingQueued(robotModel);  
+	} else {
+		mPlayer->frameRenderingQueued(evt); // Apply player(~body) movement
+	}
+
+	if (mDetailsPanel->isVisible()) {
+		mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedPosition().x));
+		mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedPosition().y));
+		mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedPosition().z));
+		mDetailsPanel->setParamValue(4, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().w));
+		mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().x));
+		mDetailsPanel->setParamValue(6, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().y));
+		mDetailsPanel->setParamValue(7, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().z));
+		mDetailsPanel->setParamValue(11, boost::lexical_cast<std::string>(closestWP));
+		mDetailsPanel->setParamValue(12, Ogre::StringConverter::toString(mPlayerBodyNode->getOrientation().getYaw()));
+	}
+
+	oculus->update(); // Set OCULUS orientation
+
+	// For game navigation:
+	Ogre::Vector3 pos(mPlayerBodyNode->getPosition()+Ogre::Vector3::UNIT_Y*0.7);
+	Ogre::Quaternion qView = Ogre::Quaternion(mPlayerBodyNode->getOrientation().getYaw(), Ogre::Vector3::UNIT_Y)*oculus->getOrientation();
+	Ogre::Vector3 view(-qView.zAxis());
+	if (view.y >= -0.05f) view.y = -0.05f;
+	Ogre::Vector3 xzPoint = pos - view*(pos.y/(view.y-0.05f))*0.35f;
+	xzPoint.y = 0.05f;
+	cursor->setPosition(xzPoint);
 }
 
 bool BaseApplication::frameEnded(const Ogre::FrameEvent& evt) {
+	// Lock the framerate and save some processing power
 	int dt = 25000 - int(1000000.0*evt.timeSinceLastFrame);
 	if (dt < 0) dt = 0;
 	if (dt > 25000) dt = 25000;
@@ -443,40 +472,42 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 			mTrayMgr->removeWidgetFromTray(mDetailsPanel);
 			mDetailsPanel->hide();
 		}
+	} else if (arg.key == OIS::KC_T) {
+		takeSnapshot = true;
 	}
-	else if (arg.key == OIS::KC_T)   // cycle polygon rendering mode
-	{
-		Ogre::String newVal;
-		Ogre::TextureFilterOptions tfo;
-		unsigned int aniso;
- 
-		switch (mDetailsPanel->getParamValue(9).asUTF8()[0])
-		{
-		case 'B':
-			newVal = "Trilinear";
-			tfo = Ogre::TFO_TRILINEAR;
-			aniso = 1;
-			break;
-		case 'T':
-			newVal = "Anisotropic";
-			tfo = Ogre::TFO_ANISOTROPIC;
-			aniso = 8;
-			break;
-		case 'A':
-			newVal = "None";
-			tfo = Ogre::TFO_NONE;
-			aniso = 1;
-			break;
-		default:
-			newVal = "Bilinear";
-			tfo = Ogre::TFO_BILINEAR;
-			aniso = 1;
-		}
- 
-		Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(tfo);
-		Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(aniso);
-		mDetailsPanel->setParamValue(9, newVal);
-	}
+	//~ else if (arg.key == OIS::KC_T)   // cycle polygon rendering mode
+	//~ {
+		//~ Ogre::String newVal;
+		//~ Ogre::TextureFilterOptions tfo;
+		//~ unsigned int aniso;
+ //~ 
+		//~ switch (mDetailsPanel->getParamValue(9).asUTF8()[0])
+		//~ {
+		//~ case 'B':
+			//~ newVal = "Trilinear";
+			//~ tfo = Ogre::TFO_TRILINEAR;
+			//~ aniso = 1;
+			//~ break;
+		//~ case 'T':
+			//~ newVal = "Anisotropic";
+			//~ tfo = Ogre::TFO_ANISOTROPIC;
+			//~ aniso = 8;
+			//~ break;
+		//~ case 'A':
+			//~ newVal = "None";
+			//~ tfo = Ogre::TFO_NONE;
+			//~ aniso = 1;
+			//~ break;
+		//~ default:
+			//~ newVal = "Bilinear";
+			//~ tfo = Ogre::TFO_BILINEAR;
+			//~ aniso = 1;
+		//~ }
+ //~ 
+		//~ Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(tfo);
+		//~ Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(aniso);
+		//~ mDetailsPanel->setParamValue(9, newVal);
+	//~ }
 	else if(arg.key == OIS::KC_F5)   // refresh all textures
 	{
 		Ogre::TextureManager::getSingleton().reloadAll();
@@ -501,8 +532,10 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     else if(arg.key == OIS::KC_P)   // refresh all textures
     {
         mPlayer->toggleFirstPersonMode();
-        globalMap->flipVisibility();
     }
+    else if(arg.key == OIS::KC_M) {
+		globalMap->flipVisibility();
+	}
 	else if (arg.key == OIS::KC_SYSRQ)   // take a screenshot
 	{
 		mWindow->writeContentsToTimestampedFile("screenshot", ".jpg");
@@ -510,6 +543,17 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 	else if (arg.key == OIS::KC_ESCAPE)
 	{
 		mShutDown = true;
+	}
+	else if (arg.key == OIS::KC_SPACE) {
+		Ogre::String target = demoGame->highlightClosestWP(cursor->getPosition());
+		if (target != Ogre::StringUtil::BLANK && NULL != rosieActionClient) {
+			rosieActionClient->waitForServer();
+			topological_navigation::GotoNodeGoal goal;
+			goal.target = target;
+			rosieActionClient->cancelAllGoals();
+			rosieActionClient->sendGoal(goal);
+			LogManager::getSingletonPtr()->logMessage("SendGoal: " + target);
+		}
 	}
 
 	mPlayer->injectKeyDown(arg);
@@ -659,22 +703,19 @@ void BaseApplication::syncCallback(const sensor_msgs::CompressedImageConstPtr& d
 		Ogre::DataStreamPtr *pRstr = new Ogre::DataStreamPtr(&rgbStr);
 		
 		using namespace Ogre;
-		static Quaternion qRot = Quaternion(-sqrt(0.5), 0.0f, sqrt(0.5), 0.0f)*Quaternion(-sqrt(0.5), sqrt(0.5), 0.0f, 0.0f);
 		static tfScalar yaw,pitch,roll;
 		static Matrix3 mRot;
 		
 		try {
 			tfListener->lookupTransform("map", "head_xtion_depth_optical_frame", depthImg->header.stamp, snTransform);
 			
-			snPos.x = snTransform.getOrigin().x();
-			snPos.y = snTransform.getOrigin().y();
-			snPos.z = snTransform.getOrigin().z();
-			snPos = qRot*snPos;
+			snPos.x = -snTransform.getOrigin().y();
+			snPos.y = snTransform.getOrigin().z();
+			snPos.z = -snTransform.getOrigin().x();
 			
 			snTransform.getBasis().getEulerYPR(yaw,pitch,roll);
-			mRot.FromEulerAnglesZYX(Radian(yaw),Radian(pitch),Radian(roll));
+			mRot.FromEulerAnglesYXZ(Radian(yaw),Radian(pitch),Radian(roll));
 			snOri.FromRotationMatrix(mRot);
-			snOri = qRot*snOri;
 			
 			depImage.load(*pDstr, "png");
 			texImage.load(*pRstr, "jpeg");
@@ -687,8 +728,10 @@ void BaseApplication::syncCallback(const sensor_msgs::CompressedImageConstPtr& d
 }
 
 void BaseApplication::syncVideoCallback(const sensor_msgs::CompressedImageConstPtr& depthImg, const sensor_msgs::CompressedImageConstPtr& rgbImg) {
-
-	if (!videoUpdate) {
+	static int cb_cnt = 0;
+	cb_cnt++;
+	if (!videoUpdate && cb_cnt >= 2) {
+		cb_cnt = 0;
 
 		Ogre::MemoryDataStream depthStr(depthImg->data.size(), false, false);
 		Ogre::MemoryDataStream rgbStr(rgbImg->data.size(), false, false);
@@ -719,24 +762,19 @@ void BaseApplication::syncVideoCallback(const sensor_msgs::CompressedImageConstP
 		Ogre::DataStreamPtr *pRstr = new Ogre::DataStreamPtr(&rgbStr);
 		
 		using namespace Ogre;
-		static Quaternion qRot = Quaternion(-sqrt(0.5), 0.0f, sqrt(0.5), 0.0f)*Quaternion(-sqrt(0.5), sqrt(0.5), 0.0f, 0.0f);
 		static tfScalar yaw,pitch,roll;
 		static Matrix3 mRot;
 		
 		try {
-			tfListener->lookupTransform("map", "head_xtion_depth_optical_frame", depthImg->header.stamp, vdTransform);
+			tfListener->lookupTransform("map", "chest_xtion_depth_optical_frame", depthImg->header.stamp, vdTransform);
 			
-			vdPos.x = vdTransform.getOrigin().x();
-			vdPos.y = vdTransform.getOrigin().y();
-			vdPos.z = vdTransform.getOrigin().z();
-			vdPos = qRot*vdPos;
+			vdPos.x = -vdTransform.getOrigin().y();
+			vdPos.y = vdTransform.getOrigin().z();
+			vdPos.z = -vdTransform.getOrigin().x();
 			
 			vdTransform.getBasis().getEulerYPR(yaw,pitch,roll);
-			mRot.FromEulerAnglesZYX(Radian(yaw),Radian(pitch),Radian(roll));
-			vdOri.FromRotationMatrix(mRot);
-			vdOri = qRot*vdOri;
-			
-			std::cout << vdOri << std::endl;
+			mRot.FromEulerAnglesYXZ(Radian(yaw),Radian(pitch),Radian(roll));
+			vdOri.FromRotationMatrix(mRot);			
 		
 		} catch (tf::TransformException ex) {
 			ROS_ERROR("%s",ex.what());
@@ -768,19 +806,15 @@ void BaseApplication::joyCallback(const sensor_msgs::Joy::ConstPtr &joy ) {
 	}
 	else if (l_button1 == false && joy->buttons[1] != 0) {
 		snLib->flipVisibility();
-		//~ Ogre::LogManager::getSingletonPtr()->logMessage("Button 2; toggle Snapshot visibility");
 	}
 	else if (l_button2 == false && joy->buttons[2] != 0) {
 		rsLib->flipVisibility();
-		//~ Ogre::LogManager::getSingletonPtr()->logMessage("Button 3; toggle RoomScan visibility");
 	}
 	else if (l_button3 == false && joy->buttons[3] != 0) {
 		boost::thread tmpThread(boost::bind(&BaseApplication::triggerPanoramaPTUScan, this));
-		//~ Ogre::LogManager::getSingletonPtr()->logMessage("[ERR] Failed to trigger room panorama (!)");
 	}
 	else if (l_button5 == false && joy->buttons[5] != 0) {
 		mPlayer->toggleFirstPersonMode();
-		//~ Ogre::LogManager::getSingletonPtr()->logMessage("Button 6; toggle first-person view");
 	}
 	else if (joy->buttons[7] != 0) {
 		oculus->resetOrientation();
@@ -798,8 +832,8 @@ void BaseApplication::joyCallback(const sensor_msgs::Joy::ConstPtr &joy ) {
 }
 
 void BaseApplication::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr& map) {
-	Ogre::MemoryDataStream dataStream(map->data.size(), false, false);
 	
+	Ogre::MemoryDataStream dataStream(map->data.size(), false, false);
 	Ogre::uint8 value(0);
 	for (int i=0; i<map->data.size(); i++) {
 		if (map->data[i] == -1) {
@@ -812,19 +846,48 @@ void BaseApplication::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr& map) 
 	dataStream.seek(0);
 	
 	globalMap->insertWHR(map->info.width, map->info.height, map->info.resolution);
-	globalMap->setOrigin(Vector3(-map->info.origin.position.y, map->info.origin.position.z, -map->info.origin.position.x));
+	globalMap->setOrigin(Vector3(map->info.origin.position.y, map->info.origin.position.z, -map->info.origin.position.x));
 
 	Ogre::DataStreamPtr *pMap = new Ogre::DataStreamPtr(&dataStream);
 	mapImage.loadRawData(*pMap, map->info.width, map->info.height, Ogre::PF_L8);
-	mapImage.resize(2048,2048);
-	//~ mapImage.save("./media/globalMap.png");
 	hRosSubMap->shutdown();
 	mapArrived = true;
 }
 
-void BaseApplication::poseCallback(const geometry_msgs::Pose::ConstPtr& pose)
-{
+void BaseApplication::poseCallback(const geometry_msgs::Pose::ConstPtr& pose) {
     cout<<"Pose received "<<pose<<endl;
+}
+
+void BaseApplication::topoNodesCB(const visualization_msgs::InteractiveMarkerInit::ConstPtr& data){
+
+	for (int i=0;i<data->markers.size();i++) {
+		WayPoint *wp = demoGame->getWPByName(data->markers[i].name);
+		if (wp) {
+			wp->setPosition(Vector3(-data->markers[i].pose.position.y,
+				data->markers[i].pose.position.z,
+				-data->markers[i].pose.position.x));
+			Quaternion wpRot(data->markers[i].pose.orientation.w,
+				-data->markers[i].pose.orientation.y,
+				data->markers[i].pose.orientation.z,
+				-data->markers[i].pose.orientation.x);
+			if (wpRot != Quaternion::ZERO) {
+				wp->setOrientation(wpRot);
+			}
+			
+			wp->setVisible(true);
+			Ogre::LogManager::getSingletonPtr()->logMessage(wp->toString() + " arrived.");
+		} else {
+			cerr << "Inexistant WayPoint transmittet by ROS." << endl;
+		}
+	}
+	
+	hRosSubNodes->shutdown();
+	receivedWPs = true;	
+}
+
+void BaseApplication::closestWayPointCB(const std_msgs::String::ConstPtr& data) {
+	std::string name(data->data);
+	closestWP = boost::lexical_cast<int>(name.erase(0,8)); //Erase "WayPoint" before casting
 }
 
 void BaseApplication::initROS() {
@@ -841,8 +904,14 @@ void BaseApplication::initROS() {
   hRosSubMap = new ros::Subscriber(hRosNode->subscribe<nav_msgs::OccupancyGrid>
 				("/map", 1, boost::bind(&BaseApplication::mapCallback, this, _1)));
 
-  hRosSubPose = new ros::Subscriber(hRosNode->subscribe<geometry_msgs::Pose>
-                ("/robot_pose", 1, boost::bind(&BaseApplication::poseCallback, this, _1)));
+  //~ hRosSubPose = new ros::Subscriber(hRosNode->subscribe<geometry_msgs::Pose>
+                //~ ("/robot_pose", 1, boost::bind(&BaseApplication::poseCallback, this, _1)));
+                
+  hRosSubNodes = new ros::Subscriber(hRosNode->subscribe<visualization_msgs::InteractiveMarkerInit>
+                ("/kth_floorsix_y2_topo_markers/update_full", 1, boost::bind(&BaseApplication::topoNodesCB, this, _1)));
+                
+  hRosSubCloseWP = new ros::Subscriber(hRosNode->subscribe<std_msgs::String>
+                ("/closest_node", 1, boost::bind(&BaseApplication::closestWayPointCB, this, _1)));
 
 
 	// Subscription and binding for the 360deg images
@@ -856,15 +925,20 @@ void BaseApplication::initROS() {
   
 	// Subscription and binding for the 3D video and requested snapshots
   hRosSubRGBVid = new message_filters::Subscriber<sensor_msgs::CompressedImage>
-				(*hRosNode, "/head_xtion/rgb/image_raw_low_fps/compressed", 1);
+				//(*hRosNode, "/head_xtion/rgb/image_raw_low_fps/compressed", 1);
+				//(*hRosNode, "/head_xtion/rgb/image_color/compressed", 1);
+				(*hRosNode, "/chest_xtion/rgb/image_color/reducedBW/compressed", 1);
   hRosSubDepthVid = new message_filters::Subscriber<sensor_msgs::CompressedImage>
-				(*hRosNode, "/head_xtion/depth/image_raw_low_fps/compressedDepth", 1);
+				//(*hRosNode, "/head_xtion/depth/image_raw_low_fps/compressedDepth", 1);
+				//(*hRosNode, "/head_xtion/depth_registered/image_rect/compressedDepth", 1);
+				(*hRosNode, "/chest_xtion/depth_registered/image_rect/reducedBW/compressedDepth", 1);
   rosVideoSync = new message_filters::Synchronizer<ApproximateTimePolicy>
 				(ApproximateTimePolicy(15), *hRosSubDepthVid, *hRosSubRGBVid);
   rosVideoSync->registerCallback(boost::bind(&BaseApplication::syncVideoCallback, this, _1, _2));
   
 	// Setting up the tfListener and initialize the AsyncSpinner ROS
-  rosPTUClient = new Client("ptu_pan_tilt_metric_map", true);
+  //~ rosPTUClient = new Client("ptu_pan_tilt_metric_map", true);
+  rosieActionClient = new actionlib::SimpleActionClient<topological_navigation::GotoNodeAction>("topological_navigation", true);
   tfListener = new tf::TransformListener(); 
   hRosSpinner = new ros::AsyncSpinner(1);
 }
@@ -907,6 +981,14 @@ void BaseApplication::destroyROS() {
     delete hRosSubDepth;
     hRosSubDepth = NULL;
   }
+  if (hRosSubNodes) {
+    delete hRosSubNodes;
+    hRosSubNodes = NULL;
+  }
+  if (hRosSubCloseWP) {
+    delete hRosSubCloseWP;
+    hRosSubCloseWP = NULL;
+  }
   if (hRosNode) {
     delete hRosNode;
     hRosNode = NULL;
@@ -915,19 +997,18 @@ void BaseApplication::destroyROS() {
 	delete rosPTUClient;
 	rosPTUClient = NULL;
   }
+  if (rosieActionClient) {
+	  delete rosieActionClient;
+	  rosieActionClient = NULL;
+  }
 }
 
-void BaseApplication::loadSavedMap()
-{
+void BaseApplication::loadSavedMap() {
     cout<<"Loading saved map"<<endl;
 
     bool fileFound = true;
     int counter = 0;
-
-
-
-
-
+    
     while (fileFound)
     {
         char filename_pos[50];

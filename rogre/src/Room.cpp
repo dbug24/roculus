@@ -46,7 +46,7 @@ int getDoorEventWPId() {
 	return doorEventWPId;
 }
 
-void setDoorEvtWPId(int id) {
+void setDoorEventWPId(int id) {
 	this->doorEventWPId = id;
 }
 

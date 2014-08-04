@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(rogre)
 
-set(OpenCV_DIR /opt/ros/hydro/share/OpenCV/)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -12,9 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   message_filters
   tf
-  cv_bridge
   image_transport
-  OpenCV
 )
 
 ## System dependencies are found with CMake's conventions
@@ -89,7 +86,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES rogre 
-  CATKIN_DEPENDS openni_launch roscpp std_msgs sensor_msgs message_filters tf cv_bridge image_transport opencv2 scitos_ptu
+  CATKIN_DEPENDS openni_launch roscpp std_msgs sensor_msgs message_filters tf cv_bridge image_transport scitos_ptu
   DEPENDS system_lib
 )
 
@@ -102,11 +99,10 @@ catkin_package(
 include_directories(
  ./include
  ${catkin_INCLUDE_DIRS}
- ${OpenCV_INCLUDE_DIRS}
  /usr/local/include/OGRE
  /usr/local/include/OGRE/Overlay
  /usr/include/OIS
- /home/rares/code/OculusSDK/LibOVR/Include
+ /home/cvapdemo/Development/OculusSDK/LibOVR/Include
  /usr/include/pcl-1.7
  /usr/include/eigen3
 )
@@ -126,11 +122,11 @@ add_executable(rogre_node src/PlayerBody.cpp
       src/Robot.cpp
        src/Video3D.cpp
         src/GlobalMap.cpp
+		 src/WayPoint.cpp
+		  src/Game.cpp
 )
 
 add_executable(joy_remap src/JoystickRemapper.cpp)
-
-add_executable(sobelDepthImage src/SobelDepthImage.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -138,7 +134,7 @@ add_executable(sobelDepthImage src/SobelDepthImage.cpp)
 
 link_directories(
  /usr/local/lib/OGRE
- /home/rares/code/OculusSDK/LibOVR/Lib/Linux/Debug/x86_64
+ /home/cvapdemo/Development/OculusSDK/LibOVR/Lib/Linux/Debug/x86_64
 )
 
 #find_library(OVR_LIB ovr)
@@ -160,12 +156,6 @@ target_link_libraries(rogre_node
 
 target_link_libraries(joy_remap
   ${catkin_LIBRARIES}
-  udev
-)
-
-target_link_libraries(sobelDepthImage
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBRARIES}
   udev
 )
 

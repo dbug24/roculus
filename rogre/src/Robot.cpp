@@ -19,18 +19,17 @@ void Robot::updateFrom(tf::TransformListener *tfListener) {
 	static tf::StampedTransform baseTF;
 	static Vector3 translation = Vector3::ZERO;
 	static Quaternion orientation = Quaternion::IDENTITY;
-	static Quaternion qRot = Quaternion(-sqrt(0.5), 0.0f, sqrt(0.5), 0.0f)*Quaternion(-sqrt(0.5), sqrt(0.5), 0.0f, 0.0f);
-	static Quaternion qYn90 = Quaternion(Degree(90), Vector3::NEGATIVE_UNIT_Y);
+	static Quaternion qYn90 = Quaternion(Degree(90), Vector3::UNIT_Y);
 	static tfScalar yaw,pitch,roll;
 	static Matrix3 mRot;
 	
 	try {
 		tfListener->lookupTransform("map","base_footprint",ros::Time(0), baseTF);
 		
-		translation.x = baseTF.getOrigin().x();
-		translation.y = baseTF.getOrigin().y();
-		translation.z = baseTF.getOrigin().z();
-		translation = qRot*translation + Vector3(0.0f, 1.0f, 0.0f);
+		translation.x = -baseTF.getOrigin().y();
+		translation.y = baseTF.getOrigin().z();
+		translation.z = -baseTF.getOrigin().x();
+		translation = translation + Vector3(0.0f, 1.0f, 0.0f);
 		baseTF.getBasis().getEulerYPR(yaw,pitch,roll);
 		mRot.FromEulerAnglesYXZ(Radian(yaw),Radian(0.0f),Radian(0.0f));
 		orientation.FromRotationMatrix(mRot);

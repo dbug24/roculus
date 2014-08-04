@@ -15,12 +15,12 @@ String WayPoint::getName() {
 	return this->name;
 }
 
-Vector3* WayPoint::getPosition() {
-	return &pos;
+const Vector3& WayPoint::getPosition() {
+	return pos;
 }
 
-Quaternion* WayPoint::getOrientation() {
-	return &ori;
+const Quaternion& WayPoint::getOrientation() {
+	return ori;
 }
 
 int WayPoint::getId() {

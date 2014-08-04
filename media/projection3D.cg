@@ -8,9 +8,10 @@ void main_vp (float4 position : POSITION,
 	float depth = tex2D(depthMap, texDep)*65.535f; 
 	
 	position[0] = depth*position[0]; // pos.x should hold tan(alpha)
-	position[1] = -depth*position[1]; // pos.y should hold tan(beta)
-	position[2] = depth;
-		
+	position[1] = depth*position[1]; // pos.y should hold tan(beta)
+	position[2] = -depth;			 // depth is in -z direction
+	position[3] = 1.0f;
+			
 	oPosition = mul(worldViewProj, position);
 	oTexDep = texDep;
 }
@@ -54,18 +55,4 @@ float4 main_fp (float2 texPos : TEXCOORD0,
 	} else {
 		return tex2D(scene, texPos);
 	}
-}
-
-void laser_vp (float4 position : POSITION,
-				out float4 oPosition : POSITION,
-				uniform float4 point1,
-				uniform float4 point2,
-				uniform float4x4 worldViewProj)
-{
-	if (position[2] > 0.5f) {
-		oPosition = point1;
-	} else {
-		oPosition = point2;
-	}
-	oPosition = mul(worldViewProj,oPosition);
 }

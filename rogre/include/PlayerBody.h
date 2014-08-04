@@ -17,10 +17,10 @@ Class it to be used as parent node to the Oculus handling system by Kojack.
 // Axes for LOGITECH RumblePad2
 #define ROS_RJOY_X 0
 #define ROS_RJOY_Y 1
-#define ROS_LJOY_X 2
-#define ROS_LJOY_Y 3
-#define ROS_POV_X 5
-#define ROS_POV_Y 6
+#define ROS_LJOY_X 2	//2
+#define ROS_LJOY_Y 3	//3
+#define ROS_POV_X 4		//4
+#define ROS_POV_Y 7		//5
 
 class PlayerBody {
  private:

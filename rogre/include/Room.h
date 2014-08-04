@@ -19,7 +19,7 @@ class Room {
 	int getRoomId();
 	std::vector<int>& getRoomPoints();
 	std::vector<int>& getUsePoints();
-	int getDoorEvtWPId();
+	int getDoorEventWPId();
 	void setDoorEventWPId(int);
 	void addRoomPoint(int);
 	void addUsePoint(int);

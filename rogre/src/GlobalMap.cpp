@@ -1,4 +1,6 @@
 #include "GlobalMap.h"
+#include <OgreStringConverter.h>
+
 using namespace Ogre;
 
 GlobalMap::GlobalMap(SceneManager* mgr) {
@@ -16,7 +18,8 @@ void GlobalMap::insertWHR(uint32 width, uint32 height, Real resolution) {
 }
 
 void GlobalMap::setOrigin(Vector3 origin) {
-	this->origin = origin;
+	this->origin = origin*resolution;
+	Ogre::LogManager::getSingletonPtr()->logMessage("Map origin at: " + StringConverter::toString(this->origin));
 }
 
 void GlobalMap::includeMap(const Image& map) {
@@ -27,21 +30,21 @@ void GlobalMap::includeMap(const Image& map) {
 	mMapObj->estimateIndexCount(6);
 	mMapObj->begin("roculus3D/GlobalMapMaterial", RenderOperation::OT_TRIANGLE_LIST);
 	
-	mMapObj->position(Vector3(-width/2.0f, 0.0f, height/2.0f)*resolution);
-	mMapObj->textureCoord(1.0f,0.0f);
-	mMapObj->position(Vector3(width/2.0f, 0.0f, height/2.0f)*resolution);
-	mMapObj->textureCoord(1.0f,1.0f);
-	mMapObj->position(Vector3(width/2.0f, 0.0f, -height/2.0f)*resolution);
+	mMapObj->position(Vector3(-height/2.0f, -0.05f, width/2.0f)*resolution);
 	mMapObj->textureCoord(0.0f,1.0f);
-	mMapObj->position(Vector3(-width/2.0f, 0.0f, -height/2.0f)*resolution);
+	mMapObj->position(Vector3(height/2.0f, -0.05f, width/2.0f)*resolution);
 	mMapObj->textureCoord(0.0f,0.0f);
+	mMapObj->position(Vector3(height/2.0f, -0.05f, -width/2.0f)*resolution);
+	mMapObj->textureCoord(1.0f,0.0f);
+	mMapObj->position(Vector3(-height/2.0f, -0.05f, -width/2.0f)*resolution);
+	mMapObj->textureCoord(1.0f,1.0f);
+	
 	
 	mMapObj->quad(0,1,2,3);
 	mMapObj->end();
 	
-	//~ pSceneNode->setPosition(-origin*resolution/2);
 	pSceneNode->attachObject(mMapObj);
-	pSceneNode->attachObject(mSceneMgr->createEntity("CoordSystem"));
+	pSceneNode->setPosition(2.0f*origin); // Why 2.0f times? - I have no idea...
 }
 
 Real  GlobalMap::getWidth() {
