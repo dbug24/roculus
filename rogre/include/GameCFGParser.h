@@ -1,25 +1,38 @@
 #ifndef _GAME_CFG_PARSER_H_
 #define _GAME_CFG_PARSER_H_
 
-#include <OgreString.h>
-#include <OgreStringVector.h>
+#include <OgreConfigFile.h>
 #include <OgreStringConverter.h>
-#include <fstream>
+#include <OgreResourceGroupManager.h>
+#include <map>
 #include <vector>
 #include <string>
 #include "WayPoint.h"
 
 class GameCFGParser {
   protected:
-	std::vector<int> wpsToUse;
-	std::vector<int> wpsNotToUse;
-	Ogre::StringVector areas;	
+	GameCFGParser();
+	~GameCFGParser();
+	GameCFGParser(const GameCFGParser&);
+	GameCFGParser& operator=(const GameCFGParser&);
+	
+	Ogre::ConfigFile game_cfg;
+	std::map<std::string, std::string> m_Config;
+	int cntCorridors;
+	int cntRooms;
+	
   public:
-	GameCFGParser(const char*);
-	std::vector<int>& getWPsToUse();
-	std::vector<int>& getWPsNotToUse();
-	Ogre::StringVector& getAreas();
-	void assignRoles(std::vector<WayPoint*>*);
+	static GameCFGParser &getInstance();
+	
+	int getNrRooms();
+	int getNrCorridors();
+	int getNrWayPoints();
+	int getDoor(const std::string&);
+	int getDoorEvt(const std::string&);
+	std::vector<int> getWPs2Use(const std::string&);
+	std::vector<int> getWPs(const std::string&);
+	std::string getValueAsString(const std::string&);
+	bool getKeyExists(const std::string&);
 };
 
 #endif

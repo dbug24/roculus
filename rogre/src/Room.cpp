@@ -1,63 +1,74 @@
 #include <Room.h>
 
-using namespace Room;
-
-Room(Game *game, int id) {
+Room::Room(int id) {
 	this->id = id;
-	this->game = game;
 	locked = false;
+	roomPoints.clear();
+	usePoints.clear();
 }
 
-std::vector<int>& getWPs() {
+std::vector<int>& Room::getWPs() {
 	return roomPoints;
 }
 
-bool isLocked() {
+bool Room::isLocked() {
 	return locked;
 }
 
-void lock() {
+void Room::lock(const std::vector<WayPoint*>& wpList) {
 	for (int i=0;i<roomPoints.size();i++) {
-		game->getWPs()->at(roomPoints[i])->setAccessibility(false);
+		wpList.at(roomPoints[i])->setAccessibility(false);
 	}
 	locked = true;
 }
 
-void unlock() {
+void Room::unlock(const std::vector<WayPoint*>& wpList) {
 	for (int i=0;i<roomPoints.size();i++) {
-		game->getWPs()->at(roomPoints[i])->setAccessibility(true);
+		wpList.at(roomPoints[i])->setAccessibility(true);
 	}
 	locked = false;
 }
 
-int getRoomId() {
+int Room::getRoomId() {
 	return id;
 }
 
-std::vector<int>& getRoomPoints() {
+std::vector<int>& Room::getRoomPoints() {
 	return roomPoints;
 }
 
-std::vector<int>& getUsePoints() {
+std::vector<int>& Room::getUsePoints() {
 	return usePoints;
 }
 
-int getDoorEventWPId() {
+int Room::getDoorEvt() {
 	return doorEventWPId;
 }
 
-void setDoorEventWPId(int id) {
+void Room::setDoorEvtId(int id) {
 	this->doorEventWPId = id;
 }
 
-void addRoomPoint(int id) {
+void Room::addRoomPoint(int id) {
 	roomPoints.push_back(id);
 }
 
-void addUsePoint(int id) {
+void Room::addUsePoint(int id) {
 	usePoints.push_back(id);
 }
 
-void setDoorPosition(Ogre::Vector3 pos) {
-	this->doorPosition = pos;
+void Room::setDoorId(int id) {
+	this->doorId = id;
+}
+
+std::string Room::toString() {
+	std::string result("Room:\n");
+	result.append("\t id:" + boost::lexical_cast<std::string>(id) + "\n");
+	result.append("\t door:" + boost::lexical_cast<std::string>(doorId) + "\n"); 
+	result.append("\t doorEvt:" + boost::lexical_cast<std::string>(doorEventWPId) + "\n"); 
+	for (int i=0;i<roomPoints.size();i++) {
+		result.append("\t" + boost::lexical_cast<std::string>(roomPoints[i]));
+	}
+	result.append("\n");
+	return result;
 }

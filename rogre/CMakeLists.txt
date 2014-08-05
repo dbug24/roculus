@@ -124,6 +124,8 @@ add_executable(rogre_node src/PlayerBody.cpp
         src/GlobalMap.cpp
 		 src/WayPoint.cpp
 		  src/Game.cpp
+		   src/GameCFGParser.cpp
+		    src/Room.cpp
 )
 
 add_executable(joy_remap src/JoystickRemapper.cpp)

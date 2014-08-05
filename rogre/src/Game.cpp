@@ -1,11 +1,11 @@
 #include <Game.h>
 using namespace Ogre;
 
-Game::Game(SceneManager* mSceneMgr, int numberOfWPs) {
+Game::Game(SceneManager* mSceneMgr) {
 	this->mSceneMgr = mSceneMgr;
 	wayPoints.clear();
 	Entity* wpEnt;
-	for (int i=0;i<numberOfWPs;i++) {
+	for (int i=0;i<GameCFGParser::getInstance().getNrWayPoints();i++) {
 		wayPoints.push_back(new WayPoint(i,
 			mSceneMgr->getRootSceneNode()->createChildSceneNode(),
 			Vector3::ZERO,
@@ -18,23 +18,54 @@ Game::Game(SceneManager* mSceneMgr, int numberOfWPs) {
 		LogManager::getSingletonPtr()->logMessage(wayPoints[i]->toString() + " added to Game.");
 	}
 	
-	cursor = NULL;
 	marker = mSceneMgr->getRootSceneNode()->createChildSceneNode("Game_WayPointMarker");
 	wpEnt = mSceneMgr->createEntity("Cylinder.mesh");
 	wpEnt->setMaterialName("roculus3D/WayPointMarker");
 	marker->attachObject(wpEnt);
-	//~ marker->setVisible(false);
+	
+	// link WayPoints in list to WayPoints in game.cfg
+	for (int i=0;i<GameCFGParser::getInstance().getNrRooms();i++) {
+		rooms.push_back(new Room(i));
+		std::string tmp_name("Room" + boost::lexical_cast<std::string>(i));
+		rooms[i]->setDoorId(GameCFGParser::getInstance().getDoor(tmp_name));
+		rooms[i]->setDoorEvtId(GameCFGParser::getInstance().getDoorEvt(tmp_name));
+		std::vector<int> tmp_values(GameCFGParser::getInstance().getWPs(tmp_name));
+		for (int j=0;j<tmp_values.size();j++) {
+			rooms[i]->addRoomPoint(tmp_values[j]);
+		}
+		tmp_values.clear();
+		tmp_values = GameCFGParser::getInstance().getWPs2Use(tmp_name);
+		for (int j=0;j<tmp_values.size();j++) {
+			rooms[i]->addUsePoint(tmp_values[j]);
+		}
+	}
+	
+	for (int i=0;i<GameCFGParser::getInstance().getNrCorridors();i++) {
+		corridors.push_back(new Room(i));
+		std::string tmp_name("Corridor" + boost::lexical_cast<std::string>(i));
+		corridors[i]->setDoorId(-1);
+		corridors[i]->setDoorEvtId(-1);
+		std::vector<int> tmp_values(GameCFGParser::getInstance().getWPs(tmp_name));
+		for (int j=0;j<tmp_values.size();j++) {
+			corridors[i]->addRoomPoint(tmp_values[j]);
+		}
+	}
+	
+	if (corridors.size() != GameCFGParser::getInstance().getNrCorridors() || rooms.size() != GameCFGParser::getInstance().getNrRooms())
+		std::cerr << "There seems to be a mismatch between game.cfg and parsed game structure." << std::endl;
 }
-
-//~ Game::Game(SceneManager*, const std::string&) {
-	//~ //nothing yet, parse the game.cfg
-//~ }
 
 Game::~Game() {
 	for (int i=0;i<wayPoints.size();i++) {
 		if (wayPoints[i]) {
 			delete wayPoints[i];
 			wayPoints[i] = NULL;
+		}
+	}
+	for (int i=0;i<rooms.size();i++) {
+		if (rooms[i]) {
+			delete rooms[i];
+			rooms[i] = NULL;
 		}
 	}
 }
@@ -72,4 +103,15 @@ String Game::highlightClosestWP(Vector3 pos) {
 	}
 	
 	return StringUtil::BLANK;
+}
+
+void Game::print() {
+	std::cout << "Corridors [] :" << std::endl;
+	for (int i=0;i<corridors.size();i++) {
+		std::cout << corridors[i]->toString() << std::endl;
+	}
+	std::cout << "Rooms [] :" << std::endl;
+	for (int i=0;i<rooms.size();i++) {
+		std::cout << rooms[i]->toString() << std::endl;
+	}
 }

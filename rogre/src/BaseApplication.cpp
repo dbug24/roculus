@@ -333,7 +333,8 @@ bool BaseApplication::setup(void)
  
 	createFrameListener();
 	
-	demoGame = new Game(mSceneMgr, 24);
+	demoGame = new Game(mSceneMgr);
+	//~ demoGame->print();
 	
 	mPlayerBodyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	oculus = new Oculus();
