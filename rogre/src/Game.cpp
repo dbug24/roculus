@@ -27,27 +27,27 @@ Game::Game(SceneManager* mSceneMgr) {
 	for (int i=0;i<GameCFGParser::getInstance().getNrRooms();i++) {
 		rooms.push_back(new Room(i));
 		std::string tmp_name("Room" + boost::lexical_cast<std::string>(i));
-		rooms[i]->setDoorId(GameCFGParser::getInstance().getDoor(tmp_name));
-		rooms[i]->setDoorEvtId(GameCFGParser::getInstance().getDoorEvt(tmp_name));
+		rooms[i]->setDoor(wayPoints[GameCFGParser::getInstance().getDoor(tmp_name)]);
+		rooms[i]->setDoorEvt(wayPoints[GameCFGParser::getInstance().getDoorEvt(tmp_name)]);
 		std::vector<int> tmp_values(GameCFGParser::getInstance().getWPs(tmp_name));
 		for (int j=0;j<tmp_values.size();j++) {
-			rooms[i]->addRoomPoint(tmp_values[j]);
+			rooms[i]->addRoomPoint(wayPoints[tmp_values[j]]);
 		}
 		tmp_values.clear();
 		tmp_values = GameCFGParser::getInstance().getWPs2Use(tmp_name);
 		for (int j=0;j<tmp_values.size();j++) {
-			rooms[i]->addUsePoint(tmp_values[j]);
+			rooms[i]->addUsePoint(wayPoints[tmp_values[j]]);
 		}
 	}
 	
 	for (int i=0;i<GameCFGParser::getInstance().getNrCorridors();i++) {
 		corridors.push_back(new Room(i));
 		std::string tmp_name("Corridor" + boost::lexical_cast<std::string>(i));
-		corridors[i]->setDoorId(-1);
-		corridors[i]->setDoorEvtId(-1);
+		corridors[i]->setDoor(NULL);
+		corridors[i]->setDoorEvt(NULL);
 		std::vector<int> tmp_values(GameCFGParser::getInstance().getWPs(tmp_name));
 		for (int j=0;j<tmp_values.size();j++) {
-			corridors[i]->addRoomPoint(tmp_values[j]);
+			corridors[i]->addRoomPoint(wayPoints[tmp_values[j]]);
 		}
 	}
 	
@@ -108,10 +108,10 @@ String Game::highlightClosestWP(Vector3 pos) {
 void Game::print() {
 	std::cout << "Corridors [] :" << std::endl;
 	for (int i=0;i<corridors.size();i++) {
-		std::cout << corridors[i]->toString() << std::endl;
+		corridors[i]->print();
 	}
 	std::cout << "Rooms [] :" << std::endl;
 	for (int i=0;i<rooms.size();i++) {
-		std::cout << rooms[i]->toString() << std::endl;
+		rooms[i]->print();
 	}
 }

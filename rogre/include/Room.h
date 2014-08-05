@@ -7,26 +7,25 @@
 class Room {
   protected:
 	int id;
-	std::vector<int> roomPoints;
+	std::vector<WayPoint*> roomPoints;
 	bool locked;
-	int doorId;
-	int doorEventWPId;
-	std::vector<int> usePoints;
+	WayPoint* door;
+	WayPoint* doorEventWP;
+	std::vector<WayPoint*> usePoints;
   public:
 	Room(int);
-	std::vector<int>& getWPs();
+	std::vector<WayPoint*>& getWPs();
+	std::vector<WayPoint*>& getWPs2Use();
 	bool isLocked();
-	void lock(const std::vector<WayPoint*>& wpList);
-	void unlock(const std::vector<WayPoint*>& wpList);
+	void lock();
+	void unlock();
 	int getRoomId();
-	std::vector<int>& getRoomPoints();
-	std::vector<int>& getUsePoints();
-	int getDoorEvt();
-	void setDoorEvtId(int);
-	void addRoomPoint(int);
-	void addUsePoint(int);
-	void setDoorId(int);
-	std::string toString();
+	WayPoint* getDoorEvt();
+	void setDoorEvt(WayPoint*);
+	void addRoomPoint(WayPoint*);
+	void addUsePoint(WayPoint*);
+	void setDoor(WayPoint*);
+	void print();
 };
 
 #endif

@@ -334,7 +334,6 @@ bool BaseApplication::setup(void)
 	createFrameListener();
 	
 	demoGame = new Game(mSceneMgr);
-	//~ demoGame->print();
 	
 	mPlayerBodyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	oculus = new Oculus();
@@ -883,6 +882,7 @@ void BaseApplication::topoNodesCB(const visualization_msgs::InteractiveMarkerIni
 	}
 	
 	hRosSubNodes->shutdown();
+	//~ demoGame->print();
 	receivedWPs = true;	
 }
 

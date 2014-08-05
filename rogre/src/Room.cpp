@@ -7,7 +7,7 @@ Room::Room(int id) {
 	usePoints.clear();
 }
 
-std::vector<int>& Room::getWPs() {
+std::vector<WayPoint*>& Room::getWPs() {
 	return roomPoints;
 }
 
@@ -15,16 +15,16 @@ bool Room::isLocked() {
 	return locked;
 }
 
-void Room::lock(const std::vector<WayPoint*>& wpList) {
+void Room::lock() {
 	for (int i=0;i<roomPoints.size();i++) {
-		wpList.at(roomPoints[i])->setAccessibility(false);
+		roomPoints[i]->setAccessibility(false);
 	}
 	locked = true;
 }
 
-void Room::unlock(const std::vector<WayPoint*>& wpList) {
+void Room::unlock() {
 	for (int i=0;i<roomPoints.size();i++) {
-		wpList.at(roomPoints[i])->setAccessibility(true);
+		roomPoints[i]->setAccessibility(true);
 	}
 	locked = false;
 }
@@ -33,42 +33,36 @@ int Room::getRoomId() {
 	return id;
 }
 
-std::vector<int>& Room::getRoomPoints() {
-	return roomPoints;
-}
-
-std::vector<int>& Room::getUsePoints() {
+std::vector<WayPoint*>& Room::getWPs2Use() {
 	return usePoints;
 }
 
-int Room::getDoorEvt() {
-	return doorEventWPId;
+WayPoint* Room::getDoorEvt() {
+	return doorEventWP;
 }
 
-void Room::setDoorEvtId(int id) {
-	this->doorEventWPId = id;
+void Room::setDoorEvt(WayPoint* wp) {
+	this->doorEventWP = wp;
 }
 
-void Room::addRoomPoint(int id) {
-	roomPoints.push_back(id);
+void Room::addRoomPoint(WayPoint* wp) {
+	roomPoints.push_back(wp);
 }
 
-void Room::addUsePoint(int id) {
-	usePoints.push_back(id);
+void Room::addUsePoint(WayPoint* wp) {
+	usePoints.push_back(wp);
 }
 
-void Room::setDoorId(int id) {
-	this->doorId = id;
+void Room::setDoor(WayPoint* wp) {
+	this->door = wp;
 }
 
-std::string Room::toString() {
-	std::string result("Room:\n");
-	result.append("\t id:" + boost::lexical_cast<std::string>(id) + "\n");
-	result.append("\t door:" + boost::lexical_cast<std::string>(doorId) + "\n"); 
-	result.append("\t doorEvt:" + boost::lexical_cast<std::string>(doorEventWPId) + "\n"); 
+void Room::print() {
+	std::cout << "Room" << id << std::endl;
+	if (door) std::cout << "\t door: " << door->toString() << std::endl; 
+	if (doorEventWP) std::cout << "\t doorEvt: " + doorEventWP->toString() << std::endl << "\t" << "list of points:" << std::endl;
 	for (int i=0;i<roomPoints.size();i++) {
-		result.append("\t" + boost::lexical_cast<std::string>(roomPoints[i]));
+		std::cout << "\t\t" << roomPoints[i]->toString() << std::endl;
 	}
-	result.append("\n");
-	return result;
+	std::cout << std::endl;
 }

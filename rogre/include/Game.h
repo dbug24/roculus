@@ -6,6 +6,7 @@
 #include <WayPoint.h>
 #include <GameCFGParser.h>
 #include <Room.h>
+#include <GameDefinitions.h>
 
 using namespace Ogre;
 
@@ -21,6 +22,8 @@ class Game {
 	Real distMin;
 	Real distance;
 	Vector3 markerPos;
+	
+	
   public:
 	Game(SceneManager*);
 	~Game();
@@ -28,6 +31,9 @@ class Game {
 	WayPoint* getWPByName(const String& name);
 	String highlightClosestWP(Vector3 pos);
 	void print();
+	
+	void startGameSession();
+	void frameEventQueued();
 };
 
 #endif

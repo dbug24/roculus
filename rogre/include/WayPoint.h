@@ -7,13 +7,9 @@
 #include <OgreQuaternion.h>
 #include <OgreSceneNode.h>
 #include <boost/lexical_cast.hpp>
+#include <GameDefinitions.h>
 
 using namespace Ogre; 
-
-enum WayPoint_Role {WP_ROLE_NONE,
-					WP_ROLE_TREASURE,
-					WP_ROLE_KEY,
-					WP_ROLE_DOOR};
 
 class WayPoint {
   protected:
