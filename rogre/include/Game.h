@@ -6,7 +6,10 @@
 #include <WayPoint.h>
 #include <GameCFGParser.h>
 #include <Room.h>
-#include <GameDefinitions.h>
+#include <GameObject.h>
+#include <Door.h>
+#include <Key.h>
+#include <Treasure.h>
 
 using namespace Ogre;
 
@@ -18,10 +21,13 @@ class Game {
 	std::vector<WayPoint*> wayPoints;
 	std::vector<Room*> rooms;
 	std::vector<Room*> corridors;
+	std::vector<GameObject*> gameObjects;
 	WayPoint *select;
 	Real distMin;
 	Real distance;
 	Vector3 markerPos;
+	GameState state;
+	int lastWPId;
 	
 	
   public:
@@ -33,7 +39,7 @@ class Game {
 	void print();
 	
 	void startGameSession();
-	void frameEventQueued();
+	void frameEventQueued(int);
 };
 
 #endif

@@ -1,1 +1,30 @@
+#include <Door.h>
+using namespace Ogre;
 
+Door::Door(SceneManager* mSceneMgr, int keys) : GameObject(mSceneMgr) {
+	Entity *ent = mSceneMgr->createEntity("Door.mesh");
+	ent->setMaterialName("roculus3D/Game_Door");
+	myNode->attachObject(ent);
+	switch (keys) {
+		case 1: this->keys = GS_KEY_1; break;
+		case 2: this->keys = GS_KEY_2; break;
+		case 3: this->keys = GS_KEY_3; break;
+		case 4: this->keys = GS_KEY_4; break;
+		default: this->keys = GS_KEY_2;
+	}
+}
+
+
+GameState Door::frameEventQueued(WayPoint* currentWP, GameState gs) {
+	if (currentWP == trigger && gs >= keys && gs < GS_DOOR_OPEN) { 
+		room->unlock();
+		myNode->setVisible(false);
+		return GS_DOOR_OPEN; 
+	}
+	return gs;
+}
+
+void Door::init(Room *room) {
+	this->room = room;
+	room->lock();
+}

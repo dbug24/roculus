@@ -475,39 +475,6 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 	} else if (arg.key == OIS::KC_T) {
 		takeSnapshot = true;
 	}
-	//~ else if (arg.key == OIS::KC_T)   // cycle polygon rendering mode
-	//~ {
-		//~ Ogre::String newVal;
-		//~ Ogre::TextureFilterOptions tfo;
-		//~ unsigned int aniso;
- //~ 
-		//~ switch (mDetailsPanel->getParamValue(9).asUTF8()[0])
-		//~ {
-		//~ case 'B':
-			//~ newVal = "Trilinear";
-			//~ tfo = Ogre::TFO_TRILINEAR;
-			//~ aniso = 1;
-			//~ break;
-		//~ case 'T':
-			//~ newVal = "Anisotropic";
-			//~ tfo = Ogre::TFO_ANISOTROPIC;
-			//~ aniso = 8;
-			//~ break;
-		//~ case 'A':
-			//~ newVal = "None";
-			//~ tfo = Ogre::TFO_NONE;
-			//~ aniso = 1;
-			//~ break;
-		//~ default:
-			//~ newVal = "Bilinear";
-			//~ tfo = Ogre::TFO_BILINEAR;
-			//~ aniso = 1;
-		//~ }
- //~ 
-		//~ Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(tfo);
-		//~ Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(aniso);
-		//~ mDetailsPanel->setParamValue(9, newVal);
-	//~ }
 	else if(arg.key == OIS::KC_F5)   // refresh all textures
 	{
 		Ogre::TextureManager::getSingleton().reloadAll();

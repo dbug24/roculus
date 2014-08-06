@@ -1,9 +1,8 @@
 #include <Game.h>
 using namespace Ogre;
 
-Game::Game(SceneManager* mSceneMgr) {
-	this->mSceneMgr = mSceneMgr;
-	wayPoints.clear();
+Game::Game(SceneManager* mSceneMgr) : lastWPId(-1) {
+	this->mSceneMgr = mSceneMgr;	
 	Entity* wpEnt;
 	for (int i=0;i<GameCFGParser::getInstance().getNrWayPoints();i++) {
 		wayPoints.push_back(new WayPoint(i,
@@ -51,8 +50,33 @@ Game::Game(SceneManager* mSceneMgr) {
 		}
 	}
 	
+	gameObjects.push_back(new Door(mSceneMgr, 2));
+	gameObjects.push_back(new Treasure(mSceneMgr));
+	for (int i=0;i<2;i++) {
+		gameObjects.push_back(new Key(mSceneMgr));
+	}
+	
 	if (corridors.size() != GameCFGParser::getInstance().getNrCorridors() || rooms.size() != GameCFGParser::getInstance().getNrRooms())
 		std::cerr << "There seems to be a mismatch between game.cfg and parsed game structure." << std::endl;
+}
+
+void Game::startGameSession() {
+	//clean up last game:
+	state = GS_START;
+	for (int i=0;i<gameObjects.size();i++) {
+		//clean up this object
+	}
+}
+
+void Game::frameEventQueued(int currentWPId) {
+	if (currentWPId != lastWPId) {
+		lastWPId = currentWPId;
+		GameState next_state;
+		for (int i=0;i<gameObjects.size();i++) {
+			next_state = gameObjects[i]->frameEventQueued(wayPoints[currentWPId], state);
+		}
+		state = next_state;
+	}
 }
 
 Game::~Game() {
@@ -66,6 +90,18 @@ Game::~Game() {
 		if (rooms[i]) {
 			delete rooms[i];
 			rooms[i] = NULL;
+		}
+	}
+	for (int i=0;i<corridors.size();i++) {
+		if (corridors[i]) {
+			delete corridors[i];
+			corridors[i] = NULL;
+		}
+	}
+	for (int i=0;i<gameObjects.size();i++) {
+		if (gameObjects[i]) {
+			delete gameObjects[i];
+			gameObjects[i] = NULL;
 		}
 	}
 }
