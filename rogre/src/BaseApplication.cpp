@@ -74,6 +74,7 @@ BaseApplication::BaseApplication(void)
 	  globalMap(NULL),
 	  demoGame(NULL),
 	  rosieActionClient(NULL),
+	  targetWPName(Ogre::StringUtil::BLANK),
 	  selectedWP(NULL)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
@@ -195,7 +196,7 @@ void BaseApplication::createFrameListener(void)
 	items.push_back("Filtering");
 	items.push_back("Poly Mode");
 	items.push_back("closestWP");
-	items.push_back("RobotYaw");
+	items.push_back("GameState");
  
 	mDetailsPanel = mTrayMgr->createParamsPanel(OgreBites::TL_NONE, "DetailsPanel", 200, items);
 	mDetailsPanel->setParamValue(9, "Anisotropic");
@@ -403,6 +404,8 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 }
 
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
+	
+	boost::recursive_mutex::scoped_lock lock(GAME_MUTEX);
 	//Need to capture/update each device
 	mKeyboard->capture();
 	mMouse->capture();
@@ -426,7 +429,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 		mDetailsPanel->setParamValue(6, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().y));
 		mDetailsPanel->setParamValue(7, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().z));
 		mDetailsPanel->setParamValue(11, boost::lexical_cast<std::string>(closestWP));
-		mDetailsPanel->setParamValue(12, Ogre::StringConverter::toString(mPlayerBodyNode->getOrientation().getYaw()));
+		mDetailsPanel->setParamValue(12, demoGame->getState());
 	}
 
 	oculus->update(); // Set OCULUS orientation
@@ -439,6 +442,11 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 	Ogre::Vector3 xzPoint = pos - view*(pos.y/(view.y-0.05f))*0.35f;
 	xzPoint.y = 0.05f;
 	cursor->setPosition(xzPoint);
+	targetWPName = demoGame->highlightClosestWP(cursor->getPosition());
+	
+	if (demoGame->isRunning() && closestWP != -1) {
+		demoGame->frameEventQueued(closestWP);
+	}
 }
 
 bool BaseApplication::frameEnded(const Ogre::FrameEvent& evt) {
@@ -511,16 +519,19 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 	{
 		mShutDown = true;
 	}
+	// for the game:
 	else if (arg.key == OIS::KC_SPACE) {
-		Ogre::String target = demoGame->highlightClosestWP(cursor->getPosition());
-		if (target != Ogre::StringUtil::BLANK && NULL != rosieActionClient) {
+		if (targetWPName != Ogre::StringUtil::BLANK && NULL != rosieActionClient) {
+			demoGame->placePersistentMarker(targetWPName);
 			rosieActionClient->waitForServer();
 			topological_navigation::GotoNodeGoal goal;
-			goal.target = target;
+			goal.target = targetWPName;
 			rosieActionClient->cancelAllGoals();
 			rosieActionClient->sendGoal(goal);
-			LogManager::getSingletonPtr()->logMessage("SendGoal: " + target);
+			LogManager::getSingletonPtr()->logMessage("SendGoal: " + targetWPName);
 		}
+	} else if (arg.key == OIS::KC_I) {
+		demoGame->startGameSession();
 	}
 
 	mPlayer->injectKeyDown(arg);
@@ -827,6 +838,8 @@ void BaseApplication::poseCallback(const geometry_msgs::Pose::ConstPtr& pose) {
 
 void BaseApplication::topoNodesCB(const visualization_msgs::InteractiveMarkerInit::ConstPtr& data){
 
+	boost::recursive_mutex::scoped_lock lock(GAME_MUTEX);
+
 	for (int i=0;i<data->markers.size();i++) {
 		WayPoint *wp = demoGame->getWPByName(data->markers[i].name);
 		if (wp) {
@@ -855,7 +868,12 @@ void BaseApplication::topoNodesCB(const visualization_msgs::InteractiveMarkerIni
 
 void BaseApplication::closestWayPointCB(const std_msgs::String::ConstPtr& data) {
 	std::string name(data->data);
-	closestWP = boost::lexical_cast<int>(name.erase(0,8)); //Erase "WayPoint" before casting
+	if (name.substr(0,8).compare("WayPoint") == 0) {
+		closestWP = boost::lexical_cast<int>(name.erase(0,8)); //Erase "WayPoint" before casting
+	} else {
+		std::cout << name << std::endl;
+		closestWP = -1;
+	}
 }
 
 void BaseApplication::initROS() {

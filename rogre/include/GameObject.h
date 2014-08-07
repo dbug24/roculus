@@ -4,6 +4,9 @@
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
 #include <OgreEntity.h> //Not needed here,but in every child-class
+#include <stdio.h>      /* printf, scanf, puts, NULL */
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>
 #include <GameDefinitions.h>
 #include <WayPoint.h>
 #include <Room.h>
@@ -15,10 +18,12 @@ class GameObject {
 	SceneNode *myNode;
 	WayPoint *place;
 	WayPoint *trigger;
-	Room *room; //only used by Door?, but better here for polymorphism
+	Room *room;
+	bool initialized;
   public:
-	GameObject(SceneManager *mSceneMgr) {
+	GameObject(SceneManager *mSceneMgr) : initialized(false) {
 		myNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		std::srand(time(NULL));
 	}
 	
 	void placeObjectOnWP(WayPoint *location) { 
@@ -36,7 +41,9 @@ class GameObject {
 	}
 	
 	void setVisible(bool val) { myNode->setVisible(val); }
-	virtual void init(Room *room) { this->room = room; }
+	virtual void init(Room *room) { this->room = room; initialized = true; }
+	void resetInit() { initialized = false; }
+	bool isInitialized() { return initialized; }
 };
 
 #endif

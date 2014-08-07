@@ -8,6 +8,7 @@ class Door : public GameObject {
   protected:
     Door();
     GameState keys;
+    const Vector3 mask;
   public:
 	Door(SceneManager*, int);
 	virtual GameState frameEventQueued(WayPoint* currentWP, GameState gs); 

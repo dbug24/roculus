@@ -1,5 +1,5 @@
 #include <Key.h>
-#include <OgreEntity.h>
+#include <OgreQuaternion.h>
 using namespace Ogre;
 
 Key::Key(SceneManager* mSceneMgr) : GameObject(mSceneMgr), found(false) {
@@ -9,6 +9,7 @@ Key::Key(SceneManager* mSceneMgr) : GameObject(mSceneMgr), found(false) {
 }
 
 GameState Key::frameEventQueued(WayPoint* currentWP, GameState gs) {
+	myNode->yaw(Degree(1));
 	if (false == found && currentWP == trigger && gs < GS_KEY_4) {
 		found = true;
 		myNode->setVisible(false);
@@ -19,4 +20,15 @@ GameState Key::frameEventQueued(WayPoint* currentWP, GameState gs) {
 		return GS_KEY_4;
 	}
 	return gs;
+}
+
+void Key::init(Room *room) {	
+	trigger = room->getWPs2Use()[std::rand() % room->getWPs2Use().size()];
+	this->room = room;
+	found = false;
+	myNode->setOrientation(Quaternion::IDENTITY);
+	myNode->setPosition(trigger->getPosition());
+	myNode->setVisible(true);
+	
+	initialized = true;
 }

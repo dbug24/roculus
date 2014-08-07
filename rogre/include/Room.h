@@ -21,6 +21,7 @@ class Room {
 	void unlock();
 	int getRoomId();
 	WayPoint* getDoorEvt();
+	WayPoint* getDoorWP();
 	void setDoorEvt(WayPoint*);
 	void addRoomPoint(WayPoint*);
 	void addUsePoint(WayPoint*);

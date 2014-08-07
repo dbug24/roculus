@@ -1,7 +1,7 @@
 #include <Door.h>
 using namespace Ogre;
 
-Door::Door(SceneManager* mSceneMgr, int keys) : GameObject(mSceneMgr) {
+Door::Door(SceneManager* mSceneMgr, int keys) : GameObject(mSceneMgr), mask(1.0f, 0.0f, 1.0f) {
 	Entity *ent = mSceneMgr->createEntity("Door.mesh");
 	ent->setMaterialName("roculus3D/Game_Door");
 	myNode->attachObject(ent);
@@ -26,5 +26,11 @@ GameState Door::frameEventQueued(WayPoint* currentWP, GameState gs) {
 
 void Door::init(Room *room) {
 	this->room = room;
+	trigger = room->getDoorEvt();
+	myNode->setPosition(0.5*(room->getDoorWP()->getPosition()+room->getDoorEvt()->getPosition())*mask);
+	myNode->lookAt(trigger->getPosition()*mask, SceneNode::TS_WORLD);
+	myNode->setVisible(true);
 	room->lock();
+	
+	initialized = true;
 }

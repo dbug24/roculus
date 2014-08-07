@@ -5,23 +5,31 @@
 #include <OgreStringConverter.h>
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
+#include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
+#include <OgreEntity.h>
 #include <boost/lexical_cast.hpp>
 #include <GameDefinitions.h>
+
+#include <boost/thread/thread.hpp>
+#include <boost/thread/mutex.hpp>
 
 using namespace Ogre; 
 
 class WayPoint {
   protected:
+	boost::mutex WAYPOINT_MUTEX;
 	int id;
-	SceneNode* wpSN;
+	SceneManager *mSceneMgr;
+	SceneNode *wpSN;
+	Entity *wpEnt;
 	String name;
 	Vector3 pos;
 	Quaternion ori;	
 	WayPoint_Role role;
 	bool accessible;
   public:
-	WayPoint(int, SceneNode*, Vector3, Quaternion, WayPoint_Role);
+	WayPoint(int, SceneManager*, Vector3, Quaternion, WayPoint_Role);
 	String getName();
 	const Vector3& getPosition();
 	const Quaternion& getOrientation();
@@ -32,7 +40,6 @@ class WayPoint {
 	void setOrientation(const Quaternion& orientation);
 	bool isAccessible();
 	void setAccessibility(bool);
-	SceneNode* getSceneNode();
 	void setVisible(bool visible);
 	std::string toString();
 };

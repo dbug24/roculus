@@ -88,7 +88,7 @@ This source file is part of the
 #include <topological_navigation/GotoNodeAction.h>
 
 #include <boost/thread/thread.hpp>
-
+#include <boost/thread/recursive_mutex.hpp>
 
 #include "SnapshotLibrary.h"
 #include "Video3D.h"
@@ -96,7 +96,6 @@ This source file is part of the
 #include "WayPoint.h"
 #include "Game.h"
 
-//~ typedef boost::mutex Lock;
 typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::CompressedImage, sensor_msgs::CompressedImage> ApproximateTimePolicy;
 typedef actionlib::SimpleActionClient<scitos_ptu::PanTiltAction> Client;
 
@@ -208,12 +207,15 @@ protected:
 	Ogre::Vector3 snPos, vdPos;
 	Ogre::Quaternion snOri, vdOri;
 	bool syncedUpdate, videoUpdate, takeSnapshot, mapArrived, receivedWPs;
+	
 	// for the game	
 	Game *demoGame;
 	SceneNode* cursor;
 	WayPoint* selectedWP;
+	Ogre::String targetWPName;
 	int closestWP; //interally using ids only
 	actionlib::SimpleActionClient<topological_navigation::GotoNodeAction> *rosieActionClient;
+	boost::recursive_mutex GAME_MUTEX;
 
     bool m_bBufferSnapshotData;
 	

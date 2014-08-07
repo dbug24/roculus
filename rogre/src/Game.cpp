@@ -1,26 +1,23 @@
 #include <Game.h>
 using namespace Ogre;
 
-Game::Game(SceneManager* mSceneMgr) : lastWPId(-1) {
+Game::Game(SceneManager* mSceneMgr) : lastWPId(-1), state(GS_START), running(false) {
 	this->mSceneMgr = mSceneMgr;	
-	Entity* wpEnt;
 	for (int i=0;i<GameCFGParser::getInstance().getNrWayPoints();i++) {
-		wayPoints.push_back(new WayPoint(i,
-			mSceneMgr->getRootSceneNode()->createChildSceneNode(),
-			Vector3::ZERO,
-			Quaternion::IDENTITY,
-			WP_ROLE_NONE));
-		wpEnt = mSceneMgr->createEntity("Torus.001.mesh");
-		wpEnt->setMaterialName("roculus3D/WayPoint");
-		wayPoints[i]->getSceneNode()->attachObject(wpEnt);
-		wayPoints[i]->setVisible(false);
+		wayPoints.push_back(new WayPoint(i, mSceneMgr,
+			Vector3::ZERO, Quaternion::IDENTITY, WP_ROLE_NONE));
 		LogManager::getSingletonPtr()->logMessage(wayPoints[i]->toString() + " added to Game.");
 	}
 	
 	marker = mSceneMgr->getRootSceneNode()->createChildSceneNode("Game_WayPointMarker");
-	wpEnt = mSceneMgr->createEntity("Cylinder.mesh");
+	Entity *wpEnt = mSceneMgr->createEntity("Cylinder.mesh");
 	wpEnt->setMaterialName("roculus3D/WayPointMarker");
 	marker->attachObject(wpEnt);
+	persMarker = mSceneMgr->getRootSceneNode()->createChildSceneNode("Game_WayPointPersistentMarker");
+	wpEnt = mSceneMgr->createEntity("Cylinder.mesh");
+	wpEnt->setMaterialName("roculus3D/WayPointPersistentMarker");
+	persMarker->attachObject(wpEnt);
+	persMarker->setVisible(false);
 	
 	// link WayPoints in list to WayPoints in game.cfg
 	for (int i=0;i<GameCFGParser::getInstance().getNrRooms();i++) {
@@ -49,9 +46,10 @@ Game::Game(SceneManager* mSceneMgr) : lastWPId(-1) {
 			corridors[i]->addRoomPoint(wayPoints[tmp_values[j]]);
 		}
 	}
-	
-	gameObjects.push_back(new Door(mSceneMgr, 2));
-	gameObjects.push_back(new Treasure(mSceneMgr));
+	door = new Door(mSceneMgr, 2);
+	treasure = new Treasure(mSceneMgr);
+	gameObjects.push_back(door);
+	gameObjects.push_back(treasure);
 	for (int i=0;i<2;i++) {
 		gameObjects.push_back(new Key(mSceneMgr));
 	}
@@ -61,14 +59,39 @@ Game::Game(SceneManager* mSceneMgr) : lastWPId(-1) {
 }
 
 void Game::startGameSession() {
-	//clean up last game:
+	running = false;
+	
+	std::srand(time(NULL));
+	std::set<int> roomNRs;
+	int index = -1;
+	
 	state = GS_START;
 	for (int i=0;i<gameObjects.size();i++) {
-		//clean up this object
+		gameObjects[i]->resetInit();
+		roomNRs.insert(i);
 	}
+	
+	do {
+		index = std::rand() % rooms.size();
+	} while (0 == roomNRs.count(index) || roomNRs.size() == 0);
+	roomNRs.erase(index);
+	door->init(rooms[index]);
+	treasure->init(rooms[index]);
+	
+	
+	for (int i=0;i<gameObjects.size();i++) {
+		if (gameObjects[i]->isInitialized()) continue;
+		do {
+			index = std::rand() % rooms.size();
+		} while (0 == roomNRs.count(index) || roomNRs.size() == 0);
+		roomNRs.erase(index);
+		gameObjects[i]->init(rooms[index]);
+	}
+	
+	running = true;
 }
 
-void Game::frameEventQueued(int currentWPId) {
+GameState Game::frameEventQueued(int currentWPId) {
 	if (currentWPId != lastWPId) {
 		lastWPId = currentWPId;
 		GameState next_state;
@@ -77,6 +100,7 @@ void Game::frameEventQueued(int currentWPId) {
 		}
 		state = next_state;
 	}
+	return state;
 }
 
 Game::~Game() {
@@ -120,24 +144,28 @@ WayPoint* Game::getWPByName(const String& name) {
 	return NULL;
 }
 
-String Game::highlightClosestWP(Vector3 pos) {
+String Game::highlightClosestWP(const Vector3& pos) {
 	select = NULL;
 	distMin = 900000.0f;
 	distance = distMin;
 	for (int i=0;i<wayPoints.size();i++) {
-		distance = pos.squaredDistance(wayPoints[i]->getPosition());
+		if (!wayPoints[i]->isAccessible()) continue;
+		const Vector3& wp = wayPoints[i]->getPosition();
+		distance = (pos.x-wp.x)*(pos.x-wp.x) + (pos.z-wp.z)*(pos.z-wp.z);
 		if (distance < distMin) {
 			distMin = distance;
 			select = wayPoints[i];
 		}
 	}
 	
-	if (select) {
+	if (select && distMin < 1.0f) {
 		marker->setPosition(select->getPosition());
-		LogManager::getSingletonPtr()->logMessage(select->toString() + " at sq-distance: " + StringConverter::toString(distance));
+		marker->setVisible(true);
+		//~ LogManager::getSingletonPtr()->logMessage(select->toString() + " at sq-distance: " + StringConverter::toString(distance));
 		return select->getName();
 	}
 	
+	marker->setVisible(false);
 	return StringUtil::BLANK;
 }
 
@@ -150,4 +178,24 @@ void Game::print() {
 	for (int i=0;i<rooms.size();i++) {
 		rooms[i]->print();
 	}
+}
+
+String Game::getState() {
+	if (state == GS_START) return String("START"); else
+	if (state == GS_KEY_1) return String("KEY_1"); else
+	if (state == GS_KEY_2) return String("KEY_2"); else
+	if (state == GS_KEY_3) return String("KEY_3"); else
+	if (state == GS_KEY_4) return String("KEY_4"); else
+	if (state == GS_DOOR_OPEN) return String("DOOR_OPEN"); else
+	if (state == GS_FOUND_TREASURE) return String("FOUND_TREASURE");
+	std::cout << "getState()" << std::endl;
+}
+
+bool Game::isRunning() {
+	return running;
+}
+
+void Game::placePersistentMarker(const String& name) {
+	persMarker->setPosition(getWPByName(name)->getPosition());
+	persMarker->setVisible(true);
 }

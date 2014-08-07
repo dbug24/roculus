@@ -10,6 +10,9 @@
 #include <Door.h>
 #include <Key.h>
 #include <Treasure.h>
+#include <stdio.h>      /* printf, scanf, puts, NULL */
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>
 
 using namespace Ogre;
 
@@ -17,7 +20,7 @@ class Game {
   protected:
 	Game();
 	SceneManager* mSceneMgr;
-	SceneNode* marker;
+	SceneNode *marker, *persMarker;
 	std::vector<WayPoint*> wayPoints;
 	std::vector<Room*> rooms;
 	std::vector<Room*> corridors;
@@ -25,21 +28,25 @@ class Game {
 	WayPoint *select;
 	Real distMin;
 	Real distance;
-	Vector3 markerPos;
 	GameState state;
 	int lastWPId;
-	
+	Door *door;
+	Treasure *treasure;
+	bool running;
 	
   public:
 	Game(SceneManager*);
 	~Game();
-	WayPoint* getWPById(int id);
-	WayPoint* getWPByName(const String& name);
-	String highlightClosestWP(Vector3 pos);
+	WayPoint* getWPById(int);
+	WayPoint* getWPByName(const String&);
+	String highlightClosestWP(const Vector3&);
+	String getState();
+	void placePersistentMarker(const String&);
 	void print();
 	
 	void startGameSession();
-	void frameEventQueued(int);
+	GameState frameEventQueued(int);
+	bool isRunning();
 };
 
 #endif

@@ -37,6 +37,10 @@ std::vector<WayPoint*>& Room::getWPs2Use() {
 	return usePoints;
 }
 
+WayPoint* Room::getDoorWP() {
+	return door;
+}
+
 WayPoint* Room::getDoorEvt() {
 	return doorEventWP;
 }

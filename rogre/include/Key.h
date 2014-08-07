@@ -10,7 +10,8 @@ class Key : public GameObject {
     bool found;
   public:
 	Key(SceneManager*);
-	virtual GameState frameEventQueued(WayPoint* currentWP, GameState gs); 
+	virtual GameState frameEventQueued(WayPoint* currentWP, GameState gs);
+	virtual void init(Room *room);
 };
 
 #endif

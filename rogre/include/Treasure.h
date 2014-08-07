@@ -12,6 +12,7 @@ class Treasure : public GameObject {
   public:
 	Treasure(SceneManager*);
 	virtual GameState frameEventQueued(WayPoint* currentWP, GameState gs); 
+	virtual void init(Room *room);
 };
 
 #endif
