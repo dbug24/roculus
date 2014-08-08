@@ -24,6 +24,8 @@ class GameCFGParser {
   public:
 	static GameCFGParser &getInstance();
 	
+	std::string getInitNode();
+	int getNrKeys();
 	int getNrRooms();
 	int getNrCorridors();
 	int getNrWayPoints();

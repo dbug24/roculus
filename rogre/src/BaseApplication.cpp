@@ -72,7 +72,6 @@ BaseApplication::BaseApplication(void)
 	  rosPTUClient(NULL),
 	  ptuSweep(NULL),
 	  globalMap(NULL),
-	  demoGame(NULL),
 	  rosieActionClient(NULL),
 	  targetWPName(Ogre::StringUtil::BLANK),
 	  selectedWP(NULL)
@@ -212,7 +211,7 @@ void BaseApplication::destroyScene(void)
 //-------------------------------------------------------------------------------------
 
 void BaseApplication::cleanUp(void) {
-	delete demoGame;
+
 }
 
 void BaseApplication::createViewports(void)
@@ -334,7 +333,7 @@ bool BaseApplication::setup(void)
  
 	createFrameListener();
 	
-	demoGame = new Game(mSceneMgr);
+	Game::getInstance().init(mSceneMgr);
 	
 	mPlayerBodyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	oculus = new Oculus();
@@ -429,7 +428,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 		mDetailsPanel->setParamValue(6, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().y));
 		mDetailsPanel->setParamValue(7, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedOrientation().z));
 		mDetailsPanel->setParamValue(11, boost::lexical_cast<std::string>(closestWP));
-		mDetailsPanel->setParamValue(12, demoGame->getState());
+		mDetailsPanel->setParamValue(12, Game::getInstance().getState());
 	}
 
 	oculus->update(); // Set OCULUS orientation
@@ -442,10 +441,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 	Ogre::Vector3 xzPoint = pos - view*(pos.y/(view.y-0.05f))*0.35f;
 	xzPoint.y = 0.05f;
 	cursor->setPosition(xzPoint);
-	targetWPName = demoGame->highlightClosestWP(cursor->getPosition());
+	targetWPName = Game::getInstance().highlightClosestWP(cursor->getPosition());
 	
-	if (demoGame->isRunning() && closestWP != -1) {
-		demoGame->frameEventQueued(closestWP);
+	if (Game::getInstance().isRunning() && closestWP != -1) {
+		Game::getInstance().frameEventQueued(closestWP);
 	}
 }
 
@@ -522,16 +521,24 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 	// for the game:
 	else if (arg.key == OIS::KC_SPACE) {
 		if (targetWPName != Ogre::StringUtil::BLANK && NULL != rosieActionClient) {
-			demoGame->placePersistentMarker(targetWPName);
-			rosieActionClient->waitForServer();
-			topological_navigation::GotoNodeGoal goal;
-			goal.target = targetWPName;
-			rosieActionClient->cancelAllGoals();
-			rosieActionClient->sendGoal(goal);
-			LogManager::getSingletonPtr()->logMessage("SendGoal: " + targetWPName);
+			//~ Game::getInstance().placePersistentMarker(targetWPName);
+			//~ rosieActionClient->waitForServer();
+			//~ topological_navigation::GotoNodeGoal goal;
+			//~ goal.target = targetWPName;
+			//~ rosieActionClient->cancelAllGoals();
+			//~ rosieActionClient->sendGoal(goal);
+			//~ LogManager::getSingletonPtr()->logMessage("SendGoal: " + targetWPName);
+			LogManager::getSingletonPtr()->logMessage("!!!I am not sending any goals right now!!!");
 		}
 	} else if (arg.key == OIS::KC_I) {
-		demoGame->startGameSession();
+		//~ rosieActionClient->waitForServer();
+		//~ topological_navigation::GotoNodeGoal goal;
+		//~ goal.target = Game::getInstance().getInitWP();
+		//~ rosieActionClient->cancelAllGoals();
+		//~ rosieActionClient->sendGoal(goal);
+		//~ LogManager::getSingletonPtr()->logMessage("Send2InitNode: " + goal.target);
+		
+		Game::getInstance().startGameSession();
 	}
 
 	mPlayer->injectKeyDown(arg);
@@ -841,7 +848,7 @@ void BaseApplication::topoNodesCB(const visualization_msgs::InteractiveMarkerIni
 	boost::recursive_mutex::scoped_lock lock(GAME_MUTEX);
 
 	for (int i=0;i<data->markers.size();i++) {
-		WayPoint *wp = demoGame->getWPByName(data->markers[i].name);
+		WayPoint *wp = Game::getInstance().getWPByName(data->markers[i].name);
 		if (wp) {
 			wp->setPosition(Vector3(-data->markers[i].pose.position.y,
 				data->markers[i].pose.position.z,
@@ -862,7 +869,7 @@ void BaseApplication::topoNodesCB(const visualization_msgs::InteractiveMarkerIni
 	}
 	
 	hRosSubNodes->shutdown();
-	//~ demoGame->print();
+	//~ Game::getInstance().print();
 	receivedWPs = true;	
 }
 
@@ -871,7 +878,7 @@ void BaseApplication::closestWayPointCB(const std_msgs::String::ConstPtr& data) 
 	if (name.substr(0,8).compare("WayPoint") == 0) {
 		closestWP = boost::lexical_cast<int>(name.erase(0,8)); //Erase "WayPoint" before casting
 	} else {
-		std::cout << name << std::endl;
+		std::cout << "Node unknown:" << name << std::endl;
 		closestWP = -1;
 	}
 }
@@ -897,7 +904,7 @@ void BaseApplication::initROS() {
                 ("/kth_floorsix_y2_topo_markers/update_full", 1, boost::bind(&BaseApplication::topoNodesCB, this, _1)));
                 
   hRosSubCloseWP = new ros::Subscriber(hRosNode->subscribe<std_msgs::String>
-                ("/closest_node", 1, boost::bind(&BaseApplication::closestWayPointCB, this, _1)));
+                ("/current_node", 1, boost::bind(&BaseApplication::closestWayPointCB, this, _1)));
 
 
 	// Subscription and binding for the 360deg images

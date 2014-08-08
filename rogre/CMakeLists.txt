@@ -129,6 +129,7 @@ add_executable(rogre_node src/PlayerBody.cpp
 			 src/Door.cpp
 			  src/Key.cpp
 			   src/Treasure.cpp
+			    src/Lock.cpp
 )
 
 add_executable(joy_remap src/JoystickRemapper.cpp)

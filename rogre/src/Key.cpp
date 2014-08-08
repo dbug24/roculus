@@ -6,10 +6,12 @@ Key::Key(SceneManager* mSceneMgr) : GameObject(mSceneMgr), found(false) {
 	Entity *ent = mSceneMgr->createEntity("Key.mesh");
 	ent->setMaterialName("roculus3D/Game_Key");
 	myNode->attachObject(ent);
+	
+	type = GO_KEY;
 }
 
 GameState Key::frameEventQueued(WayPoint* currentWP, GameState gs) {
-	myNode->yaw(Degree(1));
+	myNode->yaw(Degree(0.5));
 	if (false == found && currentWP == trigger && gs < GS_KEY_4) {
 		found = true;
 		myNode->setVisible(false);

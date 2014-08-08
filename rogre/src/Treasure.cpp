@@ -5,6 +5,8 @@ Treasure::Treasure(SceneManager* mSceneMgr) : GameObject(mSceneMgr) {
 	Entity *ent = mSceneMgr->createEntity("TreasureBox.mesh");
 	ent->setMaterialName("roculus3D/Game_TreasureBox");
 	myNode->attachObject(ent);
+	
+	type = GO_TREASURE;
 }
 
 GameState Treasure::frameEventQueued(WayPoint* currentWP, GameState gs) {

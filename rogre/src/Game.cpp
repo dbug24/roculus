@@ -1,105 +1,124 @@
 #include <Game.h>
 using namespace Ogre;
 
-Game::Game(SceneManager* mSceneMgr) : lastWPId(-1), state(GS_START), running(false) {
-	this->mSceneMgr = mSceneMgr;	
-	for (int i=0;i<GameCFGParser::getInstance().getNrWayPoints();i++) {
-		wayPoints.push_back(new WayPoint(i, mSceneMgr,
-			Vector3::ZERO, Quaternion::IDENTITY, WP_ROLE_NONE));
-		LogManager::getSingletonPtr()->logMessage(wayPoints[i]->toString() + " added to Game.");
-	}
-	
-	marker = mSceneMgr->getRootSceneNode()->createChildSceneNode("Game_WayPointMarker");
-	Entity *wpEnt = mSceneMgr->createEntity("Cylinder.mesh");
-	wpEnt->setMaterialName("roculus3D/WayPointMarker");
-	marker->attachObject(wpEnt);
-	persMarker = mSceneMgr->getRootSceneNode()->createChildSceneNode("Game_WayPointPersistentMarker");
-	wpEnt = mSceneMgr->createEntity("Cylinder.mesh");
-	wpEnt->setMaterialName("roculus3D/WayPointPersistentMarker");
-	persMarker->attachObject(wpEnt);
-	persMarker->setVisible(false);
-	
-	// link WayPoints in list to WayPoints in game.cfg
-	for (int i=0;i<GameCFGParser::getInstance().getNrRooms();i++) {
-		rooms.push_back(new Room(i));
-		std::string tmp_name("Room" + boost::lexical_cast<std::string>(i));
-		rooms[i]->setDoor(wayPoints[GameCFGParser::getInstance().getDoor(tmp_name)]);
-		rooms[i]->setDoorEvt(wayPoints[GameCFGParser::getInstance().getDoorEvt(tmp_name)]);
-		std::vector<int> tmp_values(GameCFGParser::getInstance().getWPs(tmp_name));
-		for (int j=0;j<tmp_values.size();j++) {
-			rooms[i]->addRoomPoint(wayPoints[tmp_values[j]]);
-		}
-		tmp_values.clear();
-		tmp_values = GameCFGParser::getInstance().getWPs2Use(tmp_name);
-		for (int j=0;j<tmp_values.size();j++) {
-			rooms[i]->addUsePoint(wayPoints[tmp_values[j]]);
-		}
-	}
-	
-	for (int i=0;i<GameCFGParser::getInstance().getNrCorridors();i++) {
-		corridors.push_back(new Room(i));
-		std::string tmp_name("Corridor" + boost::lexical_cast<std::string>(i));
-		corridors[i]->setDoor(NULL);
-		corridors[i]->setDoorEvt(NULL);
-		std::vector<int> tmp_values(GameCFGParser::getInstance().getWPs(tmp_name));
-		for (int j=0;j<tmp_values.size();j++) {
-			corridors[i]->addRoomPoint(wayPoints[tmp_values[j]]);
-		}
-	}
-	door = new Door(mSceneMgr, 2);
-	treasure = new Treasure(mSceneMgr);
-	gameObjects.push_back(door);
-	gameObjects.push_back(treasure);
-	for (int i=0;i<2;i++) {
-		gameObjects.push_back(new Key(mSceneMgr));
-	}
-	
-	if (corridors.size() != GameCFGParser::getInstance().getNrCorridors() || rooms.size() != GameCFGParser::getInstance().getNrRooms())
-		std::cerr << "There seems to be a mismatch between game.cfg and parsed game structure." << std::endl;
+Game &Game::getInstance() {
+	static Game instance;
+	return instance;
 }
 
-void Game::startGameSession() {
-	running = false;
-	
-	std::srand(time(NULL));
-	std::set<int> roomNRs;
-	int index = -1;
-	
-	state = GS_START;
-	for (int i=0;i<gameObjects.size();i++) {
-		gameObjects[i]->resetInit();
-		roomNRs.insert(i);
+void Game::init(SceneManager* mSceneMgr) {
+	if (!initiated) {
+		state = GS_START;
+		running = false;
+		this->mSceneMgr = mSceneMgr;	
+		for (int i=0;i<GameCFGParser::getInstance().getNrWayPoints();i++) {
+			wayPoints.push_back(new WayPoint(i, mSceneMgr,
+				Vector3::ZERO, Quaternion::IDENTITY, WP_ROLE_NONE));
+			LogManager::getSingletonPtr()->logMessage(wayPoints[i]->toString() + " added to Game.");
+		}
+		
+		marker = mSceneMgr->getRootSceneNode()->createChildSceneNode("Game_WayPointMarker");
+		Entity *wpEnt = mSceneMgr->createEntity("Cylinder.mesh");
+		wpEnt->setMaterialName("roculus3D/WayPointMarker");
+		marker->attachObject(wpEnt);
+		persMarker = mSceneMgr->getRootSceneNode()->createChildSceneNode("Game_WayPointPersistentMarker");
+		wpEnt = mSceneMgr->createEntity("Cylinder.mesh");
+		wpEnt->setMaterialName("roculus3D/WayPointPersistentMarker");
+		persMarker->attachObject(wpEnt);
+		persMarker->setVisible(false);
+		
+		// link WayPoints in list to WayPoints in game.cfg
+		for (int i=0;i<GameCFGParser::getInstance().getNrRooms();i++) {
+			rooms.push_back(new Room(i));
+			std::string tmp_name("Room" + boost::lexical_cast<std::string>(i));
+			rooms[i]->setDoor(wayPoints[GameCFGParser::getInstance().getDoor(tmp_name)]);
+			rooms[i]->setDoorEvt(wayPoints[GameCFGParser::getInstance().getDoorEvt(tmp_name)]);
+			std::vector<int> tmp_values(GameCFGParser::getInstance().getWPs(tmp_name));
+			for (int j=0;j<tmp_values.size();j++) {
+				rooms[i]->addRoomPoint(wayPoints[tmp_values[j]]);
+			}
+			tmp_values.clear();
+			tmp_values = GameCFGParser::getInstance().getWPs2Use(tmp_name);
+			for (int j=0;j<tmp_values.size();j++) {
+				rooms[i]->addUsePoint(wayPoints[tmp_values[j]]);
+			}
+		}
+		
+		for (int i=0;i<GameCFGParser::getInstance().getNrCorridors();i++) {
+			corridors.push_back(new Room(i));
+			std::string tmp_name("Corridor" + boost::lexical_cast<std::string>(i));
+			corridors[i]->setDoor(NULL);
+			corridors[i]->setDoorEvt(NULL);
+			std::vector<int> tmp_values(GameCFGParser::getInstance().getWPs(tmp_name));
+			for (int j=0;j<tmp_values.size();j++) {
+				corridors[i]->addRoomPoint(wayPoints[tmp_values[j]]);
+			}
+		}
+		
+		initWP = getWPByName(GameCFGParser::getInstance().getInitNode());
+		
+		door = new Door(mSceneMgr, GameCFGParser::getInstance().getNrKeys());
+		treasure = new Treasure(mSceneMgr);
+		gameObjects.push_back(door);
+		gameObjects.push_back(treasure);
+		for (int i=0;i<GameCFGParser::getInstance().getNrKeys();i++) {
+			gameObjects.push_back(new Key(mSceneMgr));
+			gameObjects.push_back(new Lock(mSceneMgr, i));
+		}
+		
+		if (corridors.size() != GameCFGParser::getInstance().getNrCorridors() || rooms.size() != GameCFGParser::getInstance().getNrRooms())
+			std::cerr << "There seems to be a mismatch between game.cfg and parsed game structure." << std::endl;
+		initiated = true;
 	}
-	
+}
+
+Room *Game::getRndRoom(std::set<int> &roomNRs) {
+	int index = -1;
 	do {
 		index = std::rand() % rooms.size();
 	} while (0 == roomNRs.count(index) || roomNRs.size() == 0);
 	roomNRs.erase(index);
-	door->init(rooms[index]);
-	treasure->init(rooms[index]);
+	return rooms[index];
+}
+
+void Game::startGameSession() {
+	running = false;
+	state = GS_START;
 	
+	std::srand(time(NULL));
+	std::set<int> roomNRs;
+		
+	for (int i=0;i<rooms.size();i++) {
+		rooms[i]->unlock();
+		roomNRs.insert(i);
+	}
 	
 	for (int i=0;i<gameObjects.size();i++) {
-		if (gameObjects[i]->isInitialized()) continue;
-		do {
-			index = std::rand() % rooms.size();
-		} while (0 == roomNRs.count(index) || roomNRs.size() == 0);
-		roomNRs.erase(index);
-		gameObjects[i]->init(rooms[index]);
+		gameObjects[i]->resetInit();
+	}
+	
+	Room *treasureRoom = getRndRoom(roomNRs);
+	
+	for (int i=0;i<gameObjects.size();i++) {
+		switch (gameObjects[i]->getType()) {
+			case GO_DOOR: 
+			case GO_TREASURE:
+			case GO_LOCK: gameObjects[i]->init(treasureRoom); break;
+			case GO_KEY: gameObjects[i]->init(getRndRoom(roomNRs)); break;
+			default: std::cerr << "Could not start new game: Undetermined Room Type." << std::endl;
+		}
 	}
 	
 	running = true;
 }
 
 GameState Game::frameEventQueued(int currentWPId) {
-	if (currentWPId != lastWPId) {
-		lastWPId = currentWPId;
-		GameState next_state;
-		for (int i=0;i<gameObjects.size();i++) {
-			next_state = gameObjects[i]->frameEventQueued(wayPoints[currentWPId], state);
-		}
-		state = next_state;
+	GameState next_state;
+	for (int i=0;i<gameObjects.size();i++) {
+		next_state = gameObjects[i]->frameEventQueued(wayPoints[currentWPId], state);
+		if (next_state != state) break;
 	}
+	state = next_state;
 	return state;
 }
 
@@ -198,4 +217,8 @@ bool Game::isRunning() {
 void Game::placePersistentMarker(const String& name) {
 	persMarker->setPosition(getWPByName(name)->getPosition());
 	persMarker->setVisible(true);
+}
+
+std::string Game::getInitWP() {
+	return initWP->getName();
 }

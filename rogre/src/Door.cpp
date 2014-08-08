@@ -12,6 +12,7 @@ Door::Door(SceneManager* mSceneMgr, int keys) : GameObject(mSceneMgr), mask(1.0f
 		case 4: this->keys = GS_KEY_4; break;
 		default: this->keys = GS_KEY_2;
 	}
+	type = GO_DOOR;
 }
 
 

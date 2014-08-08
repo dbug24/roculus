@@ -209,7 +209,6 @@ protected:
 	bool syncedUpdate, videoUpdate, takeSnapshot, mapArrived, receivedWPs;
 	
 	// for the game	
-	Game *demoGame;
 	SceneNode* cursor;
 	WayPoint* selectedWP;
 	Ogre::String targetWPName;

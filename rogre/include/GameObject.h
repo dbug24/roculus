@@ -20,8 +20,9 @@ class GameObject {
 	WayPoint *trigger;
 	Room *room;
 	bool initialized;
+	GameObjectType type;
   public:
-	GameObject(SceneManager *mSceneMgr) : initialized(false) {
+	GameObject(SceneManager *mSceneMgr) : initialized(false), type(GO_GENERIC) {
 		myNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		std::srand(time(NULL));
 	}
@@ -32,9 +33,11 @@ class GameObject {
 		myNode->setVisible(true);
 	}
 	
-	void setTrigger(WayPoint* trigger) { this->trigger = trigger; }
+	WayPoint *getTrigger() { return trigger; }
 	
 	WayPoint *getWP() const { return place; }
+	
+	GameObjectType getType() { return type; }
 	
 	virtual GameState frameEventQueued(WayPoint* currentWP, GameState gs) { 
 		return gs; 

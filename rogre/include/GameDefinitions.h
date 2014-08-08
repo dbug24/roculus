@@ -1,6 +1,12 @@
 #ifndef _GAME_DEFINITIONS_H_
 #define _GAME_DEFINITIONS_H_
 
+enum GameObjectType {GO_GENERIC,
+					GO_KEY,
+					GO_LOCK,
+					GO_DOOR,
+					GO_TREASURE};
+
 enum WayPoint_Role {WP_ROLE_NONE,
 					WP_ROLE_TREASURE,
 					WP_ROLE_KEY,

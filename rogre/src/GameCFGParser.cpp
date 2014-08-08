@@ -43,6 +43,14 @@ GameCFGParser& GameCFGParser::getInstance() {
 }
 
 GameCFGParser::~GameCFGParser() { }
+
+std::string GameCFGParser::getInitNode() {
+	return "WayPoint" + getValueAsString("Game/initWP");
+}
+
+int GameCFGParser::getNrKeys() {
+	return StringConverter::parseInt(getValueAsString("Game/cntKeys"));
+}
 	
 int GameCFGParser::getNrRooms() {
 	return StringConverter::parseInt(getValueAsString("Game/cntRooms"));
