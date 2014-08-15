@@ -237,7 +237,7 @@ bool Oculus::setupOgre(Ogre::SceneManager *sm, Ogre::RenderWindow *win, Ogre::Sc
 		if(m_stereoConfig)
 		{
 			// Setup cameras.
-            m_cameras[i]->setNearClipDistance(/*m_stereoConfig->GetEyeToScreenDistance()*/0.05f);
+            m_cameras[i]->setNearClipDistance(g_defaultNearClip);
 			m_cameras[i]->setFarClipDistance(g_defaultFarClip);
 			m_cameras[i]->setPosition((i * 2 - 1) * m_stereoConfig->GetIPD() * 0.5f, 0, 0);
 			m_cameras[i]->setAspectRatio(m_stereoConfig->GetAspect());
@@ -251,7 +251,7 @@ bool Oculus::setupOgre(Ogre::SceneManager *sm, Ogre::RenderWindow *win, Ogre::Sc
 		}
 		else
 		{
-            m_cameras[i]->setNearClipDistance(/*g_defaultNearClip*/0.05f);
+            m_cameras[i]->setNearClipDistance(g_defaultNearClip);
 			m_cameras[i]->setFarClipDistance(g_defaultFarClip);
 			m_cameras[i]->setPosition((i*2-1) * g_defaultIPD * 0.5f, 0, 0);
 		}

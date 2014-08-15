@@ -47,7 +47,11 @@
   <build_depend>message_filters</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>cv_bridge</build_depend>
+  <build_depend>opencv2</build_depend>
+  <build_depend>pcl_ros</build_depend>
+  <build_depend>qt_build</build_depend>
   <build_depend>image_transport</build_depend>
+  <build_depend>image_geometry</build_depend>
   <build_depend>scitos_ptu</build_depend>
   <build_depend>topological_navigation</build_depend>
   <run_depend>openni_launch</run_depend>
@@ -57,7 +61,10 @@
   <run_depend>message_filters</run_depend>
   <run_depend>tf</run_depend>
   <run_depend>cv_bridge</run_depend>
+  <run_depend>pcl_ros</run_depend>
+  <run_depend>qt_build</run_depend>
   <run_depend>image_transport</run_depend>
+  <run_depend>image_geometry</run_depend>
   <run_depend>scitos_ptu</run_depend>
   <run_depend>topological_navigation</run_depend>
 

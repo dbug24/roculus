@@ -27,6 +27,7 @@ public:
 
 protected:
     virtual void createScene(void);
+    virtual void loadRecordedScene();
 };
 
 #endif // #ifndef __TutorialApplication_h_

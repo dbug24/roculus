@@ -15,9 +15,9 @@ fragment_program roculus3D/texture3d cg {
 
 	default_params {
 		// find suitable steps (dx,dy) to test for depth changes
-		param_named invResolution float2 0.005f 0.005f
-		param_named sepia float 1.0f
-		param_named lim float 0.05f
+		param_named invResolution float2 0.002f 0.002f
+		param_named sepia float 0.0f
+		param_named lim float 0.0003f
 	}
 }
 
@@ -35,15 +35,18 @@ material roculus3D/DynamicTextureMaterial
 				{
 				}
 				
-			texture_unit {
+			texture_unit 0 {
 				texture VideoRGBTexture
 				tex_coord_set 0
+				colour_op replace
+				filtering trilinear
 			}
 			
-			texture_unit {
+			texture_unit 1 {
 				texture VideoDepthTexture
 				tex_coord_set 0
-				filtering anisotropic
+				tex_address_mode mirror
+				filtering bilinear
 			}
 			
 			lighting off
@@ -51,7 +54,7 @@ material roculus3D/DynamicTextureMaterial
 	}
 }
 
-material roculus3D/DynamicTextureMaterialNoSepia
+material roculus3D/DynamicTextureMaterialSepia
 {
 	technique
 	{
@@ -59,25 +62,27 @@ material roculus3D/DynamicTextureMaterialNoSepia
 		{
 			fragment_program_ref roculus3D/texture3d
 				{
-					param_named sepia float 0.0f
+					param_named sepia float 1.0f
 				}
 
 			vertex_program_ref roculus3D/resort3d 
 				{
 				}
 				
-			texture_unit {
+			texture_unit 0 {
 				texture VideoRGBTexture
 				tex_coord_set 0
+				colour_op replace
+				filtering trilinear
 			}
 			
-			texture_unit {
+			texture_unit 1 {
 				texture VideoDepthTexture
 				tex_coord_set 0
-				filtering anisotropic
+				tex_address_mode mirror
+				filtering bilinear
 			}
 			
-			depth_func always_pass
 			lighting off
 		}
 	}
@@ -104,6 +109,7 @@ material roculus3D/GlobalMapMaterial
 			texture_unit {
 				texture GlobalMapTexture
 				tex_coord_set 0
+				filtering trilinear
 			}
 			lighting off
 		}

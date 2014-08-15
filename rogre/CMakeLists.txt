@@ -12,7 +12,16 @@ find_package(catkin REQUIRED COMPONENTS
   message_filters
   tf
   image_transport
+  metaroom_xml_parser
 )
+
+find_package(PCL 1.7 REQUIRED)
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
+
+
+rosbuild_prepare_qt4(QtCore QtXml)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -86,8 +95,8 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES rogre 
-  CATKIN_DEPENDS openni_launch roscpp std_msgs sensor_msgs message_filters tf cv_bridge image_transport scitos_ptu
-  DEPENDS system_lib
+  CATKIN_DEPENDS openni_launch roscpp std_msgs sensor_msgs message_filters tf cv_bridge image_transport scitos_ptu pcl_ros
+  DEPENDS system_lib qt_build image_geometry libqt4-dev
 )
 
 ###########
@@ -148,6 +157,9 @@ link_directories(
 ## Specify libraries to link a library or executable target against
 target_link_libraries(rogre_node
   ${catkin_LIBRARIES}
+  ${QT_LIBRARIES}
+  ${PCL_LIBRARIES}
+  metaroomXMLparser
   OgreMain2
   OgreOverlay
   OIS

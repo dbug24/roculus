@@ -81,6 +81,12 @@ This source file is part of the
 #include <actionlib/client/simple_action_client.h>
 
 // for the game:
+#include <compressed_depth_image_transport/compression_common.h>
+#include <image_transport/image_transport.h>
+#include <cv_bridge/cv_bridge.h>
+#include <sensor_msgs/image_encodings.h>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <visualization_msgs/InteractiveMarkerInit.h>
 #include <std_msgs/String.h>
 #include <actionlib/client/simple_action_client.h>
@@ -195,18 +201,17 @@ protected:
 	message_filters::Subscriber<sensor_msgs::CompressedImage> *hRosSubRGB, *hRosSubDepth, *hRosSubRGBVid, *hRosSubDepthVid;
 	message_filters::Synchronizer<ApproximateTimePolicy> *rosMsgSync, *rosVideoSync;
 	tf::TransformListener *tfListener;
-	tf::StampedTransform snTransform, vdTransform;
 	Robot *robotModel;
 	GlobalMap *globalMap;
 
 	Ogre::ManualObject *mPCRender;
 	Ogre::Image depImage, texImage, depVideo, texVideo, mapImage;
-	//~ Lock lockRendering;
+	cv::Mat cv_depth, cv_rgb;
 	SnapshotLibrary *snLib, *rsLib;
 	Video3D *vdVideo;
 	Ogre::Vector3 snPos, vdPos;
 	Ogre::Quaternion snOri, vdOri;
-	bool syncedUpdate, videoUpdate, takeSnapshot, mapArrived, receivedWPs;
+	volatile bool syncedUpdate, videoUpdate, takeSnapshot, mapArrived, receivedWPs;
 	
 	// for the game	
 	SceneNode* cursor;

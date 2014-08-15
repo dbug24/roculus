@@ -3,10 +3,10 @@ void main_vp (float4 position : POSITION,
 				out float4 oPosition : POSITION,
 				out float2 oTexDep: TEXCOORD0,
 				uniform float4x4 worldViewProj,
-				uniform sampler2D depthMap : register(s0))
+				uniform sampler2D depthMap : register(s1))
 {
-	float depth = tex2D(depthMap, texDep)*65.535f; 
-	
+	float depth = tex2D(depthMap, texDep) * 65.535f;
+
 	position[0] = depth*position[0]; // pos.x should hold tan(alpha)
 	position[1] = depth*position[1]; // pos.y should hold tan(beta)
 	position[2] = -depth;			 // depth is in -z direction
@@ -19,30 +19,33 @@ void main_vp (float4 position : POSITION,
 float4 main_fp (float2 texPos : TEXCOORD0,
 				uniform float2 invResolution,
 				uniform float sepia,
-				uniform sampler2D scene : register(s1),
-				uniform sampler2D depthMap : register(s0),
+				uniform sampler2D scene : register(s0),
+				uniform sampler2D depthMap : register(s1),
 				uniform float lim) : COLOR
 {	
+	const float minLim = 0.007f;
 	float d0 = float(tex2D(depthMap, texPos));
-	if (d0 < 0.005f || d0 > 0.045f)
+	if (isnan(d0) || d0 > 0.055f)
 		discard;
 		
 	const float2 u1 = {invResolution[0], 0.0f};
 	const float2 u2 = {0.0f, invResolution[1]};
+	const float2 s1 = 0.707*u1;
+	const float2 s2 = 0.707*u2;
 
 	float d1,d2,d3,d4,d5,d6,d7,d8; // image has 8-connectivity
-	d1 = abs(float(tex2D(depthMap, texPos + u1))-d0);
-	d2 = abs(float(tex2D(depthMap, texPos - u1))-d0);
-	d3 = abs(float(tex2D(depthMap, texPos + u2))-d0);
-	d4 = abs(float(tex2D(depthMap, texPos - u2))-d0);
-	d5 = abs(float(tex2D(depthMap, texPos + u1 +u2))-d0);
-	d6 = abs(float(tex2D(depthMap, texPos - u1 +u2))-d0);
-	d7 = abs(float(tex2D(depthMap, texPos + u1 -u2))-d0);
-	d8 = abs(float(tex2D(depthMap, texPos - u1 -u2))-d0);
+	d1 = float(tex2D(depthMap, texPos + u1));
+	d2 = float(tex2D(depthMap, texPos - u1));
+	d3 = float(tex2D(depthMap, texPos + u2));
+	d4 = float(tex2D(depthMap, texPos - u2));
+	d5 = float(tex2D(depthMap, texPos + s1 +s2));
+	d6 = float(tex2D(depthMap, texPos - s1 +s2));
+	d7 = float(tex2D(depthMap, texPos + s1 -s2));
+	d8 = float(tex2D(depthMap, texPos - s1 -s2));
 	
-	float localLim = lim*d0;
+	lim = lim*(d0*65.535f);
 	
-	if (d1 > localLim || d2 > localLim || d2 > localLim || d4 > localLim || d5 > localLim || d6 > localLim || d7 > localLim || d8 > localLim)
+	if (abs(d1-d0) > lim || abs(d2-d0) > lim || abs(d3-d0) > lim || abs(d4-d0) > lim || abs(d5-d0) > lim || abs(d6-d0) > lim || abs(d7-d0) > lim || abs(d8-d0) > lim)
 		discard;
 
 	if (sepia > 0.5f) {

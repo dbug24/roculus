@@ -321,7 +321,7 @@ bool BaseApplication::setup(void)
 	chooseSceneManager();
 
 	// Set default mipmap level (NB some APIs ignore this)
-	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(3);
  
 	// Create any resource listeners (for loading screens)
 	createResourceListener();
@@ -335,7 +335,7 @@ bool BaseApplication::setup(void)
 	
 	Game::getInstance().init(mSceneMgr);
 	
-	mPlayerBodyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	mPlayerBodyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("PlayerBodyNode");
 	oculus = new Oculus();
 	oculus->setupOculus();
 	oculus->setupOgre(mSceneMgr, mWindow, mPlayerBodyNode);
@@ -366,16 +366,16 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
         {
             std::cout<<"Saving depth and rgb textures"<<std::endl;
             char filename_rgb[50];
-            sprintf(filename_rgb,"snap_rgb%d.jpg",index);
+            sprintf(filename_rgb,"./map/snap_rgb%d.jpg",index);
             texImage.save(filename_rgb);
 
             char filename_depth[50];
-            sprintf(filename_depth,"snap_depth%d.png",index);
+            sprintf(filename_depth,"./map/snap_depth%d.png",index);
             depImage.save(filename_depth);
 
             ofstream myfile;
             char filename_pos[50];
-            sprintf(filename_pos,"snap_pos%d.txt",index);
+            sprintf(filename_pos,"./map/snap_pos%d.txt",index);
             myfile.open (filename_pos);
             myfile<<Ogre::StringConverter::toString(snPos)<<"\n"<<Ogre::StringConverter::toString(snOri);
             myfile.close();
@@ -389,7 +389,7 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 			snLib->placeInScene(depVideo, texVideo, vdPos, vdOri);
 			takeSnapshot = false;
 		}
-		vdVideo->update(texVideo, depVideo, vdPos, vdOri);
+		vdVideo->update(depVideo, texVideo, vdPos, vdOri);
 		videoUpdate = false;
 	}
 	
@@ -488,8 +488,9 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         syncedUpdate = true;
         std::cout<<"Starting to receive sweep frames"<<std::endl;
 	}
-    else if(arg.key == OIS::KC_F6)   // refresh all textures
+    else if(arg.key == OIS::KC_F6)   // trigger to save map
     {
+		//~ snLib->setSaveOnShutdown(true);
         m_bBufferSnapshotData = !m_bBufferSnapshotData;
 
         if (m_bBufferSnapshotData)
@@ -521,14 +522,14 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 	// for the game:
 	else if (arg.key == OIS::KC_SPACE) {
 		if (targetWPName != Ogre::StringUtil::BLANK && NULL != rosieActionClient) {
-			//~ Game::getInstance().placePersistentMarker(targetWPName);
-			//~ rosieActionClient->waitForServer();
-			//~ topological_navigation::GotoNodeGoal goal;
-			//~ goal.target = targetWPName;
-			//~ rosieActionClient->cancelAllGoals();
-			//~ rosieActionClient->sendGoal(goal);
-			//~ LogManager::getSingletonPtr()->logMessage("SendGoal: " + targetWPName);
-			LogManager::getSingletonPtr()->logMessage("!!!I am not sending any goals right now!!!");
+			Game::getInstance().placePersistentMarker(targetWPName);
+			rosieActionClient->waitForServer();
+			topological_navigation::GotoNodeGoal goal;
+			goal.target = targetWPName;
+			rosieActionClient->cancelAllGoals();
+			rosieActionClient->sendGoal(goal);
+			LogManager::getSingletonPtr()->logMessage("SendGoal: " + targetWPName);
+			//~ LogManager::getSingletonPtr()->logMessage("!!!I am not sending any goals right now!!!");
 		}
 	} else if (arg.key == OIS::KC_I) {
 		//~ rosieActionClient->waitForServer();
@@ -632,9 +633,9 @@ void BaseApplication::triggerPanoramaPTUScan() {
 		goal.pan_start= -150;
 		goal.pan_end= 151;
 		goal.pan_step= 50;
-		goal.tilt_start= -25;	// OR: -30
-		goal.tilt_step= 50;		// 30
-		goal.tilt_end= 26;		// 31
+		goal.tilt_start= -20;	// OR: -30
+		goal.tilt_step= 40;		// 30
+		goal.tilt_end= 21;		// 31
 		rosPTUClient->sendGoal(goal);
 		rosPTUClient->waitForResult(ros::Duration(120.0));
 		if (rosPTUClient->getState() == actionlib::SimpleClientGoalState::SUCCEEDED) {
@@ -688,6 +689,7 @@ void BaseApplication::syncCallback(const sensor_msgs::CompressedImageConstPtr& d
 		Ogre::DataStreamPtr *pRstr = new Ogre::DataStreamPtr(&rgbStr);
 		
 		using namespace Ogre;
+		static tf::StampedTransform snTransform;
 		static tfScalar yaw,pitch,roll;
 		static Matrix3 mRot;
 		
@@ -699,7 +701,7 @@ void BaseApplication::syncCallback(const sensor_msgs::CompressedImageConstPtr& d
 			snPos.z = -snTransform.getOrigin().x();
 			
 			snTransform.getBasis().getEulerYPR(yaw,pitch,roll);
-			mRot.FromEulerAnglesYXZ(Radian(yaw),Radian(pitch),Radian(roll));
+			mRot.FromEulerAnglesXYZ(-Radian(pitch),Radian(yaw),-Radian(roll));
 			snOri.FromRotationMatrix(mRot);
 			
 			depImage.load(*pDstr, "png");
@@ -713,62 +715,57 @@ void BaseApplication::syncCallback(const sensor_msgs::CompressedImageConstPtr& d
 }
 
 void BaseApplication::syncVideoCallback(const sensor_msgs::CompressedImageConstPtr& depthImg, const sensor_msgs::CompressedImageConstPtr& rgbImg) {
-	static int cb_cnt = 0;
-	cb_cnt++;
-	if (!videoUpdate && cb_cnt >= 2) {
-		cb_cnt = 0;
-
-		Ogre::MemoryDataStream depthStr(depthImg->data.size(), false, false);
-		Ogre::MemoryDataStream rgbStr(rgbImg->data.size(), false, false);
-		
-		Ogre::uint8 buffer1, buffer2, buffer3, buffer4;
-		for (int d=0; d<depthImg->data.size(); d++) {
-			buffer1 = depthImg->data[d];
-			buffer2 = depthImg->data[d+1];
-			buffer3 = depthImg->data[d+2];
-			buffer4 = depthImg->data[d+3];
-			if (buffer1 == 137 && buffer2 == 80 && buffer3 == 78 && buffer4 == 71) {
-				depthStr.write(&depthImg->data[d],depthImg->data.size()-d);
-				break;
-			}
-		}
-		depthStr.seek(0); //Reset stream position
-		Ogre::DataStreamPtr *pDstr = new Ogre::DataStreamPtr(&depthStr);
-		
-		for (int d=0; d<rgbImg->data.size(); d++) {
-			buffer1 = rgbImg->data[d];
-			buffer2 = rgbImg->data[d+1];
-			if (buffer1 == 255 && buffer2 == 216)  {
-				rgbStr.write(&rgbImg->data[d], rgbImg->data.size()-d);
-				break;
-			}
-		}
-		rgbStr.seek(0); // Reset stream position
-		Ogre::DataStreamPtr *pRstr = new Ogre::DataStreamPtr(&rgbStr);
-		
-		using namespace Ogre;
-		static tfScalar yaw,pitch,roll;
-		static Matrix3 mRot;
-		
+	static tfScalar yaw,pitch,roll;
+	static tf::StampedTransform vdTransform;
+	static Ogre::Matrix3 mRot;
+	
+	if (!videoUpdate) {			
 		try {
-			tfListener->lookupTransform("map", "chest_xtion_depth_optical_frame", depthImg->header.stamp, vdTransform);
+			// We have to cut away the compression header to load the depth image into openCV
+			compressed_depth_image_transport::ConfigHeader compressionConfig;
+			memcpy(&compressionConfig, &depthImg->data[0], sizeof(compressionConfig));
+			const std::vector<uint8_t> depthData(depthImg->data.begin() + sizeof(compressionConfig), depthImg->data.end());
 			
+			// load the images:
+			cv::Mat tmp_depth = cv::imdecode(cv::Mat(depthData), CV_LOAD_IMAGE_UNCHANGED);
+			cv::Mat tmp_rgb = cv::imdecode(cv::Mat(rgbImg->data), CV_LOAD_IMAGE_UNCHANGED);
+			tmp_depth.convertTo(cv_depth, CV_16U);
+			tmp_rgb.convertTo(cv_rgb, CV_8UC3);
+			
+			// process images, by bluring the depth and rearranging the color values
+			cv::GaussianBlur(cv_depth, cv_depth, cv::Size(11,11), 0, 0);
+			cv::cvtColor(cv_rgb,cv_rgb, CV_BGR2RGB);
+
+			/* lookup the transform and convert them to the OGRE coordinates
+			 *  unfortunately there is still some magic going on in Video3D.cpp and Snapshot.cpp
+			 *  in order to end up in the correct orientation...
+			*/
+			tfListener->lookupTransform("map", "head_xtion_depth_optical_frame", depthImg->header.stamp, vdTransform);
+			
+			// positioning
 			vdPos.x = -vdTransform.getOrigin().y();
 			vdPos.y = vdTransform.getOrigin().z();
 			vdPos.z = -vdTransform.getOrigin().x();
 			
+			// rotation (at least get it into global coords that are fixed on the robot)
 			vdTransform.getBasis().getEulerYPR(yaw,pitch,roll);
-			mRot.FromEulerAnglesYXZ(Radian(yaw),Radian(pitch),Radian(roll));
-			vdOri.FromRotationMatrix(mRot);			
+			mRot.FromEulerAnglesXYZ(-Radian(pitch),Radian(yaw),-Radian(roll));
+			vdOri.FromRotationMatrix(mRot);
 		
+			/* connect the data to the images, note that this does in fact not load, but store pointers instead
+			 * which is why the cv_depth and cv_rgb are members of BaseApplication to prevent data loss
+			*/
+			depVideo.loadDynamicImage(static_cast<uchar*>(cv_depth.data), cv_depth.cols, cv_depth.rows, 1, Ogre::PF_L16);
+			texVideo.loadDynamicImage(static_cast<uchar*>(cv_rgb.data), cv_rgb.cols, cv_rgb.rows, 1, Ogre::PF_BYTE_RGB);
+			videoUpdate = true;
+			
 		} catch (tf::TransformException ex) {
 			ROS_ERROR("%s",ex.what());
+			videoUpdate = false;
+		} catch (std::exception& e) {
+			std::cerr << e.what() << std::endl;
+			videoUpdate = false;
 		}
-		
-		depVideo.load(*pDstr, "png");
-		texVideo.load(*pRstr, "jpeg");
-
-		videoUpdate = true;
 	}
 }
 
@@ -918,13 +915,13 @@ void BaseApplication::initROS() {
   
 	// Subscription and binding for the 3D video and requested snapshots
   hRosSubRGBVid = new message_filters::Subscriber<sensor_msgs::CompressedImage>
-				//(*hRosNode, "/head_xtion/rgb/image_raw_low_fps/compressed", 1);
-				//(*hRosNode, "/head_xtion/rgb/image_color/compressed", 1);
-				(*hRosNode, "/chest_xtion/rgb/image_color/reducedBW/compressed", 1);
+				//~ (*hRosNode, "/head_xtion/rgb/image_raw_low_fps/compressed", 1);
+				//~ (*hRosNode, "/head_xtion/rgb/image_color/compressed", 1);
+				(*hRosNode, "/head_xtion/rgb/image_color/reducedBW/compressed", 1);
   hRosSubDepthVid = new message_filters::Subscriber<sensor_msgs::CompressedImage>
-				//(*hRosNode, "/head_xtion/depth/image_raw_low_fps/compressedDepth", 1);
-				//(*hRosNode, "/head_xtion/depth_registered/image_rect/compressedDepth", 1);
-				(*hRosNode, "/chest_xtion/depth_registered/image_rect/reducedBW/compressedDepth", 1);
+				//~ (*hRosNode, "/head_xtion/depth/image_raw_low_fps/compressedDepth", 1);
+				//~ (*hRosNode, "/head_xtion/depth_registered/image_rect/compressedDepth", 1);
+				(*hRosNode, "/head_xtion/depth_registered/image_rect/reducedBW/compressedDepth", 1);
   rosVideoSync = new message_filters::Synchronizer<ApproximateTimePolicy>
 				(ApproximateTimePolicy(15), *hRosSubDepthVid, *hRosSubRGBVid);
   rosVideoSync->registerCallback(boost::bind(&BaseApplication::syncVideoCallback, this, _1, _2));
@@ -1005,12 +1002,12 @@ void BaseApplication::loadSavedMap() {
     while (fileFound)
     {
         char filename_pos[50];
-        sprintf(filename_pos,"snap_pos%d.txt",counter);
+        sprintf(filename_pos,"Znap_pos%d.txt",counter);
         ifstream pos_file(filename_pos);
         char filename_rgb[50];
-        sprintf(filename_rgb,"snap_rgb%d.jpg",counter);
+        sprintf(filename_rgb,"Znap_rgb%d.jpg",counter);
         char filename_depth[50];
-        sprintf(filename_depth,"snap_depth%d.png",counter);
+        sprintf(filename_depth,"Znap_depth%d.png",counter);
 
         if (pos_file)
         {

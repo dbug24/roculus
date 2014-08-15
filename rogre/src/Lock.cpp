@@ -18,7 +18,7 @@ Lock::Lock(SceneManager* mSceneMgr, int idx) : GameObject(mSceneMgr), locked(tru
 }
 
 GameState Lock::frameEventQueued(WayPoint* currentWP, GameState gs) {
-	myNode->yaw(-Degree(0.5));
+	myNode->yaw(-Degree(0.45+0.15*idx));
 	if (gs == react && true == locked) {
 		locked = false;
 		ent->setMaterialName("roculus3D/Game_Lock_Open");

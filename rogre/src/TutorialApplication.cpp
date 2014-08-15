@@ -14,9 +14,13 @@ This source file is part of the
       http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
-#include "TutorialApplication.h"
 #include <math.h>
+#include <simpleXMLparser.h>
+#include <simpleSummaryParser.h>
+#include "TutorialApplication.h"
 
+typedef pcl::PointXYZRGB PointType;
+typedef typename SimpleSummaryParser<PointType>::EntityStruct Entities;
 //-------------------------------------------------------------------------------------
 TutorialApplication::TutorialApplication(void)
 {
@@ -28,45 +32,44 @@ TutorialApplication::~TutorialApplication(void)
 
 //-------------------------------------------------------------------------------------
 void TutorialApplication::createScene(void)
-{
-	using namespace Ogre;
-	
+{	
 	// Set camera resolution (X, Y, f) here
-	Vector3 cam(640.0f, 480.0f, 574.0f);
+	Ogre::Vector3 cam(640.0f, 480.0f, 574.0f);
 	cam = cam/2.0f; // Lower number of vertices (!), comment out for full resolution
 	// For better results adapt the invResolution parameter in vertexColours.material (!)
 
 	// Loading two dummy textures for the validity of the standard material
 	// Actually the textures can be reused for the video stream
-	TexturePtr pT_RGB = Ogre::TextureManager::getSingleton().createManual(
+	Ogre::TexturePtr pT_RGB = Ogre::TextureManager::getSingleton().createManual(
 		"VideoRGBTexture", 				// name
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		TEX_TYPE_2D,      // type
+		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Ogre::TEX_TYPE_2D,      // type
 		640, 480,         		// width & height
 		0,                		// number of mipmaps
-		PF_BYTE_RGBA,     // pixel format
-		TU_DYNAMIC_WRITE_ONLY_DISCARDABLE);  
+		Ogre::PF_BYTE_RGB,     // pixel format
+		Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE);  //TU_DYNAMIC_WRITE_ONLY_DISCARDABLE
 		
-	TexturePtr pT_Depth = Ogre::TextureManager::getSingleton().createManual(
+	Ogre::TexturePtr pT_Depth = Ogre::TextureManager::getSingleton().createManual(
 		"VideoDepthTexture", 				// name
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		TEX_TYPE_2D,      // type
-		320, 240,         		// width & height
+		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Ogre::TEX_TYPE_2D,      // type
+		640, 480,         		// width & height
 		0,                		// number of mipmaps
-		PF_DEPTH,     // pixel format
-		TU_DYNAMIC_WRITE_ONLY_DISCARDABLE); 
+		Ogre::PF_L16,     // pixel format
+		Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE); 
 	
-	TexturePtr pT_GlobalMap = Ogre::TextureManager::getSingleton().createManual(
+	Ogre::TexturePtr pT_GlobalMap = Ogre::TextureManager::getSingleton().createManual(
 		"GlobalMapTexture", 				// name
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		TEX_TYPE_2D,      // type
+		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Ogre::TEX_TYPE_2D,      // type
 		1024, 1024,         		// width & height
 		0,                		// number of mipmaps
-		PF_BYTE_RGBA,     // pixel format
-		TU_STATIC);
+		Ogre::PF_BYTE_RGBA,     // pixel format
+		Ogre::TU_STATIC);
 			
 	Ogre::Image imDefault;
 	imDefault.load("KAMEN320x240.jpg","Popular");
+	imDefault.resize(512,512);
 	pT_RGB->loadImage(imDefault);
 	pT_Depth->loadImage(imDefault);
 	pT_GlobalMap->loadImage(imDefault);
@@ -74,12 +77,12 @@ void TutorialApplication::createScene(void)
 	mPCRender= mSceneMgr->createManualObject();
 	mPCRender->estimateVertexCount(cam.x * cam.y);
 	mPCRender->estimateIndexCount(4 * cam.x * cam.y);
-	mPCRender->begin("roculus3D/DynamicTextureMaterial", RenderOperation::OT_TRIANGLE_LIST);
+	mPCRender->begin("roculus3D/DynamicTextureMaterial", Ogre::RenderOperation::OT_TRIANGLE_LIST);
 
 	float fake_z = 0.0f;
 	for (int w=0; w<cam.x; w++) {
 		for (int h=0; h<cam.y; h++) {
-			if (fake_z < 4.1f) fake_z += 1.0f;
+			if (fake_z > -4.0f) fake_z -= 0.05f;
 			mPCRender->position(float(w - (cam.x-1.0f)/2.0f)/cam.z, float((cam.y-1.0f)/2.0f - h)/cam.z, fake_z);
 			mPCRender->textureCoord(float(w)/(cam.x-1.0f),float(h)/(cam.y-1.0f));
 			if (w>0 && h>0) {
@@ -93,7 +96,7 @@ void TutorialApplication::createScene(void)
 	mPCRender->convertToMesh("DefGeometry");
 	
 	mPCRender= mSceneMgr->createManualObject();
-	mPCRender->begin("roculus3D/BlankMaterial", RenderOperation::OT_LINE_LIST);
+	mPCRender->begin("roculus3D/BlankMaterial", Ogre::RenderOperation::OT_LINE_LIST);
 
 	mPCRender->position(0.0f,0.0f,0.0f);
 	mPCRender->colour(Ogre::ColourValue(1.0f, 1.0f, 1.0f, 1.0f));
@@ -116,7 +119,7 @@ void TutorialApplication::createScene(void)
 	mPCRender->convertToMesh("CoordSystem");
 	
 	mPCRender= mSceneMgr->createManualObject();
-	mPCRender->begin("roculus3D/BlankMaterial", RenderOperation::OT_LINE_STRIP);
+	mPCRender->begin("roculus3D/BlankMaterial", Ogre::RenderOperation::OT_LINE_STRIP);
 	
 	float const radius = 0.3;
     float const accuracy = 35; 
@@ -134,22 +137,73 @@ void TutorialApplication::createScene(void)
 
 	cursor = mSceneMgr->getRootSceneNode()->createChildSceneNode("CircleCursor");
 	cursor->attachObject(mSceneMgr->createEntity("CircleCursor"));
-	Entity *wpMarker = mSceneMgr->createEntity("Cylinder.mesh");
+	Ogre::Entity *wpMarker = mSceneMgr->createEntity("Cylinder.mesh");
 	wpMarker->setMaterialName("roculus3D/WayPointMarkerTransparent");
 	cursor->attachObject(wpMarker);
 	
-	mSceneMgr->getRootSceneNode()->createChildSceneNode("SysOrigin")->attachObject(mSceneMgr->createEntity("CoordSystem"));
-	//~ mSceneMgr->getRootSceneNode()->createChildSceneNode("TTtest")->attachObject(mSceneMgr->createEntity("Torus.001.mesh"));
-	mSceneMgr->getSceneNode("SysOrigin")->scale(Ogre::Vector3(2.0f,2.0f,2.0f));
+	mSceneMgr->getRootSceneNode()->attachObject(mSceneMgr->createEntity("CoordSystem"));
 	
 	vdVideo = new Video3D(mSceneMgr->createEntity("DefGeometry"), mSceneMgr->getRootSceneNode()->createChildSceneNode(), pT_Depth, pT_RGB);	
 	vdVideo->getTargetSceneNode()->attachObject(mSceneMgr->createEntity("CoordSystem"));
+
 	// PREallocate and manage memory
-	snLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterial"), 10);
-    rsLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterial"), 10,true);
+	snLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterialSepia"), 10);
+    rsLib = new SnapshotLibrary(mSceneMgr, Ogre::String("DefGeometry"), Ogre::String("roculus3D/DynamicTextureMaterialSepia"), 10);
+    
+    // Load the prerecorded environment    
+	loadRecordedScene();
+    
 }
 
+void TutorialApplication::loadRecordedScene() {
+	
+	SimpleSummaryParser<PointType> summary_parser("./map/index.xml");
+    summary_parser.createSummaryXML("./map/");
+    
+	SimpleXMLParser<PointType> parser;
+    SimpleXMLParser<PointType>::RoomData roomData;
+    std::vector<Entities> allSweeps = summary_parser.getRooms();
 
+	std::set<size_t> idc2process; // store all indecies that shall be processed and displayed {you can specify higher indices that don't actually exist!}
+	idc2process.insert(0); 	idc2process.insert(2);	idc2process.insert(4);	idc2process.insert(6);	idc2process.insert(8);	idc2process.insert(10);
+	idc2process.insert(12);	idc2process.insert(14);	idc2process.insert(16);	
+	idc2process.insert(34); idc2process.insert(36);	idc2process.insert(38);	idc2process.insert(40);	idc2process.insert(42);	idc2process.insert(44);
+	idc2process.insert(46); idc2process.insert(48);	idc2process.insert(50);	
+	idc2process.insert(68);	idc2process.insert(70);	idc2process.insert(72);	idc2process.insert(74);	idc2process.insert(76);	idc2process.insert(78);
+	idc2process.insert(80); idc2process.insert(82);	idc2process.insert(84);
+	
+	Ogre::Image oi_rgb, oi_depth;
+	Ogre::Quaternion orientation;
+	Ogre::Vector3 position;
+	tfScalar yaw,pitch,roll;
+	Matrix3 mRot;
+	for (size_t i=0; i<allSweeps.size(); i++) {
+		
+		roomData = parser.loadRoomFromXML(allSweeps[i].roomXmlFile, &idc2process);
+		for (size_t i=0; i<roomData.vIntermediateRoomClouds.size(); i++)
+		{
+			const cv::Mat& rgbImg = roomData.vIntermediateRGBImages[i];
+			const cv::Mat& depthImg = roomData.vIntermediateDepthImages[i];
+					
+			// IMAGE FILTERING:
+			cv::GaussianBlur(depthImg, depthImg, cv::Size(11,11), 0, 0);
+					
+			oi_rgb.loadDynamicImage(static_cast<uchar*>(rgbImg.data), rgbImg.cols, rgbImg.rows, 1, Ogre::PF_BYTE_RGB);
+			oi_depth.loadDynamicImage(static_cast<uchar*>(depthImg.data), rgbImg.cols, rgbImg.rows, 1, Ogre::PF_L16);
+			
+			const tf::StampedTransform& tfCurrent = roomData.vIntermediateRoomCloudTransforms[i];
+			position.x = -tfCurrent.getOrigin().y();
+			position.y = tfCurrent.getOrigin().z();
+			position.z = -tfCurrent.getOrigin().x();
+			
+			tfCurrent.getBasis().getEulerYPR(yaw,pitch,roll);
+			mRot.FromEulerAnglesXYZ(-Radian(pitch),Radian(yaw),-Radian(roll));
+			orientation.FromRotationMatrix(mRot);
+			
+			rsLib->placeInScene(oi_depth, oi_rgb, position, orientation);
+		}
+	}
+}
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
