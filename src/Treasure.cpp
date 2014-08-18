@@ -32,13 +32,17 @@ GameState Treasure::frameEventQueued(WayPoint* currentWP, GameState gs) {
 void Treasure::init(Room *room) {
 	trigger = room->getWPs2Use()[std::rand() % room->getWPs2Use().size()];
 	this->room = room;
-	myNode->setPosition(trigger->getPosition());
-	myNode->lookAt(room->getDoorWP()->getPosition(), SceneNode::TS_WORLD);
-	myNode->setVisible(true);
 	gold->setEmitting(false);
 	gold->setVisible(false);
 	fireworks->setEmitting(false);
 	fireworks->setVisible(false);
+	myNode->setPosition(trigger->getPosition());
+	myNode->lookAt(room->getDoorWP()->getPosition(), SceneNode::TS_WORLD);
+	myNode->setVisible(true);
+	//~ gold->setEmitting(true);
+	//~ gold->setVisible(true);
+	//~ fireworks->setEmitting(true);
+	//~ fireworks->setVisible(true);
 	
 	initialized = true;
 }

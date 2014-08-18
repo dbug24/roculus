@@ -126,7 +126,7 @@ void Roculus::createScene(void)
     unsigned point_index = 0;
     
     for(float theta = 0; theta <= 2 * Math::PI; theta += Math::PI / accuracy) {
-        mPCRender->position(radius * cos(theta), 0.0f, radius * sin(theta));
+        mPCRender->position(radius * cos(theta), 0.15f, radius * sin(theta));
         mPCRender->colour(Ogre::ColourValue(0.0f, 1.0f, 0.0f, 1.0f));
         mPCRender->index(point_index++);
     }
@@ -154,7 +154,7 @@ void Roculus::createScene(void)
     rsLib = new SnapshotLibrary(mSceneMgr, Ogre::String("CamGeometry"), Ogre::String("roculus3D/DynamicTextureMaterialSepia"), 10);
     
     // Load the prerecorded environment    
-	//~ loadRecordedScene();
+	loadRecordedScene();
     
 }
 
