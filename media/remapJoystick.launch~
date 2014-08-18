@@ -1,7 +1,0 @@
-<launch>
-	<node name="JoyStick_Input" pkg="joy" type="joy_node">
-		<remap from="joy" to ="joy/original"/>
-	</node>
-	<node name="JoyStick_Remapping" pkg="rogre" type="joy_remap">
-	</node>
-</launch>
