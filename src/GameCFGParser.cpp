@@ -2,6 +2,8 @@
 using namespace Ogre;
 
 GameCFGParser::GameCFGParser() {
+	// hardcoded config file to parse
+	// Ogre::ConfigFile.load(...) will already parse the sections of the file
 	game_cfg.load(String("game.cfg"), "=", true);
 	
 	Ogre::ConfigFile::SectionIterator seci = game_cfg.getSectionIterator();
@@ -9,10 +11,12 @@ GameCFGParser::GameCFGParser() {
 	Ogre::String keyName;
 	Ogre::String valueName;
  
+	// iterate over the sections
 	while (seci.hasMoreElements())
 	{
 		sectionName = seci.peekNextKey();
 		
+		// sort after type
 		if (sectionName.compare("Corridor") == 0) {
 			cntCorridors++;
 		} else if (sectionName.compare("Room") == 0) {
@@ -21,6 +25,9 @@ GameCFGParser::GameCFGParser() {
 		
 		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
 		Ogre::ConfigFile::SettingsMultiMap::iterator i;
+		
+		// iterate over parameters
+		// and store them in a handy way
 		for (i = settings->begin(); i != settings->end(); ++i)
 		{
 			keyName = i->first;
@@ -38,11 +45,17 @@ GameCFGParser::GameCFGParser() {
 }
 
 GameCFGParser& GameCFGParser::getInstance() {
+	// get the single parser instance
 	static GameCFGParser instance;
 	return instance;
 }
 
 GameCFGParser::~GameCFGParser() { }
+
+/* All following methods work the same: they return a value based on the
+ * identifying string. Splitting it into methods allows the user of this
+ * class to directly access the values in the correct type.
+ */
 
 std::string GameCFGParser::getInitNode() {
 	return "WayPoint" + getValueAsString("Game/initWP");
@@ -92,6 +105,7 @@ std::vector<int> GameCFGParser::getWPs(const std::string& room) {
 
 std::string GameCFGParser::getValueAsString(const std::string &key)
 {
+	// check if a key exists and eventually return its value
 	if (getKeyExists(key) == true)
 	{
 		return m_Config[key];
@@ -105,6 +119,7 @@ std::string GameCFGParser::getValueAsString(const std::string &key)
 
 bool GameCFGParser::getKeyExists(const std::string &key)
 {
+	// does this key exists?
 	if (m_Config.count(key) > 0)
 	{
 		return true;

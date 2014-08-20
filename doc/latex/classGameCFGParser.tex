@@ -1,0 +1,206 @@
+\hypertarget{classGameCFGParser}{\section{\-Game\-C\-F\-G\-Parser \-Class \-Reference}
+\label{classGameCFGParser}\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}}
+}
+
+
+\-Parses the 'game.\-cfg' file. \-This class provides an easy-\/to-\/use parser for the config file of a game. \-Note that the filename is hardcoded in the constructor.  
+
+
+
+
+{\ttfamily \#include $<$\-Game\-C\-F\-G\-Parser.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\-::string \hyperlink{classGameCFGParser_ad703ab9f55a3542232f90f6b87cd85e5}{get\-Init\-Node} ()
+\item 
+int \hyperlink{classGameCFGParser_a48546c5931ccc40303713cdbbc3362f7}{get\-Nr\-Keys} ()
+\item 
+int \hyperlink{classGameCFGParser_ac7001b9a73ab8d89870d4a01d3fcb3e9}{get\-Nr\-Rooms} ()
+\item 
+int \hyperlink{classGameCFGParser_af35e4757b4cb39753b3a3779252ef61f}{get\-Nr\-Corridors} ()
+\item 
+int \hyperlink{classGameCFGParser_a4762e0fc122db2360a01d92ccf66a290}{get\-Nr\-Way\-Points} ()
+\item 
+int \hyperlink{classGameCFGParser_af4e55769fb6c312e1946320f5871d137}{get\-Door} (const std\-::string \&)
+\item 
+int \hyperlink{classGameCFGParser_a331c9e8f80f4e9db2712062e8526ea0d}{get\-Door\-Evt} (const std\-::string \&)
+\item 
+std\-::vector$<$ int $>$ \hyperlink{classGameCFGParser_a6ebc74939d28da7cfd68018202aba3f4}{get\-W\-Ps2\-Use} (const std\-::string \&)
+\item 
+std\-::vector$<$ int $>$ \hyperlink{classGameCFGParser_a88232d196c405ce5736749db1f200981}{get\-W\-Ps} (const std\-::string \&)
+\item 
+std\-::string \hyperlink{classGameCFGParser_adb5f04b377373467e3568c546e1b0eb2}{get\-Value\-As\-String} (const std\-::string \&)
+\item 
+bool \hyperlink{classGameCFGParser_ab283cea504bf1db9d35a89e95b285402}{get\-Key\-Exists} (const std\-::string \&)
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classGameCFGParser}{\-Game\-C\-F\-G\-Parser} \& \hyperlink{classGameCFGParser_a5e16899911e9978520f2b3899f05ca36}{get\-Instance} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classGameCFGParser_ad746b796abbe8e061e3da92e08d3dab7}{\-Game\-C\-F\-G\-Parser} ()
+\item 
+\hyperlink{classGameCFGParser_a2abbb5569224df6be70644311d524433}{$\sim$\-Game\-C\-F\-G\-Parser} ()
+\item 
+\hyperlink{classGameCFGParser_a50298175551786f51749010622390163}{\-Game\-C\-F\-G\-Parser} (const \hyperlink{classGameCFGParser}{\-Game\-C\-F\-G\-Parser} \&)
+\item 
+\hyperlink{classGameCFGParser}{\-Game\-C\-F\-G\-Parser} \& \hyperlink{classGameCFGParser_a8f95dc8cadfc64f785fa929d63339220}{operator=} (const \hyperlink{classGameCFGParser}{\-Game\-C\-F\-G\-Parser} \&)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\-Ogre\-::\-Config\-File \hyperlink{classGameCFGParser_a959aad3003435f1deef6f92ca7902316}{game\-\_\-cfg}
+\item 
+std\-::map$<$ std\-::string, \*
+std\-::string $>$ \hyperlink{classGameCFGParser_a4c61cec38365caa5ed4650eff682ecd9}{m\-\_\-\-Config}
+\item 
+int \hyperlink{classGameCFGParser_a42c185380b0fb82948ef24fcdbcf1f0f}{cnt\-Corridors}
+\item 
+int \hyperlink{classGameCFGParser_a026f91734a398714a8e8fae1fa3a4f7f}{cnt\-Rooms}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Parses the 'game.\-cfg' file. \-This class provides an easy-\/to-\/use parser for the config file of a game. \-Note that the filename is hardcoded in the constructor. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classGameCFGParser_ad746b796abbe8e061e3da92e08d3dab7}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}}
+\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{\-Game\-C\-F\-G\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Game\-C\-F\-G\-Parser\-::\-Game\-C\-F\-G\-Parser} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameCFGParser_ad746b796abbe8e061e3da92e08d3dab7}
+\-Default constructor. \-Hidden due to \-Singleton pattern. \hypertarget{classGameCFGParser_a2abbb5569224df6be70644311d524433}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!$\sim$\-Game\-C\-F\-G\-Parser@{$\sim$\-Game\-C\-F\-G\-Parser}}
+\index{$\sim$\-Game\-C\-F\-G\-Parser@{$\sim$\-Game\-C\-F\-G\-Parser}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{$\sim$\-Game\-C\-F\-G\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Game\-C\-F\-G\-Parser\-::$\sim$\-Game\-C\-F\-G\-Parser} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameCFGParser_a2abbb5569224df6be70644311d524433}
+\-Default destructor. \-Hidden due to \-Singleton pattern. \hypertarget{classGameCFGParser_a50298175551786f51749010622390163}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}}
+\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{\-Game\-C\-F\-G\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Game\-C\-F\-G\-Parser\-::\-Game\-C\-F\-G\-Parser} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-Game\-C\-F\-G\-Parser} \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameCFGParser_a50298175551786f51749010622390163}
+\-Copy constructor. \-Hidden due to \-Singleton pattern. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classGameCFGParser_af4e55769fb6c312e1946320f5871d137}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-Door@{get\-Door}}
+\index{get\-Door@{get\-Door}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-Door}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Game\-C\-F\-G\-Parser\-::get\-Door} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classGameCFGParser_af4e55769fb6c312e1946320f5871d137}
+\-Returns the index of the 'door' waypoint in the specified room. \hypertarget{classGameCFGParser_a331c9e8f80f4e9db2712062e8526ea0d}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-Door\-Evt@{get\-Door\-Evt}}
+\index{get\-Door\-Evt@{get\-Door\-Evt}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-Door\-Evt}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Game\-C\-F\-G\-Parser\-::get\-Door\-Evt} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classGameCFGParser_a331c9e8f80f4e9db2712062e8526ea0d}
+\-Returns the index of the 'door event' waypoint in the specified room. \hypertarget{classGameCFGParser_ad703ab9f55a3542232f90f6b87cd85e5}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-Init\-Node@{get\-Init\-Node}}
+\index{get\-Init\-Node@{get\-Init\-Node}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-Init\-Node}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Game\-C\-F\-G\-Parser\-::get\-Init\-Node} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGameCFGParser_ad703ab9f55a3542232f90f6b87cd85e5}
+\-Returns the node at which the game should be started (with the robot on it). \hypertarget{classGameCFGParser_a5e16899911e9978520f2b3899f05ca36}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-Instance@{get\-Instance}}
+\index{get\-Instance@{get\-Instance}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf \-Game\-C\-F\-G\-Parser}\& {\bf \-Game\-C\-F\-G\-Parser\-::get\-Instance} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{classGameCFGParser_a5e16899911e9978520f2b3899f05ca36}
+\-Get the (single) instance of this class. \hypertarget{classGameCFGParser_ab283cea504bf1db9d35a89e95b285402}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-Key\-Exists@{get\-Key\-Exists}}
+\index{get\-Key\-Exists@{get\-Key\-Exists}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-Key\-Exists}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Game\-C\-F\-G\-Parser\-::get\-Key\-Exists} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classGameCFGParser_ab283cea504bf1db9d35a89e95b285402}
+\-Checks whether the specified key exists (return true), or not (false). \hypertarget{classGameCFGParser_af35e4757b4cb39753b3a3779252ef61f}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-Nr\-Corridors@{get\-Nr\-Corridors}}
+\index{get\-Nr\-Corridors@{get\-Nr\-Corridors}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-Nr\-Corridors}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Game\-C\-F\-G\-Parser\-::get\-Nr\-Corridors} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGameCFGParser_af35e4757b4cb39753b3a3779252ef61f}
+\-Returns the number of corridors in the game. \hypertarget{classGameCFGParser_a48546c5931ccc40303713cdbbc3362f7}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-Nr\-Keys@{get\-Nr\-Keys}}
+\index{get\-Nr\-Keys@{get\-Nr\-Keys}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-Nr\-Keys}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Game\-C\-F\-G\-Parser\-::get\-Nr\-Keys} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGameCFGParser_a48546c5931ccc40303713cdbbc3362f7}
+\-Returns the number of keys that are placed in the game. \hypertarget{classGameCFGParser_ac7001b9a73ab8d89870d4a01d3fcb3e9}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-Nr\-Rooms@{get\-Nr\-Rooms}}
+\index{get\-Nr\-Rooms@{get\-Nr\-Rooms}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-Nr\-Rooms}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Game\-C\-F\-G\-Parser\-::get\-Nr\-Rooms} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGameCFGParser_ac7001b9a73ab8d89870d4a01d3fcb3e9}
+\-Retruns the number of rooms in the game. \hypertarget{classGameCFGParser_a4762e0fc122db2360a01d92ccf66a290}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-Nr\-Way\-Points@{get\-Nr\-Way\-Points}}
+\index{get\-Nr\-Way\-Points@{get\-Nr\-Way\-Points}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-Nr\-Way\-Points}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Game\-C\-F\-G\-Parser\-::get\-Nr\-Way\-Points} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGameCFGParser_a4762e0fc122db2360a01d92ccf66a290}
+\-Returns the number of waypoints in the game. \hypertarget{classGameCFGParser_adb5f04b377373467e3568c546e1b0eb2}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-Value\-As\-String@{get\-Value\-As\-String}}
+\index{get\-Value\-As\-String@{get\-Value\-As\-String}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-Value\-As\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Game\-C\-F\-G\-Parser\-::get\-Value\-As\-String} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classGameCFGParser_adb5f04b377373467e3568c546e1b0eb2}
+\-Utility method to get a value for the specified key. \hypertarget{classGameCFGParser_a88232d196c405ce5736749db1f200981}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-W\-Ps@{get\-W\-Ps}}
+\index{get\-W\-Ps@{get\-W\-Ps}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-W\-Ps}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$int$>$ {\bf \-Game\-C\-F\-G\-Parser\-::get\-W\-Ps} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classGameCFGParser_a88232d196c405ce5736749db1f200981}
+\-Return all waypoints that belong to the specified room. \hypertarget{classGameCFGParser_a6ebc74939d28da7cfd68018202aba3f4}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!get\-W\-Ps2\-Use@{get\-W\-Ps2\-Use}}
+\index{get\-W\-Ps2\-Use@{get\-W\-Ps2\-Use}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{get\-W\-Ps2\-Use}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$int$>$ {\bf \-Game\-C\-F\-G\-Parser\-::get\-W\-Ps2\-Use} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classGameCFGParser_a6ebc74939d28da7cfd68018202aba3f4}
+\-Returns the indices of the waypoints to use for the placement of treasures or keys in the specified room. \hypertarget{classGameCFGParser_a8f95dc8cadfc64f785fa929d63339220}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!operator=@{operator=}}
+\index{operator=@{operator=}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Game\-C\-F\-G\-Parser}\& \-Game\-C\-F\-G\-Parser\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-Game\-C\-F\-G\-Parser} \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameCFGParser_a8f95dc8cadfc64f785fa929d63339220}
+\-Assginment operator. \-Hidden due to \-Singleton pattern. 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classGameCFGParser_a42c185380b0fb82948ef24fcdbcf1f0f}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!cnt\-Corridors@{cnt\-Corridors}}
+\index{cnt\-Corridors@{cnt\-Corridors}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{cnt\-Corridors}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Game\-C\-F\-G\-Parser\-::cnt\-Corridors}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameCFGParser_a42c185380b0fb82948ef24fcdbcf1f0f}
+\-Number of \-Corridors. \hypertarget{classGameCFGParser_a026f91734a398714a8e8fae1fa3a4f7f}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!cnt\-Rooms@{cnt\-Rooms}}
+\index{cnt\-Rooms@{cnt\-Rooms}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{cnt\-Rooms}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Game\-C\-F\-G\-Parser\-::cnt\-Rooms}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameCFGParser_a026f91734a398714a8e8fae1fa3a4f7f}
+\-Number of \-Rooms. \hypertarget{classGameCFGParser_a959aad3003435f1deef6f92ca7902316}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!game\-\_\-cfg@{game\-\_\-cfg}}
+\index{game\-\_\-cfg@{game\-\_\-cfg}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{game\-\_\-cfg}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Config\-File {\bf \-Game\-C\-F\-G\-Parser\-::game\-\_\-cfg}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameCFGParser_a959aad3003435f1deef6f92ca7902316}
+\-Stores the config file to parse. \hypertarget{classGameCFGParser_a4c61cec38365caa5ed4650eff682ecd9}{\index{\-Game\-C\-F\-G\-Parser@{\-Game\-C\-F\-G\-Parser}!m\-\_\-\-Config@{m\-\_\-\-Config}}
+\index{m\-\_\-\-Config@{m\-\_\-\-Config}!GameCFGParser@{\-Game\-C\-F\-G\-Parser}}
+\subsubsection[{m\-\_\-\-Config}]{\setlength{\rightskip}{0pt plus 5cm}std\-::map$<$std\-::string, std\-::string$>$ {\bf \-Game\-C\-F\-G\-Parser\-::m\-\_\-\-Config}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameCFGParser_a4c61cec38365caa5ed4650eff682ecd9}
+\-Collects the key-\/value pairs. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Game\-C\-F\-G\-Parser.\-h\end{DoxyCompactItemize}

@@ -1,0 +1,126 @@
+\hypertarget{classSnapshotLibrary}{\section{\-Snapshot\-Library \-Class \-Reference}
+\label{classSnapshotLibrary}\index{\-Snapshot\-Library@{\-Snapshot\-Library}}
+}
+
+
+\-Groups multiple \-Snapshots in a library (vector). \-Furthermore, this class manages the memory and preallocates \-Ogre\-::\-Textures, \-Materials and \-Scene\-Nodes, whenever needed.  
+
+
+
+
+{\ttfamily \#include $<$\-Snapshot\-Library.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classSnapshotLibrary_a211bd4eb1b15c8ae8dda57ff953528e1}{place\-In\-Scene} (const \-Ogre\-::\-Image \&, const \-Ogre\-::\-Image \&, const \-Ogre\-::\-Vector3 \&, const \-Ogre\-::\-Quaternion \&)
+\item 
+void \hyperlink{classSnapshotLibrary_ac8c6b6aaee929d20cdbfc3df95c61998}{flip\-Visibility} ()
+\item 
+\hyperlink{classSnapshotLibrary_a2db1cb6e6550c677b9a609964b7a74cb}{\-Snapshot\-Library} (\-Ogre\-::\-Scene\-Manager $\ast$, const \-Ogre\-::\-String \&, const \-Ogre\-::\-String \&, int)
+\item 
+\hyperlink{classSnapshotLibrary_a0eb263c926c8607b8943550984915933}{$\sim$\-Snapshot\-Library} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classSnapshotLibrary_af8b18edc145bf95a04f3c64659ce0904}{allocate} (int)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\-::vector$<$ \hyperlink{classSnapshot}{\-Snapshot} $\ast$ $>$ \hyperlink{classSnapshotLibrary_adc6f783d638a9ff4744b16bfa66b8953}{library}
+\item 
+int \hyperlink{classSnapshotLibrary_ac57409313d63db08bf743da47c768781}{current\-Snapshot}
+\item 
+int \hyperlink{classSnapshotLibrary_a8d1f7abf98dbb1f9cb8e82657218b850}{max\-Snapshots}
+\item 
+\-Ogre\-::\-String \hyperlink{classSnapshotLibrary_a968263cf5e86e9d2be54bae17fd69b00}{\-Entity\-Prototype}
+\item 
+\-Ogre\-::\-String \hyperlink{classSnapshotLibrary_a34479d4ccada0297ff80a41a4adf5100}{\-Material\-Prototype}
+\item 
+\-Ogre\-::\-Scene\-Manager $\ast$ \hyperlink{classSnapshotLibrary_a59737af324c6e35b0fe67b1ad60b8a8a}{m\-Scene\-Mgr}
+\item 
+\-Ogre\-::\-Scene\-Node $\ast$ \hyperlink{classSnapshotLibrary_aa510467111273c06dceeb3435d586e66}{m\-Master\-Scene\-Node}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Groups multiple \-Snapshots in a library (vector). \-Furthermore, this class manages the memory and preallocates \-Ogre\-::\-Textures, \-Materials and \-Scene\-Nodes, whenever needed. 
+
+$<$ 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classSnapshotLibrary_a2db1cb6e6550c677b9a609964b7a74cb}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!\-Snapshot\-Library@{\-Snapshot\-Library}}
+\index{\-Snapshot\-Library@{\-Snapshot\-Library}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{\-Snapshot\-Library}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Snapshot\-Library\-::\-Snapshot\-Library} (
+\begin{DoxyParamCaption}
+\item[{\-Ogre\-::\-Scene\-Manager $\ast$}]{, }
+\item[{const \-Ogre\-::\-String \&}]{, }
+\item[{const \-Ogre\-::\-String \&}]{, }
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{classSnapshotLibrary_a2db1cb6e6550c677b9a609964b7a74cb}
+\-Initialize the object with\-: (1) the scene manager (for object creation), (2) the entity prototype for the camera geometry, (3) the default material and (4) the number of snapshots for which memory should be preallocated each time. \hypertarget{classSnapshotLibrary_a0eb263c926c8607b8943550984915933}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!$\sim$\-Snapshot\-Library@{$\sim$\-Snapshot\-Library}}
+\index{$\sim$\-Snapshot\-Library@{$\sim$\-Snapshot\-Library}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{$\sim$\-Snapshot\-Library}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Snapshot\-Library\-::$\sim$\-Snapshot\-Library} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classSnapshotLibrary_a0eb263c926c8607b8943550984915933}
+\-Default destructor. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classSnapshotLibrary_af8b18edc145bf95a04f3c64659ce0904}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!allocate@{allocate}}
+\index{allocate@{allocate}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{allocate}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Snapshot\-Library\-::allocate} (
+\begin{DoxyParamCaption}
+\item[{int}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshotLibrary_af8b18edc145bf95a04f3c64659ce0904}
+\-Utility method to allocate new memory for a number of snapshots. \hypertarget{classSnapshotLibrary_ac8c6b6aaee929d20cdbfc3df95c61998}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!flip\-Visibility@{flip\-Visibility}}
+\index{flip\-Visibility@{flip\-Visibility}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{flip\-Visibility}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Snapshot\-Library\-::flip\-Visibility} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classSnapshotLibrary_ac8c6b6aaee929d20cdbfc3df95c61998}
+\-Toggle the visiblity of all snapshots in the library. \hypertarget{classSnapshotLibrary_a211bd4eb1b15c8ae8dda57ff953528e1}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!place\-In\-Scene@{place\-In\-Scene}}
+\index{place\-In\-Scene@{place\-In\-Scene}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{place\-In\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Snapshot\-Library\-::place\-In\-Scene} (
+\begin{DoxyParamCaption}
+\item[{const \-Ogre\-::\-Image \&}]{, }
+\item[{const \-Ogre\-::\-Image \&}]{, }
+\item[{const \-Ogre\-::\-Vector3 \&}]{, }
+\item[{const \-Ogre\-::\-Quaternion \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classSnapshotLibrary_a211bd4eb1b15c8ae8dda57ff953528e1}
+\-Places a new snapshot in the scene. \-Basically, this is done by forwarding the command to the \hyperlink{classSnapshot}{\-Snapshot} class, but it involves some memory check beforehand. 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classSnapshotLibrary_ac57409313d63db08bf743da47c768781}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!current\-Snapshot@{current\-Snapshot}}
+\index{current\-Snapshot@{current\-Snapshot}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{current\-Snapshot}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Snapshot\-Library\-::current\-Snapshot}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshotLibrary_ac57409313d63db08bf743da47c768781}
+\-The current snapshot index. \hypertarget{classSnapshotLibrary_a968263cf5e86e9d2be54bae17fd69b00}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!\-Entity\-Prototype@{\-Entity\-Prototype}}
+\index{\-Entity\-Prototype@{\-Entity\-Prototype}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{\-Entity\-Prototype}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-String {\bf \-Snapshot\-Library\-::\-Entity\-Prototype}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshotLibrary_a968263cf5e86e9d2be54bae17fd69b00}
+\-The entity prototype. \hypertarget{classSnapshotLibrary_adc6f783d638a9ff4744b16bfa66b8953}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!library@{library}}
+\index{library@{library}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{library}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf \-Snapshot}$\ast$$>$ {\bf \-Snapshot\-Library\-::library}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshotLibrary_adc6f783d638a9ff4744b16bfa66b8953}
+\-The vector of \hyperlink{classSnapshot}{\-Snapshot} objects. \hypertarget{classSnapshotLibrary_a34479d4ccada0297ff80a41a4adf5100}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!\-Material\-Prototype@{\-Material\-Prototype}}
+\index{\-Material\-Prototype@{\-Material\-Prototype}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{\-Material\-Prototype}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-String {\bf \-Snapshot\-Library\-::\-Material\-Prototype}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshotLibrary_a34479d4ccada0297ff80a41a4adf5100}
+\-The material prototype. \hypertarget{classSnapshotLibrary_a8d1f7abf98dbb1f9cb8e82657218b850}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!max\-Snapshots@{max\-Snapshots}}
+\index{max\-Snapshots@{max\-Snapshots}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{max\-Snapshots}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Snapshot\-Library\-::max\-Snapshots}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshotLibrary_a8d1f7abf98dbb1f9cb8e82657218b850}
+\-The current maximal size of the library. \hypertarget{classSnapshotLibrary_aa510467111273c06dceeb3435d586e66}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!m\-Master\-Scene\-Node@{m\-Master\-Scene\-Node}}
+\index{m\-Master\-Scene\-Node@{m\-Master\-Scene\-Node}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{m\-Master\-Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Scene\-Node$\ast$ {\bf \-Snapshot\-Library\-::m\-Master\-Scene\-Node}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshotLibrary_aa510467111273c06dceeb3435d586e66}
+\-The scene node of this library. \hypertarget{classSnapshotLibrary_a59737af324c6e35b0fe67b1ad60b8a8a}{\index{\-Snapshot\-Library@{\-Snapshot\-Library}!m\-Scene\-Mgr@{m\-Scene\-Mgr}}
+\index{m\-Scene\-Mgr@{m\-Scene\-Mgr}!SnapshotLibrary@{\-Snapshot\-Library}}
+\subsubsection[{m\-Scene\-Mgr}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Scene\-Manager$\ast$ {\bf \-Snapshot\-Library\-::m\-Scene\-Mgr}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshotLibrary_a59737af324c6e35b0fe67b1ad60b8a8a}
+\-The scene manager. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Snapshot\-Library.\-h\end{DoxyCompactItemize}

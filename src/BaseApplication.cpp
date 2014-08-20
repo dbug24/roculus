@@ -32,13 +32,11 @@ using namespace std;
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
 	: mRoot(0),
-	  mCamera(0),
 	  mSceneMgr(0),
 	  mWindow(0),
 	  mResourcesCfg(Ogre::StringUtil::BLANK),
 	  mPluginsCfg(Ogre::StringUtil::BLANK),
 	  mTrayMgr(0),
-	  mCameraMan(0),
 	  mDetailsPanel(0),
 	  mCursorWasVisible(false),
 	  mShutDown(false),
@@ -48,7 +46,6 @@ BaseApplication::BaseApplication(void)
 	  mPlayer(0),
 	  mPlayerBodyNode(0),
 	  mOverlaySystem(0),
-	  mPCRender(0),
 	  robotModel(0),
       syncedUpdate(false),
 	  takeSnapshot(false),
@@ -84,8 +81,8 @@ BaseApplication::BaseApplication(void)
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
+	// clean up all rendering related components and managers
 	if (mTrayMgr) delete mTrayMgr;
-	if (mCameraMan) delete mCameraMan;
 	if (mOverlaySystem) delete mOverlaySystem;
 	if (snLib) delete snLib;
 	if (rsLib) delete rsLib;
@@ -94,6 +91,7 @@ BaseApplication::~BaseApplication(void)
 	//Remove ourself as a Window listener
 	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	windowClosed(mWindow);
+	// final engine shutdown
 	delete mRoot;
 }
  
@@ -129,6 +127,7 @@ void BaseApplication::chooseSceneManager(void)
 //-------------------------------------------------------------------------------------
 void BaseApplication::createFrameListener(void)
 {
+	// Set up the management for the input handling
 	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
 	OIS::ParamList pl;
 	size_t windowHnd = 0;
@@ -176,29 +175,22 @@ void BaseApplication::createFrameListener(void)
 	mDetailsPanel->setParamValue(5, "Solid (default)");
 	mDetailsPanel->hide();
  
+	// register at the Ogre root
 	mRoot->addFrameListener(this);
 }
 //-------------------------------------------------------------------------------------
 void BaseApplication::destroyScene(void)
 {
+	if (robotModel) delete robotModel;
+	robotModel = NULL;
+	if (mPlayer) delete mPlayer;
+	mPlayer = NULL;
+	if (oculus) delete oculus;
+	oculus = NULL;
+	// add stuff here if necessary
 }
 //-------------------------------------------------------------------------------------
 
-void BaseApplication::cleanUp(void) {
-
-}
-
-void BaseApplication::createViewports(void)
-{
-	// Create one viewport, entire window
-	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
-	vp->setBackgroundColour(Ogre::ColourValue(0.1f,0.1f,0.1f));
- 
-	// Alter the camera aspect ratio to match the viewport
-	mCamera->setAspectRatio(
-		Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-}
-//-------------------------------------------------------------------------------------
 void BaseApplication::setupResources(void)
 {
 	// Load resource paths from config file
@@ -233,7 +225,6 @@ void BaseApplication::setupResources(void)
 //-------------------------------------------------------------------------------------
 void BaseApplication::createResourceListener(void)
 {
- 
 }
 //-------------------------------------------------------------------------------------
 void BaseApplication::loadResources(void)
@@ -243,27 +234,30 @@ void BaseApplication::loadResources(void)
 //-------------------------------------------------------------------------------------
 void BaseApplication::go(void)
 {
-#ifdef _DEBUG
-	#ifndef OGRE_STATIC_LIB	
-		mResourcesCfg = m_ResourcePath + "resources_d.cfg";
-		mPluginsCfg = m_ResourcePath + "plugins_d.cfg";
+	// These are the resources to be loaded:
+	#ifdef _DEBUG
+		#ifndef OGRE_STATIC_LIB	
+			mResourcesCfg = m_ResourcePath + "resources_d.cfg";
+			mPluginsCfg = m_ResourcePath + "plugins_d.cfg";
+		#else
+			mResourcesCfg = "resources_d.cfg";
+			mPluginsCfg = "plugins_d.cfg";
+		#endif
 	#else
-		mResourcesCfg = "resources_d.cfg";
-		mPluginsCfg = "plugins_d.cfg";
+		#ifndef OGRE_STATIC_LIB
+			mResourcesCfg = m_ResourcePath + "resources.cfg";
+			mPluginsCfg = m_ResourcePath + "plugins.cfg";
+		#else
+			mResourcesCfg = "resources.cfg";
+			mPluginsCfg = "plugins.cfg";
+		#endif
 	#endif
-#else
-	#ifndef OGRE_STATIC_LIB
-		mResourcesCfg = m_ResourcePath + "resources.cfg";
-		mPluginsCfg = m_ResourcePath + "plugins.cfg";
-	#else
-		mResourcesCfg = "resources.cfg";
-		mPluginsCfg = "plugins.cfg";
-	#endif
-#endif
  
+	// set everything up
 	if (!setup())
 		return;
 
+	// on success ROS can be started
 	hRosSpinner->start();
 	std::cout << " ---> ROS spinning." << std::endl;
 	
@@ -271,27 +265,24 @@ void BaseApplication::go(void)
 	boost::posix_time::milliseconds wait(1000);
 	boost::this_thread::sleep(wait);
 	
+	// start the rendering loop
 	mRoot->startRendering();
 
+	// on shutdown stop ROS
 	hRosSpinner->stop();
+	// clean up scene components
 	destroyScene();
-
-	if (robotModel) delete robotModel;
-	robotModel = NULL;
-	if (mPlayer) delete mPlayer;
-	mPlayer = NULL;
-	if (oculus) delete oculus;
-	oculus = NULL;
-
+	// clean up ROS
 	destroyROS();
-	cleanUp();
 }
 
 //-------------------------------------------------------------------------------------
 bool BaseApplication::setup(void)
 {
+	// Start the Ogre::Root
 	mRoot = new Ogre::Root(mPluginsCfg);
  
+	// Parse the resource.cfg file
 	setupResources();
  
 	bool carryOn = configure();
@@ -309,19 +300,25 @@ bool BaseApplication::setup(void)
  
 	// Create the scene
 	createScene();
- 
-	createFrameListener();
-	
+ 	createFrameListener();
+
+	// initialize the GAME (singleton pattern)
 	Game::getInstance().init(mSceneMgr);
 	
+	// get a SceneNode for the PlayerBody
 	mPlayerBodyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("PlayerBodyNode");
+	// set up the Oculus Rift (and along with it cameras and viewports of the engine)
 	oculus = new Oculus();
 	oculus->setupOculus();
 	oculus->setupOgre(mSceneMgr, mWindow, mPlayerBodyNode);
+	
+	// set up the components from the master thesis application
+	// (wow, that really was some low level of coding I did there...)
 	mPlayer = new PlayerBody(mPlayerBodyNode);
 	robotModel = new Robot(mSceneMgr);
 	globalMap = new GlobalMap(mSceneMgr);
 	
+	// configure the ROS setup
 	initROS();
 
 	return true;
@@ -340,7 +337,9 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 		//~ syncedUpdate = false;
 	//~ }
 	
+	// update video node if necessary
 	if (videoUpdate) {
+		// but first take a Snapshot, if it was requested
 		if (takeSnapshot) {
 			snLib->placeInScene(depVideo, texVideo, vdPos, vdOri);
 			takeSnapshot = false;
@@ -349,9 +348,10 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 		videoUpdate = false;
 	}
 	
+	// insert the map
 	if (mapArrived) {
 		globalMap->includeMap(mapImage);
-		globalMap->flipVisibility();
+		//~ globalMap->flipVisibility();
 		mapArrived = false;
 	}
 	
@@ -360,6 +360,7 @@ bool BaseApplication::frameStarted(const Ogre::FrameEvent& evt)
 
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 	
+	// get the exclusive access to the GAME data
 	boost::recursive_mutex::scoped_lock lock(GAME_MUTEX);
 	//Need to capture/update each device, JoyStick is handled by ROS
 	mKeyboard->capture();
@@ -367,13 +368,14 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 
 	mTrayMgr->frameRenderingQueued(evt);
 
-	robotModel->updateFrom(tfListener); // Update the robot as well
+	robotModel->updateFrom(tfListener); // Update the robot's position and orientation
 	if (mPlayer->isFirstPerson()) {
-		mPlayer->frameRenderingQueued(robotModel);  
+		mPlayer->frameRenderingQueued(robotModel);  // first-person mode will mout the player on top of the robot
 	} else {
-		mPlayer->frameRenderingQueued(evt); // Apply player(~body) movement
+		mPlayer->frameRenderingQueued(evt); // Apply player(~body) movement, if not in first-person
 	}
 
+	// update the panel information
 	if (mDetailsPanel->isVisible()) {
 		mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedPosition().x));
 		mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(oculus->getCameraNode()->_getDerivedPosition().y));
@@ -382,9 +384,11 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 		mDetailsPanel->setParamValue(7, Game::getInstance().getState());
 	}
 
-	oculus->update(); // Set OCULUS orientation
+	// update the oculus orientation
+	oculus->update();
 
-	// For game navigation:
+	// for game navigation:
+	// 1st: update the cursor
 	Ogre::Vector3 pos(mPlayerBodyNode->getPosition()+Ogre::Vector3::UNIT_Y*0.7);
 	Ogre::Quaternion qView = Ogre::Quaternion(mPlayerBodyNode->getOrientation().getYaw(), Ogre::Vector3::UNIT_Y)*oculus->getOrientation();
 	Ogre::Vector3 view(-qView.zAxis());
@@ -393,15 +397,18 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 	xzPoint.y = 0.05f;
 	cursor->setPosition(xzPoint);
 	targetWPName = Game::getInstance().highlightClosestWP(cursor->getPosition());
-	
+	// 2nd: process the input and derive the GAME's state
 	if (Game::getInstance().isRunning() && closestWP != -1) {
 		Game::getInstance().frameEventQueued(closestWP);
 	}
+	
+	return true;
 }
 
 bool BaseApplication::frameEnded(const Ogre::FrameEvent& evt) {
 	// Lock the framerate and save some processing power
 	int dt = 25000 - int(1000000.0*evt.timeSinceLastFrame);
+	// ...IF we have the resources...
 	if (dt < 0) dt = 0;
 	if (dt > 25000) dt = 25000;
 	boost::posix_time::microseconds wait(dt);
@@ -465,8 +472,8 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 			//~ LogManager::getSingletonPtr()->logMessage("!!!I am not sending any goals right now!!!");
 		}
 	} else if (arg.key == OIS::KC_I) {
-		/* Code to reinitiate game with the robot driving the the initWP */
 		
+		/* Code to reinitiate game with the robot driving the the initWP */
 		//~ rosieActionClient->waitForServer();
 		//~ topological_navigation::GotoNodeGoal goal;
 		//~ goal.target = Game::getInstance().getInitWP();
@@ -506,9 +513,9 @@ bool BaseApplication::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButto
 	return true;
 }
  
-//Adjust mouse clipping area
 void BaseApplication::windowResized(Ogre::RenderWindow* rw)
 {
+	//Adjust mouse clipping area
 	unsigned int width, height, depth;
 	int left, top;
 	rw->getMetrics(width, height, depth, left, top);
@@ -518,9 +525,10 @@ void BaseApplication::windowResized(Ogre::RenderWindow* rw)
 	ms.height = height;
 }
  
-//Unattach OIS before window shutdown (very important under Linux)
+
 void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 {
+	//Unattach OIS before window shutdown (very important under Linux)
 	//Only close for window that created OIS (the main window in these demos)
 	if( rw == mWindow )
 	{
@@ -571,6 +579,7 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 //~ 
 	//~ if (!syncedUpdate) {
 //~ 
+		/* DEPRECATED CODE VERSION: Take a look at syncVideoCallback to see how to do it better!!! */
 		//~ Ogre::MemoryDataStream depthStr(depthImg->data.size(), false, false);
 		//~ Ogre::MemoryDataStream rgbStr(rgbImg->data.size(), false, false);
 		//~ 
@@ -626,10 +635,15 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 //~ }
 
 void BaseApplication::syncVideoCallback(const sensor_msgs::CompressedImageConstPtr& depthImg, const sensor_msgs::CompressedImageConstPtr& rgbImg) {
+	/* Receive a depth-rgb pair of images, filter and convert them into the Ogre format and fetch the according transformation
+	 * in order to complete a valid Snapshot */
+	 
+	 // used for the coordinate tranformation from ROS to Ogre
 	static tfScalar yaw,pitch,roll;
 	static tf::StampedTransform vdTransform;
 	static Ogre::Matrix3 mRot;
 	
+	 // Only if the last update was rendered
 	if (!videoUpdate) {			
 		try {
 			// We have to cut away the compression header to load the depth image into openCV
@@ -695,27 +709,35 @@ void BaseApplication::joyCallback(const sensor_msgs::Joy::ConstPtr &joy ) {
 	mPlayer->injectROSJoy(joy);
 	
 	if (l_button0 == false && joy->buttons[0] != 0 && takeSnapshot == false) {
+		// request recording of a Snapshot
 		takeSnapshot = true;
 	}
 	else if (l_button1 == false && joy->buttons[1] != 0) {
+		// make all manually taken Snapshots invisible (effectively you can record a second set of images)
 		snLib->flipVisibility();
 	}
 	else if (l_button2 == false && joy->buttons[2] != 0) {
+		// make all room sweep Snapshots invisible (effectively you can record a second set of images)
 		rsLib->flipVisibility();
 	}
 	else if (l_button3 == false && joy->buttons[3] != 0) {
+		// trigger a room sweep
 		//~ boost::thread tmpThread(boost::bind(&BaseApplication::triggerPanoramaPTUScan, this));
 	}
 	else if (l_button5 == false && joy->buttons[5] != 0) {
+		// switch between first person and free viewpoint
 		mPlayer->toggleFirstPersonMode();
 	}
 	else if (joy->buttons[7] != 0) {
+		// set the oculus orientation back to IDENTITY (effectively looking into the direction the PlayerBody has)
 		oculus->resetOrientation();
 	}
 	else if (l_button9 == false && joy->buttons[9] != 0) {
+		// toggle the map
 		globalMap->flipVisibility();
 	}
 	
+	// make sure that button is released before triggering an event repeatedly
 	l_button0 = (joy->buttons[0] != 0);
 	l_button1 = (joy->buttons[1] != 0);
 	l_button2 = (joy->buttons[2] != 0);
@@ -725,7 +747,7 @@ void BaseApplication::joyCallback(const sensor_msgs::Joy::ConstPtr &joy ) {
 }
 
 void BaseApplication::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr& map) {
-	
+	/* Still the old code version with a memory leak (but is only triggered once) */
 	Ogre::MemoryDataStream dataStream(map->data.size(), false, false);
 	Ogre::uint8 value(0);
 	for (int i=0; i<map->data.size(); i++) {
@@ -748,7 +770,7 @@ void BaseApplication::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr& map) 
 }
 
 void BaseApplication::topoNodesCB(const visualization_msgs::InteractiveMarkerInit::ConstPtr& data){
-
+	// get exclusive access for the GAME in order to reset the waypoint parameters
 	boost::recursive_mutex::scoped_lock lock(GAME_MUTEX);
 
 	for (int i=0;i<data->markers.size();i++) {
@@ -778,9 +800,10 @@ void BaseApplication::topoNodesCB(const visualization_msgs::InteractiveMarkerIni
 }
 
 void BaseApplication::closestWayPointCB(const std_msgs::String::ConstPtr& data) {
+	// get the waypoint of the robot
 	std::string name(data->data);
 	if (name.substr(0,8).compare("WayPoint") == 0) {
-		closestWP = boost::lexical_cast<int>(name.erase(0,8)); //Erase "WayPoint" before casting
+		closestWP = boost::lexical_cast<int>(name.erase(0,8)); //Erase string "WayPoint" before casting
 	} else {
 		std::cout << "Node unknown:" << name << std::endl;
 		closestWP = -1;
@@ -801,9 +824,11 @@ void BaseApplication::initROS() {
   hRosSubMap = new ros::Subscriber(hRosNode->subscribe<nav_msgs::OccupancyGrid>
 				("/map", 1, boost::bind(&BaseApplication::mapCallback, this, _1)));
                 
+  /* Subscription for the waypoints */
   hRosSubNodes = new ros::Subscriber(hRosNode->subscribe<visualization_msgs::InteractiveMarkerInit>
                 ("/kth_floorsix_y2_topo_markers/update_full", 1, boost::bind(&BaseApplication::topoNodesCB, this, _1)));
-                
+  
+  /* Subscription for the closest WP / current WP */
   hRosSubCloseWP = new ros::Subscriber(hRosNode->subscribe<std_msgs::String>
                 ("/current_node", 1, boost::bind(&BaseApplication::closestWayPointCB, this, _1)));
 
@@ -833,11 +858,14 @@ void BaseApplication::initROS() {
 	/* Setting up the tfListener, action clients and initialize the AsyncSpinner */
   //~ rosPTUClient = new Client("ptu_pan_tilt_metric_map", true);
   rosieActionClient = new actionlib::SimpleActionClient<topological_navigation::GotoNodeAction>("topological_navigation", true);
-  tfListener = new tf::TransformListener(); 
+  tfListener = new tf::TransformListener();
+  
+  /* AsyncSpinner to process msgs. in a separate thread (param =!= 1) */
   hRosSpinner = new ros::AsyncSpinner(1);
 }
 
 void BaseApplication::destroyROS() {
+	// shutdown ROS and free all memory, if necessary
   ros::shutdown();
   if (hRosSpinner) {
     delete hRosSpinner;

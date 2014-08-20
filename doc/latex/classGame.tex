@@ -1,0 +1,274 @@
+\hypertarget{classGame}{\section{\-Game \-Class \-Reference}
+\label{classGame}\index{\-Game@{\-Game}}
+}
+
+
+\-Singleton pattern class to manage the demo-\/game. \-This class manages the demo-\/game and is responsible for all related objects, their (repeatable) initialization and the game process.  
+
+
+
+
+{\ttfamily \#include $<$\-Game.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classGame_a2f27f1c291c93f6d7f92e83d887f829f}{init} (\-Scene\-Manager $\ast$)
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classGame_a866d4f9558c0db8b9df1a86ae8300858}{get\-W\-P\-By\-Id} (int)
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classGame_aa364e9488c80216844c77ce81b2495a8}{get\-W\-P\-By\-Name} (const \-String \&)
+\item 
+std\-::string \hyperlink{classGame_af74c96ac1d39ce6f1ca9874c8cef4444}{get\-Init\-W\-P} ()
+\item 
+\-String \hyperlink{classGame_a8c026e73dbeeb6972f54c3d21a39b89e}{highlight\-Closest\-W\-P} (const \-Vector3 \&)
+\item 
+\-String \hyperlink{classGame_a62853a0ff9af086067da2dc102850cbb}{get\-State} ()
+\item 
+void \hyperlink{classGame_a7c39e1c575ef58a513f32fe1a7f42c52}{place\-Persistent\-Marker} (const \-String \&)
+\item 
+void \hyperlink{classGame_ae954c7759cc186cdf83bd6cc3cfa8419}{print} ()
+\item 
+void \hyperlink{classGame_ab136a509fabb87b2a0d1fda33d11a457}{start\-Game\-Session} ()
+\item 
+\-Game\-State \hyperlink{classGame_ae2e9b7906d1484b598edc707b1bd45dd}{frame\-Event\-Queued} (int)
+\item 
+bool \hyperlink{classGame_a84a979ffa2ce4f8b0df1951a9ce76ecb}{is\-Running} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classGame}{\-Game} \& \hyperlink{classGame_ab5b377b52d78849aed162538121a20a0}{get\-Instance} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classGame_ad59df6562a58a614fda24622d3715b65}{\-Game} ()
+\item 
+\hyperlink{classGame_ae3d112ca6e0e55150d2fdbc704474530}{$\sim$\-Game} ()
+\item 
+\hyperlink{classGame_aa79443880de5f26387c2a1c70c8c1aae}{\-Game} (const \hyperlink{classGame}{\-Game} \&)
+\item 
+\hyperlink{classGame}{\-Game} \& \hyperlink{classGame_a3face37327a3fcbbdb96494d58d85c48}{operator=} (const \hyperlink{classGame}{\-Game} \&)
+\item 
+\hyperlink{classRoom}{\-Room} $\ast$ \hyperlink{classGame_aa9c0d063672042d5751fb4c904b6a5b3}{get\-Rnd\-Room} (std\-::set$<$ int $>$ \&room\-N\-Rs)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classGame_aea14eeeea7d21e4ec2353957275aa8d9}{initiated}
+\item 
+\-Scene\-Manager $\ast$ \hyperlink{classGame_a5f59202a5d81c57c0f1c8f8c717067ff}{m\-Scene\-Mgr}
+\item 
+\-Scene\-Node $\ast$ \hyperlink{classGame_a1ea0118411f7ae6315bc8e48dea4d074}{marker}
+\item 
+\-Scene\-Node $\ast$ \hyperlink{classGame_a01b72d441b419041c80ba13b17ccd1a3}{pers\-Marker}
+\item 
+std\-::vector$<$ \hyperlink{classWayPoint}{\-Way\-Point} $\ast$ $>$ \hyperlink{classGame_ad8fcb3fbae1a4b604fc243e5e2717909}{way\-Points}
+\item 
+std\-::vector$<$ \hyperlink{classRoom}{\-Room} $\ast$ $>$ \hyperlink{classGame_a2224f48ac11275212f97d0bfad0aa5d0}{rooms}
+\item 
+std\-::vector$<$ \hyperlink{classRoom}{\-Room} $\ast$ $>$ \hyperlink{classGame_ae3be567935e24e323adfd4d49d345f95}{corridors}
+\item 
+std\-::vector$<$ \hyperlink{classGameObject}{\-Game\-Object} $\ast$ $>$ \hyperlink{classGame_a9fbc762ef50edb2804683eaafb3d45f3}{game\-Objects}
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classGame_ab249da316eee71f550d2cb8962c1525f}{select}
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classGame_a9f00f5b2803e11c6916f5b473b16af74}{init\-W\-P}
+\item 
+\-Real \hyperlink{classGame_a2ad28722eec0aea922bb205220a80fe8}{dist\-Min}
+\item 
+\-Real \hyperlink{classGame_a77c996af0e47853d824e25a20faecb0d}{distance}
+\item 
+\-Game\-State \hyperlink{classGame_ad9fc2a8710ee56916f79314b91112ed0}{state}
+\item 
+\hyperlink{classDoor}{\-Door} $\ast$ \hyperlink{classGame_af92011162a240ad43f9171329e391942}{door}
+\item 
+\hyperlink{classTreasure}{\-Treasure} $\ast$ \hyperlink{classGame_ad13ac2228cd02743a92666aa7ecdf5ea}{treasure}
+\item 
+bool \hyperlink{classGame_a8ca5b9f8a62990e6022de17785beac2c}{running}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Singleton pattern class to manage the demo-\/game. \-This class manages the demo-\/game and is responsible for all related objects, their (repeatable) initialization and the game process. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classGame_ad59df6562a58a614fda24622d3715b65}{\index{\-Game@{\-Game}!\-Game@{\-Game}}
+\index{\-Game@{\-Game}!Game@{\-Game}}
+\subsubsection[{\-Game}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Game\-::\-Game} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}\label{classGame_ad59df6562a58a614fda24622d3715b65}
+\-Default constructor, not to be used outside class scope. \hypertarget{classGame_ae3d112ca6e0e55150d2fdbc704474530}{\index{\-Game@{\-Game}!$\sim$\-Game@{$\sim$\-Game}}
+\index{$\sim$\-Game@{$\sim$\-Game}!Game@{\-Game}}
+\subsubsection[{$\sim$\-Game}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Game\-::$\sim$\-Game} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_ae3d112ca6e0e55150d2fdbc704474530}
+\-Default destructor. \hypertarget{classGame_aa79443880de5f26387c2a1c70c8c1aae}{\index{\-Game@{\-Game}!\-Game@{\-Game}}
+\index{\-Game@{\-Game}!Game@{\-Game}}
+\subsubsection[{\-Game}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Game\-::\-Game} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-Game} \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_aa79443880de5f26387c2a1c70c8c1aae}
+\-Copy constructor, hidden due to singleton pattern. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classGame_ae2e9b7906d1484b598edc707b1bd45dd}{\index{\-Game@{\-Game}!frame\-Event\-Queued@{frame\-Event\-Queued}}
+\index{frame\-Event\-Queued@{frame\-Event\-Queued}!Game@{\-Game}}
+\subsubsection[{frame\-Event\-Queued}]{\setlength{\rightskip}{0pt plus 5cm}\-Game\-State {\bf \-Game\-::frame\-Event\-Queued} (
+\begin{DoxyParamCaption}
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{classGame_ae2e9b7906d1484b598edc707b1bd45dd}
+\-Process the game. \-The \-Game\-State is known internally, the parameter is the current waypoint \-I\-D of the robot. \hypertarget{classGame_af74c96ac1d39ce6f1ca9874c8cef4444}{\index{\-Game@{\-Game}!get\-Init\-W\-P@{get\-Init\-W\-P}}
+\index{get\-Init\-W\-P@{get\-Init\-W\-P}!Game@{\-Game}}
+\subsubsection[{get\-Init\-W\-P}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Game\-::get\-Init\-W\-P} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGame_af74c96ac1d39ce6f1ca9874c8cef4444}
+\-Get the waypoint the game shall be started at (robot location). \hypertarget{classGame_ab5b377b52d78849aed162538121a20a0}{\index{\-Game@{\-Game}!get\-Instance@{get\-Instance}}
+\index{get\-Instance@{get\-Instance}!Game@{\-Game}}
+\subsubsection[{get\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf \-Game}\& {\bf \-Game\-::get\-Instance} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{classGame_ab5b377b52d78849aed162538121a20a0}
+\-Get the single instance of the \hyperlink{classGame}{\-Game} class. \hypertarget{classGame_aa9c0d063672042d5751fb4c904b6a5b3}{\index{\-Game@{\-Game}!get\-Rnd\-Room@{get\-Rnd\-Room}}
+\index{get\-Rnd\-Room@{get\-Rnd\-Room}!Game@{\-Game}}
+\subsubsection[{get\-Rnd\-Room}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Room}$\ast$ {\bf \-Game\-::get\-Rnd\-Room} (
+\begin{DoxyParamCaption}
+\item[{std\-::set$<$ int $>$ \&}]{room\-N\-Rs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_aa9c0d063672042d5751fb4c904b6a5b3}
+\-Utility function\-: get a random room from the set of all rooms and erase that room number/index from the set. \hypertarget{classGame_a62853a0ff9af086067da2dc102850cbb}{\index{\-Game@{\-Game}!get\-State@{get\-State}}
+\index{get\-State@{get\-State}!Game@{\-Game}}
+\subsubsection[{get\-State}]{\setlength{\rightskip}{0pt plus 5cm}\-String {\bf \-Game\-::get\-State} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGame_a62853a0ff9af086067da2dc102850cbb}
+\-Return the \-Game\-State. \hypertarget{classGame_a866d4f9558c0db8b9df1a86ae8300858}{\index{\-Game@{\-Game}!get\-W\-P\-By\-Id@{get\-W\-P\-By\-Id}}
+\index{get\-W\-P\-By\-Id@{get\-W\-P\-By\-Id}!Game@{\-Game}}
+\subsubsection[{get\-W\-P\-By\-Id}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Game\-::get\-W\-P\-By\-Id} (
+\begin{DoxyParamCaption}
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{classGame_a866d4f9558c0db8b9df1a86ae8300858}
+\-Get a waypoint using its \-I\-D as identifier. \hypertarget{classGame_aa364e9488c80216844c77ce81b2495a8}{\index{\-Game@{\-Game}!get\-W\-P\-By\-Name@{get\-W\-P\-By\-Name}}
+\index{get\-W\-P\-By\-Name@{get\-W\-P\-By\-Name}!Game@{\-Game}}
+\subsubsection[{get\-W\-P\-By\-Name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Game\-::get\-W\-P\-By\-Name} (
+\begin{DoxyParamCaption}
+\item[{const \-String \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classGame_aa364e9488c80216844c77ce81b2495a8}
+\-Get a waypoint using its name as identifier. \-String search is not very performant -\/$>$ use with care. (\-Not \-E\-A\-C\-H frame!!!). \hypertarget{classGame_a8c026e73dbeeb6972f54c3d21a39b89e}{\index{\-Game@{\-Game}!highlight\-Closest\-W\-P@{highlight\-Closest\-W\-P}}
+\index{highlight\-Closest\-W\-P@{highlight\-Closest\-W\-P}!Game@{\-Game}}
+\subsubsection[{highlight\-Closest\-W\-P}]{\setlength{\rightskip}{0pt plus 5cm}\-String {\bf \-Game\-::highlight\-Closest\-W\-P} (
+\begin{DoxyParamCaption}
+\item[{const \-Vector3 \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classGame_a8c026e73dbeeb6972f54c3d21a39b89e}
+\-Find the closest waypoint and return its name. \hypertarget{classGame_a2f27f1c291c93f6d7f92e83d887f829f}{\index{\-Game@{\-Game}!init@{init}}
+\index{init@{init}!Game@{\-Game}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Game\-::init} (
+\begin{DoxyParamCaption}
+\item[{\-Scene\-Manager $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{classGame_a2f27f1c291c93f6d7f92e83d887f829f}
+\-Initialize the \hyperlink{classGame}{\-Game} class. \-Has to be called before the singleton can be used with \hyperlink{classGame_ab5b377b52d78849aed162538121a20a0}{get\-Instance()}. \hypertarget{classGame_a84a979ffa2ce4f8b0df1951a9ce76ecb}{\index{\-Game@{\-Game}!is\-Running@{is\-Running}}
+\index{is\-Running@{is\-Running}!Game@{\-Game}}
+\subsubsection[{is\-Running}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Game\-::is\-Running} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGame_a84a979ffa2ce4f8b0df1951a9ce76ecb}
+\-Is the game running? \hypertarget{classGame_a3face37327a3fcbbdb96494d58d85c48}{\index{\-Game@{\-Game}!operator=@{operator=}}
+\index{operator=@{operator=}!Game@{\-Game}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Game}\& \-Game\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-Game} \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_a3face37327a3fcbbdb96494d58d85c48}
+\-Copy operator, hidden due to singleton pattern. \hypertarget{classGame_a7c39e1c575ef58a513f32fe1a7f42c52}{\index{\-Game@{\-Game}!place\-Persistent\-Marker@{place\-Persistent\-Marker}}
+\index{place\-Persistent\-Marker@{place\-Persistent\-Marker}!Game@{\-Game}}
+\subsubsection[{place\-Persistent\-Marker}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Game\-::place\-Persistent\-Marker} (
+\begin{DoxyParamCaption}
+\item[{const \-String \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classGame_a7c39e1c575ef58a513f32fe1a7f42c52}
+\-Place the persistent marker (for the navigation target) on the waypoint specified by name. \hypertarget{classGame_ae954c7759cc186cdf83bd6cc3cfa8419}{\index{\-Game@{\-Game}!print@{print}}
+\index{print@{print}!Game@{\-Game}}
+\subsubsection[{print}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Game\-::print} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGame_ae954c7759cc186cdf83bd6cc3cfa8419}
+\-Print the configuration of the game (waypoints, corridors, rooms) on the console. \-Useful for debugging. \hypertarget{classGame_ab136a509fabb87b2a0d1fda33d11a457}{\index{\-Game@{\-Game}!start\-Game\-Session@{start\-Game\-Session}}
+\index{start\-Game\-Session@{start\-Game\-Session}!Game@{\-Game}}
+\subsubsection[{start\-Game\-Session}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Game\-::start\-Game\-Session} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGame_ab136a509fabb87b2a0d1fda33d11a457}
+\-Start a new game (reinitialize). 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classGame_ae3be567935e24e323adfd4d49d345f95}{\index{\-Game@{\-Game}!corridors@{corridors}}
+\index{corridors@{corridors}!Game@{\-Game}}
+\subsubsection[{corridors}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf \-Room}$\ast$$>$ {\bf \-Game\-::corridors}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_ae3be567935e24e323adfd4d49d345f95}
+\-Vector of all corridors. \hypertarget{classGame_a77c996af0e47853d824e25a20faecb0d}{\index{\-Game@{\-Game}!distance@{distance}}
+\index{distance@{distance}!Game@{\-Game}}
+\subsubsection[{distance}]{\setlength{\rightskip}{0pt plus 5cm}\-Real {\bf \-Game\-::distance}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_a77c996af0e47853d824e25a20faecb0d}
+\-Internal calculus, global to avoid continuous memory alloc.\-: distance for the current iteration of the sorting algorithm. \hypertarget{classGame_a2ad28722eec0aea922bb205220a80fe8}{\index{\-Game@{\-Game}!dist\-Min@{dist\-Min}}
+\index{dist\-Min@{dist\-Min}!Game@{\-Game}}
+\subsubsection[{dist\-Min}]{\setlength{\rightskip}{0pt plus 5cm}\-Real {\bf \-Game\-::dist\-Min}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_a2ad28722eec0aea922bb205220a80fe8}
+\-Internal calculus, global to avoid continuous memory alloc.\-: current found min. distance in the sorting algorithm. \hypertarget{classGame_af92011162a240ad43f9171329e391942}{\index{\-Game@{\-Game}!door@{door}}
+\index{door@{door}!Game@{\-Game}}
+\subsubsection[{door}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Door}$\ast$ {\bf \-Game\-::door}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_af92011162a240ad43f9171329e391942}
+\-The door in the game (there is just one). \hypertarget{classGame_a9fbc762ef50edb2804683eaafb3d45f3}{\index{\-Game@{\-Game}!game\-Objects@{game\-Objects}}
+\index{game\-Objects@{game\-Objects}!Game@{\-Game}}
+\subsubsection[{game\-Objects}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf \-Game\-Object}$\ast$$>$ {\bf \-Game\-::game\-Objects}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_a9fbc762ef50edb2804683eaafb3d45f3}
+\-Vector of all \-Game\-Objects. \hypertarget{classGame_aea14eeeea7d21e4ec2353957275aa8d9}{\index{\-Game@{\-Game}!initiated@{initiated}}
+\index{initiated@{initiated}!Game@{\-Game}}
+\subsubsection[{initiated}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Game\-::initiated}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_aea14eeeea7d21e4ec2353957275aa8d9}
+\-Marks if the game was successfully initiated for the first time. \hypertarget{classGame_a9f00f5b2803e11c6916f5b473b16af74}{\index{\-Game@{\-Game}!init\-W\-P@{init\-W\-P}}
+\index{init\-W\-P@{init\-W\-P}!Game@{\-Game}}
+\subsubsection[{init\-W\-P}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Game\-::init\-W\-P}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_a9f00f5b2803e11c6916f5b473b16af74}
+\-Currently not in use, but generally the waypoint the robot should navigate to, if the game is restarted. \-The code for this should be commented-\/in in \hyperlink{classBaseApplication}{\-Base\-Application}. \hypertarget{classGame_a1ea0118411f7ae6315bc8e48dea4d074}{\index{\-Game@{\-Game}!marker@{marker}}
+\index{marker@{marker}!Game@{\-Game}}
+\subsubsection[{marker}]{\setlength{\rightskip}{0pt plus 5cm}\-Scene\-Node$\ast$ {\bf \-Game\-::marker}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_a1ea0118411f7ae6315bc8e48dea4d074}
+\-The waypoint marker (green flagg) that will jump between possible navigation targets. \hypertarget{classGame_a5f59202a5d81c57c0f1c8f8c717067ff}{\index{\-Game@{\-Game}!m\-Scene\-Mgr@{m\-Scene\-Mgr}}
+\index{m\-Scene\-Mgr@{m\-Scene\-Mgr}!Game@{\-Game}}
+\subsubsection[{m\-Scene\-Mgr}]{\setlength{\rightskip}{0pt plus 5cm}\-Scene\-Manager$\ast$ {\bf \-Game\-::m\-Scene\-Mgr}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_a5f59202a5d81c57c0f1c8f8c717067ff}
+\-The scene manager (used for object creation). \hypertarget{classGame_a01b72d441b419041c80ba13b17ccd1a3}{\index{\-Game@{\-Game}!pers\-Marker@{pers\-Marker}}
+\index{pers\-Marker@{pers\-Marker}!Game@{\-Game}}
+\subsubsection[{pers\-Marker}]{\setlength{\rightskip}{0pt plus 5cm}\-Scene\-Node $\ast$ {\bf \-Game\-::pers\-Marker}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_a01b72d441b419041c80ba13b17ccd1a3}
+\-The waypoint marker (red flagg) that will stay on the current navigation target. \hypertarget{classGame_a2224f48ac11275212f97d0bfad0aa5d0}{\index{\-Game@{\-Game}!rooms@{rooms}}
+\index{rooms@{rooms}!Game@{\-Game}}
+\subsubsection[{rooms}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf \-Room}$\ast$$>$ {\bf \-Game\-::rooms}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_a2224f48ac11275212f97d0bfad0aa5d0}
+\-Vector of all rooms. \hypertarget{classGame_a8ca5b9f8a62990e6022de17785beac2c}{\index{\-Game@{\-Game}!running@{running}}
+\index{running@{running}!Game@{\-Game}}
+\subsubsection[{running}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Game\-::running}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_a8ca5b9f8a62990e6022de17785beac2c}
+\-Is the game initialized and started? \hypertarget{classGame_ab249da316eee71f550d2cb8962c1525f}{\index{\-Game@{\-Game}!select@{select}}
+\index{select@{select}!Game@{\-Game}}
+\subsubsection[{select}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Game\-::select}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_ab249da316eee71f550d2cb8962c1525f}
+\-Waypoint to which the cursor is closest (with some maximum distance threshold). \hypertarget{classGame_ad9fc2a8710ee56916f79314b91112ed0}{\index{\-Game@{\-Game}!state@{state}}
+\index{state@{state}!Game@{\-Game}}
+\subsubsection[{state}]{\setlength{\rightskip}{0pt plus 5cm}\-Game\-State {\bf \-Game\-::state}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_ad9fc2a8710ee56916f79314b91112ed0}
+\-The current state of the game. \hypertarget{classGame_ad13ac2228cd02743a92666aa7ecdf5ea}{\index{\-Game@{\-Game}!treasure@{treasure}}
+\index{treasure@{treasure}!Game@{\-Game}}
+\subsubsection[{treasure}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Treasure}$\ast$ {\bf \-Game\-::treasure}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_ad13ac2228cd02743a92666aa7ecdf5ea}
+\-The treasure in the game (there is just one). \hypertarget{classGame_ad8fcb3fbae1a4b604fc243e5e2717909}{\index{\-Game@{\-Game}!way\-Points@{way\-Points}}
+\index{way\-Points@{way\-Points}!Game@{\-Game}}
+\subsubsection[{way\-Points}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf \-Way\-Point}$\ast$$>$ {\bf \-Game\-::way\-Points}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGame_ad8fcb3fbae1a4b604fc243e5e2717909}
+\-Vector of all waypoints. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Game.\-h\end{DoxyCompactItemize}

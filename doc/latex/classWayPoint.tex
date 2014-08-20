@@ -1,0 +1,206 @@
+\hypertarget{classWayPoint}{\section{\-Way\-Point \-Class \-Reference}
+\label{classWayPoint}\index{\-Way\-Point@{\-Way\-Point}}
+}
+
+
+\-Defines a \hyperlink{classWayPoint}{\-Way\-Point} for the \hyperlink{classGame}{\-Game}. \-Waypoints are possible navigation targets and are used to place \-Game\-Objects, like \-Keys and \-Locks. \-The list of \-Way\-Points is held by the \hyperlink{classGame}{\-Game} class, but they are read from other classes quite often, usually passed as a pointer or reference. \-A \hyperlink{classWayPoint}{\-Way\-Point} can be made inaccessible for the selection by the player setting the accessible flag.  
+
+
+
+
+{\ttfamily \#include $<$\-Way\-Point.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classWayPoint_a13644b20d0bf0ae35a3f0919b67f65aa}{\-Way\-Point} (int, \-Scene\-Manager $\ast$, \-Vector3, \-Quaternion, \-Way\-Point\-\_\-\-Role)
+\item 
+\-String \hyperlink{classWayPoint_afcbd6e620869ab00a36a36ac63d41e1a}{get\-Name} ()
+\item 
+const \-Vector3 \& \hyperlink{classWayPoint_a79327a4ecc81d6cabd5be1ea553474e3}{get\-Position} ()
+\item 
+const \-Quaternion \& \hyperlink{classWayPoint_aa89f93715f369c3be302b1c416ba5421}{get\-Orientation} ()
+\item 
+int \hyperlink{classWayPoint_a2c2c44621b047d3bdfdf4f0ee7e2566e}{get\-Id} ()
+\item 
+\-Way\-Point\-\_\-\-Role \hyperlink{classWayPoint_a52fd4b22dc0db0454ba891c799f1220c}{get\-Role} ()
+\item 
+void \hyperlink{classWayPoint_a6603a3e2950050021fb2af4f19b9cea1}{set\-Role} (\-Way\-Point\-\_\-\-Role \hyperlink{classWayPoint_aed5b54453c7dc642ee8125158942ccd0}{role})
+\item 
+void \hyperlink{classWayPoint_a58f2d2b3cf03026c34dc6cae2dbcf24e}{set\-Position} (const \-Vector3 \&\hyperlink{classWayPoint_aaace5c39e2b733295ef37de4228eb115}{pos})
+\item 
+void \hyperlink{classWayPoint_aef37a4697991dddae64f6b2bd7c1eb67}{set\-Orientation} (const \-Quaternion \&orientation)
+\item 
+bool \hyperlink{classWayPoint_aa6ea489c68a04bc8b4bbce8f30d470f4}{is\-Accessible} ()
+\item 
+void \hyperlink{classWayPoint_aaec82ed4514b47784e9e44b2becf8fc4}{set\-Accessibility} (bool)
+\item 
+void \hyperlink{classWayPoint_a7c3744470bb0733a8d027203def48925}{set\-Visible} (bool visible)
+\item 
+std\-::string \hyperlink{classWayPoint_adbda23a7d37cec525bd40e317c134b92}{to\-String} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+boost\-::mutex \hyperlink{classWayPoint_ac889b89eb8c36244c7b937bed5c2d77e}{\-W\-A\-Y\-P\-O\-I\-N\-T\-\_\-\-M\-U\-T\-E\-X}
+\item 
+int \hyperlink{classWayPoint_a01b5cf642bf27270f3eb44adfe7de271}{id}
+\item 
+\-Scene\-Manager $\ast$ \hyperlink{classWayPoint_a8a18ed96355454b4f1713d196aff2216}{m\-Scene\-Mgr}
+\item 
+\-Scene\-Node $\ast$ \hyperlink{classWayPoint_aeb4358a9171b219b8f0281cf84b5b6e0}{wp\-S\-N}
+\item 
+\-Entity $\ast$ \hyperlink{classWayPoint_a604e3fa32b79b6e2c9fabcf321f7c774}{wp\-Ent}
+\item 
+\-String \hyperlink{classWayPoint_aca34a5b321d0f27d810a3097c3ef0f3a}{name}
+\item 
+\-Vector3 \hyperlink{classWayPoint_aaace5c39e2b733295ef37de4228eb115}{pos}
+\item 
+\-Quaternion \hyperlink{classWayPoint_a5335f01d55f54a40acf21fa25d93efc0}{ori}
+\item 
+\-Way\-Point\-\_\-\-Role \hyperlink{classWayPoint_aed5b54453c7dc642ee8125158942ccd0}{role}
+\item 
+bool \hyperlink{classWayPoint_aae4377ca4bb86993f6572403e1d7e71c}{accessible}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Defines a \hyperlink{classWayPoint}{\-Way\-Point} for the \hyperlink{classGame}{\-Game}. \-Waypoints are possible navigation targets and are used to place \-Game\-Objects, like \-Keys and \-Locks. \-The list of \-Way\-Points is held by the \hyperlink{classGame}{\-Game} class, but they are read from other classes quite often, usually passed as a pointer or reference. \-A \hyperlink{classWayPoint}{\-Way\-Point} can be made inaccessible for the selection by the player setting the accessible flag. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classWayPoint_a13644b20d0bf0ae35a3f0919b67f65aa}{\index{\-Way\-Point@{\-Way\-Point}!\-Way\-Point@{\-Way\-Point}}
+\index{\-Way\-Point@{\-Way\-Point}!WayPoint@{\-Way\-Point}}
+\subsubsection[{\-Way\-Point}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point\-::\-Way\-Point} (
+\begin{DoxyParamCaption}
+\item[{int}]{, }
+\item[{\-Scene\-Manager $\ast$}]{, }
+\item[{\-Vector3}]{, }
+\item[{\-Quaternion}]{, }
+\item[{\-Way\-Point\-\_\-\-Role}]{}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_a13644b20d0bf0ae35a3f0919b67f65aa}
+\-Initialize a \hyperlink{classWayPoint}{\-Way\-Point} with\-: (1) a unique \-I\-D, (2) the scene manager, (3) the position and (4) its role. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classWayPoint_a2c2c44621b047d3bdfdf4f0ee7e2566e}{\index{\-Way\-Point@{\-Way\-Point}!get\-Id@{get\-Id}}
+\index{get\-Id@{get\-Id}!WayPoint@{\-Way\-Point}}
+\subsubsection[{get\-Id}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Way\-Point\-::get\-Id} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_a2c2c44621b047d3bdfdf4f0ee7e2566e}
+\-Returns the \-I\-D of this waypoint. \hypertarget{classWayPoint_afcbd6e620869ab00a36a36ac63d41e1a}{\index{\-Way\-Point@{\-Way\-Point}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!WayPoint@{\-Way\-Point}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}\-String {\bf \-Way\-Point\-::get\-Name} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_afcbd6e620869ab00a36a36ac63d41e1a}
+\-Returns the name of this waypoint. \hypertarget{classWayPoint_aa89f93715f369c3be302b1c416ba5421}{\index{\-Way\-Point@{\-Way\-Point}!get\-Orientation@{get\-Orientation}}
+\index{get\-Orientation@{get\-Orientation}!WayPoint@{\-Way\-Point}}
+\subsubsection[{get\-Orientation}]{\setlength{\rightskip}{0pt plus 5cm}const \-Quaternion\& {\bf \-Way\-Point\-::get\-Orientation} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_aa89f93715f369c3be302b1c416ba5421}
+\-Returns the orientation of this waypoint. \hypertarget{classWayPoint_a79327a4ecc81d6cabd5be1ea553474e3}{\index{\-Way\-Point@{\-Way\-Point}!get\-Position@{get\-Position}}
+\index{get\-Position@{get\-Position}!WayPoint@{\-Way\-Point}}
+\subsubsection[{get\-Position}]{\setlength{\rightskip}{0pt plus 5cm}const \-Vector3\& {\bf \-Way\-Point\-::get\-Position} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_a79327a4ecc81d6cabd5be1ea553474e3}
+\-Returns the position of this waypoint. \hypertarget{classWayPoint_a52fd4b22dc0db0454ba891c799f1220c}{\index{\-Way\-Point@{\-Way\-Point}!get\-Role@{get\-Role}}
+\index{get\-Role@{get\-Role}!WayPoint@{\-Way\-Point}}
+\subsubsection[{get\-Role}]{\setlength{\rightskip}{0pt plus 5cm}\-Way\-Point\-\_\-\-Role {\bf \-Way\-Point\-::get\-Role} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_a52fd4b22dc0db0454ba891c799f1220c}
+\-Returns the role of this waypoint. \hypertarget{classWayPoint_aa6ea489c68a04bc8b4bbce8f30d470f4}{\index{\-Way\-Point@{\-Way\-Point}!is\-Accessible@{is\-Accessible}}
+\index{is\-Accessible@{is\-Accessible}!WayPoint@{\-Way\-Point}}
+\subsubsection[{is\-Accessible}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Way\-Point\-::is\-Accessible} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_aa6ea489c68a04bc8b4bbce8f30d470f4}
+\-Can this waypoint currently be a navigation target? \hypertarget{classWayPoint_aaec82ed4514b47784e9e44b2becf8fc4}{\index{\-Way\-Point@{\-Way\-Point}!set\-Accessibility@{set\-Accessibility}}
+\index{set\-Accessibility@{set\-Accessibility}!WayPoint@{\-Way\-Point}}
+\subsubsection[{set\-Accessibility}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Way\-Point\-::set\-Accessibility} (
+\begin{DoxyParamCaption}
+\item[{bool}]{}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_aaec82ed4514b47784e9e44b2becf8fc4}
+\-Set the accessibility of this waypoint (true means accessible). \hypertarget{classWayPoint_aef37a4697991dddae64f6b2bd7c1eb67}{\index{\-Way\-Point@{\-Way\-Point}!set\-Orientation@{set\-Orientation}}
+\index{set\-Orientation@{set\-Orientation}!WayPoint@{\-Way\-Point}}
+\subsubsection[{set\-Orientation}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Way\-Point\-::set\-Orientation} (
+\begin{DoxyParamCaption}
+\item[{const \-Quaternion \&}]{orientation}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_aef37a4697991dddae64f6b2bd7c1eb67}
+\-Sets the orientation of this waypoint. \hypertarget{classWayPoint_a58f2d2b3cf03026c34dc6cae2dbcf24e}{\index{\-Way\-Point@{\-Way\-Point}!set\-Position@{set\-Position}}
+\index{set\-Position@{set\-Position}!WayPoint@{\-Way\-Point}}
+\subsubsection[{set\-Position}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Way\-Point\-::set\-Position} (
+\begin{DoxyParamCaption}
+\item[{const \-Vector3 \&}]{pos}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_a58f2d2b3cf03026c34dc6cae2dbcf24e}
+\-Sets the position of this waypoint. \hypertarget{classWayPoint_a6603a3e2950050021fb2af4f19b9cea1}{\index{\-Way\-Point@{\-Way\-Point}!set\-Role@{set\-Role}}
+\index{set\-Role@{set\-Role}!WayPoint@{\-Way\-Point}}
+\subsubsection[{set\-Role}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Way\-Point\-::set\-Role} (
+\begin{DoxyParamCaption}
+\item[{\-Way\-Point\-\_\-\-Role}]{role}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_a6603a3e2950050021fb2af4f19b9cea1}
+\-Sets the role of this waypoint. \hypertarget{classWayPoint_a7c3744470bb0733a8d027203def48925}{\index{\-Way\-Point@{\-Way\-Point}!set\-Visible@{set\-Visible}}
+\index{set\-Visible@{set\-Visible}!WayPoint@{\-Way\-Point}}
+\subsubsection[{set\-Visible}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Way\-Point\-::set\-Visible} (
+\begin{DoxyParamCaption}
+\item[{bool}]{visible}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_a7c3744470bb0733a8d027203def48925}
+\-Set the visibility of this waypoint. \-Forwarded to the scene node. \hypertarget{classWayPoint_adbda23a7d37cec525bd40e317c134b92}{\index{\-Way\-Point@{\-Way\-Point}!to\-String@{to\-String}}
+\index{to\-String@{to\-String}!WayPoint@{\-Way\-Point}}
+\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Way\-Point\-::to\-String} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWayPoint_adbda23a7d37cec525bd40e317c134b92}
+\-Return a string with the parameters of this waypoint. \-Useful for debugging. 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classWayPoint_aae4377ca4bb86993f6572403e1d7e71c}{\index{\-Way\-Point@{\-Way\-Point}!accessible@{accessible}}
+\index{accessible@{accessible}!WayPoint@{\-Way\-Point}}
+\subsubsection[{accessible}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Way\-Point\-::accessible}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classWayPoint_aae4377ca4bb86993f6572403e1d7e71c}
+\-Can this waypoint be targeted for navigation? \hypertarget{classWayPoint_a01b5cf642bf27270f3eb44adfe7de271}{\index{\-Way\-Point@{\-Way\-Point}!id@{id}}
+\index{id@{id}!WayPoint@{\-Way\-Point}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Way\-Point\-::id}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classWayPoint_a01b5cf642bf27270f3eb44adfe7de271}
+\-I\-D of this waypoint. \hypertarget{classWayPoint_a8a18ed96355454b4f1713d196aff2216}{\index{\-Way\-Point@{\-Way\-Point}!m\-Scene\-Mgr@{m\-Scene\-Mgr}}
+\index{m\-Scene\-Mgr@{m\-Scene\-Mgr}!WayPoint@{\-Way\-Point}}
+\subsubsection[{m\-Scene\-Mgr}]{\setlength{\rightskip}{0pt plus 5cm}\-Scene\-Manager$\ast$ {\bf \-Way\-Point\-::m\-Scene\-Mgr}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classWayPoint_a8a18ed96355454b4f1713d196aff2216}
+\-Scene manager, to create the nodes/entities for display. \hypertarget{classWayPoint_aca34a5b321d0f27d810a3097c3ef0f3a}{\index{\-Way\-Point@{\-Way\-Point}!name@{name}}
+\index{name@{name}!WayPoint@{\-Way\-Point}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}\-String {\bf \-Way\-Point\-::name}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classWayPoint_aca34a5b321d0f27d810a3097c3ef0f3a}
+\-The name of the waypoint. \-Comform with the \-R\-O\-S notation \char`\"{}\-Way\-Point\char`\"{}.append(\#\-I\-D). \hypertarget{classWayPoint_a5335f01d55f54a40acf21fa25d93efc0}{\index{\-Way\-Point@{\-Way\-Point}!ori@{ori}}
+\index{ori@{ori}!WayPoint@{\-Way\-Point}}
+\subsubsection[{ori}]{\setlength{\rightskip}{0pt plus 5cm}\-Quaternion {\bf \-Way\-Point\-::ori}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classWayPoint_a5335f01d55f54a40acf21fa25d93efc0}
+\-The orientation of this waypoint. \-If the waypoint is a navigation target, \-R\-O\-S\-I\-E will turn into this direction. \-If it is just a node in the path, it does not play a role. \hypertarget{classWayPoint_aaace5c39e2b733295ef37de4228eb115}{\index{\-Way\-Point@{\-Way\-Point}!pos@{pos}}
+\index{pos@{pos}!WayPoint@{\-Way\-Point}}
+\subsubsection[{pos}]{\setlength{\rightskip}{0pt plus 5cm}\-Vector3 {\bf \-Way\-Point\-::pos}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classWayPoint_aaace5c39e2b733295ef37de4228eb115}
+\-The position of this waypoint. \hypertarget{classWayPoint_aed5b54453c7dc642ee8125158942ccd0}{\index{\-Way\-Point@{\-Way\-Point}!role@{role}}
+\index{role@{role}!WayPoint@{\-Way\-Point}}
+\subsubsection[{role}]{\setlength{\rightskip}{0pt plus 5cm}\-Way\-Point\-\_\-\-Role {\bf \-Way\-Point\-::role}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classWayPoint_aed5b54453c7dc642ee8125158942ccd0}
+\-The role of this waypoint in the \hyperlink{classGame}{\-Game}. (\-Not in use). \hypertarget{classWayPoint_ac889b89eb8c36244c7b937bed5c2d77e}{\index{\-Way\-Point@{\-Way\-Point}!\-W\-A\-Y\-P\-O\-I\-N\-T\-\_\-\-M\-U\-T\-E\-X@{\-W\-A\-Y\-P\-O\-I\-N\-T\-\_\-\-M\-U\-T\-E\-X}}
+\index{\-W\-A\-Y\-P\-O\-I\-N\-T\-\_\-\-M\-U\-T\-E\-X@{\-W\-A\-Y\-P\-O\-I\-N\-T\-\_\-\-M\-U\-T\-E\-X}!WayPoint@{\-Way\-Point}}
+\subsubsection[{\-W\-A\-Y\-P\-O\-I\-N\-T\-\_\-\-M\-U\-T\-E\-X}]{\setlength{\rightskip}{0pt plus 5cm}boost\-::mutex {\bf \-Way\-Point\-::\-W\-A\-Y\-P\-O\-I\-N\-T\-\_\-\-M\-U\-T\-E\-X}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classWayPoint_ac889b89eb8c36244c7b937bed5c2d77e}
+\-Mutex to ensure unique access to the waypoints. (\-Haven't really tested if this makes any difference). \hypertarget{classWayPoint_a604e3fa32b79b6e2c9fabcf321f7c774}{\index{\-Way\-Point@{\-Way\-Point}!wp\-Ent@{wp\-Ent}}
+\index{wp\-Ent@{wp\-Ent}!WayPoint@{\-Way\-Point}}
+\subsubsection[{wp\-Ent}]{\setlength{\rightskip}{0pt plus 5cm}\-Entity$\ast$ {\bf \-Way\-Point\-::wp\-Ent}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classWayPoint_a604e3fa32b79b6e2c9fabcf321f7c774}
+\-The entity of this waypoint. \-Stored to be able to change the material (transparent if not accessible). \hypertarget{classWayPoint_aeb4358a9171b219b8f0281cf84b5b6e0}{\index{\-Way\-Point@{\-Way\-Point}!wp\-S\-N@{wp\-S\-N}}
+\index{wp\-S\-N@{wp\-S\-N}!WayPoint@{\-Way\-Point}}
+\subsubsection[{wp\-S\-N}]{\setlength{\rightskip}{0pt plus 5cm}\-Scene\-Node$\ast$ {\bf \-Way\-Point\-::wp\-S\-N}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classWayPoint_aeb4358a9171b219b8f0281cf84b5b6e0}
+\-The scene node of this waypoint. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Way\-Point.\-h\end{DoxyCompactItemize}

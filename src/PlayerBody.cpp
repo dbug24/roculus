@@ -49,6 +49,7 @@ void PlayerBody::injectMouseUp(const OIS::MouseEvent& evt, const OIS::MouseButto
 }
 
 void PlayerBody::injectKeyDown(const OIS::KeyEvent& evt) {
+	// From the event, mark what actions should be taken during the rendering
   if (evt.key == OIS::KC_W || evt.key == OIS::KC_UP) { fwdSpeed = -1.0f; }
   else if (evt.key == OIS::KC_S || evt.key == OIS::KC_DOWN) { fwdSpeed = 1.0f; }
   else if (evt.key == OIS::KC_A || evt.key == OIS::KC_LEFT) { lrSpeed = -1.0f; }
@@ -60,6 +61,7 @@ void PlayerBody::injectKeyDown(const OIS::KeyEvent& evt) {
 }
 
 void PlayerBody::injectKeyUp(const OIS::KeyEvent& evt) {
+	// From the event, mark what actions should be taken during the rendering
   if (evt.key == OIS::KC_W || evt.key == OIS::KC_UP || evt.key == OIS::KC_S || evt.key == OIS::KC_DOWN) 
 	{ fwdSpeed = 0.0f; }
   else if (evt.key == OIS::KC_A || evt.key == OIS::KC_LEFT || evt.key == OIS::KC_D || evt.key == OIS::KC_RIGHT)
@@ -69,6 +71,7 @@ void PlayerBody::injectKeyUp(const OIS::KeyEvent& evt) {
 }
 
 void PlayerBody::injectAxisMoved( const OIS::JoyStickEvent &evt, int axis ) {
+	// From the event, mark what actions should be taken during the rendering
   switch (axis) {
   case 0: if (evt.state.mAxes[0].abs > JOY_TRIGGER_LIMIT) { lrSpeed = 1.0f; }
     else if (evt.state.mAxes[0].abs < -JOY_TRIGGER_LIMIT) { lrSpeed = -1.0f; }
@@ -89,6 +92,7 @@ void PlayerBody::injectAxisMoved( const OIS::JoyStickEvent &evt, int axis ) {
 }
 
 void PlayerBody::injectPOVChanged( const OIS::JoyStickEvent &arg, int pov ) {
+	// From the event, mark what actions should be taken during the rendering
 	if (arg.state.mPOV[pov].direction == OIS::Pov::Centered) { udSpeed = lrSpeed = 0.0f; }
 	else if (arg.state.mPOV[pov].direction & OIS::Pov::North) { udSpeed = 1.0f; }
 	else if (arg.state.mPOV[pov].direction & OIS::Pov::South) { udSpeed = -1.0f; }
@@ -109,6 +113,8 @@ void PlayerBody::injectButtonUp( const OIS::JoyStickEvent &evt, int button ) {
 }
 
 void PlayerBody::frameRenderingQueued(const Ogre::FrameEvent& evt) {
+	// Apply all steps that were recorded with the injection methods:
+	
 	//acceleration:
 	dt = ((float) evt.timeSinceLastFrame); 
 	quad = mStereoCameraParent->getOrientation();
@@ -125,12 +131,17 @@ void PlayerBody::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 }
 
 void PlayerBody::frameRenderingQueued(Robot *robot) {
+	// Place the player on the robot's position.
+	// The quaternion is needed due to the coordinates of the robot avatar mesh
+	// (The mesh coordinates could be corrected with blender to match the Ogre coords, in order to avoid the transforms)
+	// (... this was done for all following models, like the game objects)
 	static Ogre::Quaternion qRot(Ogre::Degree(-90), Ogre::Vector3::UNIT_Y);
 	mStereoCameraParent->setPosition(Ogre::Vector3::UNIT_Y*0.7+robot->getSceneNode()->getPosition());
 	mStereoCameraParent->setOrientation(qRot*robot->getSceneNode()->getOrientation());
 }
 
 void PlayerBody::injectROSJoy( const sensor_msgs::Joy::ConstPtr &joy ) {
+	// wow, this is so much easier with ROS...
 	lrSpeed = -joy->axes[ROS_LJOY_X];
 	udSpeed = joy->axes[ROS_LJOY_Y];
 	fwdSpeed = -joy->axes[ROS_RJOY_Y];

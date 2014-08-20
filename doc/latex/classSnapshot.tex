@@ -1,0 +1,147 @@
+\hypertarget{classSnapshot}{\section{\-Snapshot \-Class \-Reference}
+\label{classSnapshot}\index{\-Snapshot@{\-Snapshot}}
+}
+
+
+\-Collects all data that describes a \hyperlink{classSnapshot}{\-Snapshot} and provides a method to insert it into the scene. (\-Not the smartest implementation, should probably be constructed given the scene manager and do the object creation by itself. \-Static counter would help to identify total number of \-Snapshots to link to individual materials, textures etc.)  
+
+
+
+
+{\ttfamily \#include $<$\-Snapshot.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classSnapshot_ac23b92a6b8dba7231deb0eabe380f7f4}{\-Snapshot} (\-Ogre\-::\-Entity $\ast$, \-Ogre\-::\-Scene\-Node $\ast$, const \-Ogre\-::\-Texture\-Ptr \&, const \-Ogre\-::\-Texture\-Ptr \&)
+\item 
+\hyperlink{classSnapshot_ac9793a7337c8b514c7679eb0a82b9328}{$\sim$\-Snapshot} ()
+\item 
+virtual \-Ogre\-::\-Scene\-Node $\ast$ \hyperlink{classSnapshot_ade78092b22032565fd191442be26106e}{get\-Target\-Scene\-Node} ()
+\item 
+virtual \-Ogre\-::\-Texture\-Ptr \hyperlink{classSnapshot_a2d025a7e4000ea6da3333d5f85127b14}{get\-Assigned\-Depth\-Texture} ()
+\item 
+virtual \-Ogre\-::\-Texture\-Ptr \hyperlink{classSnapshot_aec0736e686c5fb103dc4e0e4133c1df0}{get\-Assigned\-R\-G\-B\-Texture} ()
+\item 
+virtual void \hyperlink{classSnapshot_afa35ce833d0b5668eb04436bd581f2c0}{set\-Target\-Scene\-Node} (\-Ogre\-::\-Scene\-Node $\ast$)
+\item 
+virtual void \hyperlink{classSnapshot_ae21564f3fe2cc65bba44d25bb691ffb5}{assign\-Depth\-Texture} (const \-Ogre\-::\-Texture\-Ptr \&)
+\item 
+virtual void \hyperlink{classSnapshot_a55c7abcd9c234bb0fe9a0dc22786fdae}{assign\-R\-G\-B\-Texture} (const \-Ogre\-::\-Texture\-Ptr \&)
+\item 
+virtual bool \hyperlink{classSnapshot_ad3c7ad06b61678ded3dd022aab511ec4}{place\-In\-Scene} (const \-Ogre\-::\-Image \&, const \-Ogre\-::\-Image \&, const \-Ogre\-::\-Vector3 \&, const \-Ogre\-::\-Quaternion \&)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\-Ogre\-::\-Entity $\ast$ \hyperlink{classSnapshot_a049a4347e562c85029ddc099dc019e17}{snapshot}
+\item 
+\-Ogre\-::\-Texture\-Ptr \hyperlink{classSnapshot_aa568adf9051f6eb80353f7f1673cdb33}{depth\-Texture}
+\item 
+\-Ogre\-::\-Texture\-Ptr \hyperlink{classSnapshot_af759834693d9319f38be4e3d3cbe48c0}{rgb\-Texture}
+\item 
+\-Ogre\-::\-Scene\-Node $\ast$ \hyperlink{classSnapshot_ab86c0038377f46c94957bf5634c74b03}{target\-Scene\-Node}
+\item 
+bool \hyperlink{classSnapshot_a0c9100c6611542fafa58b9bcde75bc3d}{attached}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Collects all data that describes a \hyperlink{classSnapshot}{\-Snapshot} and provides a method to insert it into the scene. (\-Not the smartest implementation, should probably be constructed given the scene manager and do the object creation by itself. \-Static counter would help to identify total number of \-Snapshots to link to individual materials, textures etc.) 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classSnapshot_ac23b92a6b8dba7231deb0eabe380f7f4}{\index{\-Snapshot@{\-Snapshot}!\-Snapshot@{\-Snapshot}}
+\index{\-Snapshot@{\-Snapshot}!Snapshot@{\-Snapshot}}
+\subsubsection[{\-Snapshot}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Snapshot\-::\-Snapshot} (
+\begin{DoxyParamCaption}
+\item[{\-Ogre\-::\-Entity $\ast$}]{, }
+\item[{\-Ogre\-::\-Scene\-Node $\ast$}]{, }
+\item[{const \-Ogre\-::\-Texture\-Ptr \&}]{, }
+\item[{const \-Ogre\-::\-Texture\-Ptr \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classSnapshot_ac23b92a6b8dba7231deb0eabe380f7f4}
+\-Initializes this object with an \-Ogre\-::\-Entity (an instance of the camera geometry), a \-Scene\-Node (on which the object is placed), and two texture pointers for the depth-\/information (first pointer) and the rgb-\/information (second pointer). \hypertarget{classSnapshot_ac9793a7337c8b514c7679eb0a82b9328}{\index{\-Snapshot@{\-Snapshot}!$\sim$\-Snapshot@{$\sim$\-Snapshot}}
+\index{$\sim$\-Snapshot@{$\sim$\-Snapshot}!Snapshot@{\-Snapshot}}
+\subsubsection[{$\sim$\-Snapshot}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Snapshot\-::$\sim$\-Snapshot} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classSnapshot_ac9793a7337c8b514c7679eb0a82b9328}
+\-Default destructor. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classSnapshot_ae21564f3fe2cc65bba44d25bb691ffb5}{\index{\-Snapshot@{\-Snapshot}!assign\-Depth\-Texture@{assign\-Depth\-Texture}}
+\index{assign\-Depth\-Texture@{assign\-Depth\-Texture}!Snapshot@{\-Snapshot}}
+\subsubsection[{assign\-Depth\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Snapshot\-::assign\-Depth\-Texture} (
+\begin{DoxyParamCaption}
+\item[{const \-Ogre\-::\-Texture\-Ptr \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classSnapshot_ae21564f3fe2cc65bba44d25bb691ffb5}
+\-Assign a depth-\/texture to the snapshot. \hypertarget{classSnapshot_a55c7abcd9c234bb0fe9a0dc22786fdae}{\index{\-Snapshot@{\-Snapshot}!assign\-R\-G\-B\-Texture@{assign\-R\-G\-B\-Texture}}
+\index{assign\-R\-G\-B\-Texture@{assign\-R\-G\-B\-Texture}!Snapshot@{\-Snapshot}}
+\subsubsection[{assign\-R\-G\-B\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Snapshot\-::assign\-R\-G\-B\-Texture} (
+\begin{DoxyParamCaption}
+\item[{const \-Ogre\-::\-Texture\-Ptr \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classSnapshot_a55c7abcd9c234bb0fe9a0dc22786fdae}
+\-Assign a rgb-\/texture to the snapshot. \hypertarget{classSnapshot_a2d025a7e4000ea6da3333d5f85127b14}{\index{\-Snapshot@{\-Snapshot}!get\-Assigned\-Depth\-Texture@{get\-Assigned\-Depth\-Texture}}
+\index{get\-Assigned\-Depth\-Texture@{get\-Assigned\-Depth\-Texture}!Snapshot@{\-Snapshot}}
+\subsubsection[{get\-Assigned\-Depth\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Ogre\-::\-Texture\-Ptr {\bf \-Snapshot\-::get\-Assigned\-Depth\-Texture} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classSnapshot_a2d025a7e4000ea6da3333d5f85127b14}
+\-Returns the depth-\/texture pointer for this snapshot. \hypertarget{classSnapshot_aec0736e686c5fb103dc4e0e4133c1df0}{\index{\-Snapshot@{\-Snapshot}!get\-Assigned\-R\-G\-B\-Texture@{get\-Assigned\-R\-G\-B\-Texture}}
+\index{get\-Assigned\-R\-G\-B\-Texture@{get\-Assigned\-R\-G\-B\-Texture}!Snapshot@{\-Snapshot}}
+\subsubsection[{get\-Assigned\-R\-G\-B\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Ogre\-::\-Texture\-Ptr {\bf \-Snapshot\-::get\-Assigned\-R\-G\-B\-Texture} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classSnapshot_aec0736e686c5fb103dc4e0e4133c1df0}
+\-Returns the rgb-\/texture pointer for this snapshot. \hypertarget{classSnapshot_ade78092b22032565fd191442be26106e}{\index{\-Snapshot@{\-Snapshot}!get\-Target\-Scene\-Node@{get\-Target\-Scene\-Node}}
+\index{get\-Target\-Scene\-Node@{get\-Target\-Scene\-Node}!Snapshot@{\-Snapshot}}
+\subsubsection[{get\-Target\-Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Ogre\-::\-Scene\-Node$\ast$ {\bf \-Snapshot\-::get\-Target\-Scene\-Node} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classSnapshot_ade78092b22032565fd191442be26106e}
+\-Returns the scene node of this object. \hypertarget{classSnapshot_ad3c7ad06b61678ded3dd022aab511ec4}{\index{\-Snapshot@{\-Snapshot}!place\-In\-Scene@{place\-In\-Scene}}
+\index{place\-In\-Scene@{place\-In\-Scene}!Snapshot@{\-Snapshot}}
+\subsubsection[{place\-In\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Snapshot\-::place\-In\-Scene} (
+\begin{DoxyParamCaption}
+\item[{const \-Ogre\-::\-Image \&}]{, }
+\item[{const \-Ogre\-::\-Image \&}]{, }
+\item[{const \-Ogre\-::\-Vector3 \&}]{, }
+\item[{const \-Ogre\-::\-Quaternion \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classSnapshot_ad3c7ad06b61678ded3dd022aab511ec4}
+\-Given a depth image (1st), a rgb image (2nd), the corresponding camera position and orientation, place a snapshot in the scene. \hypertarget{classSnapshot_afa35ce833d0b5668eb04436bd581f2c0}{\index{\-Snapshot@{\-Snapshot}!set\-Target\-Scene\-Node@{set\-Target\-Scene\-Node}}
+\index{set\-Target\-Scene\-Node@{set\-Target\-Scene\-Node}!Snapshot@{\-Snapshot}}
+\subsubsection[{set\-Target\-Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Snapshot\-::set\-Target\-Scene\-Node} (
+\begin{DoxyParamCaption}
+\item[{\-Ogre\-::\-Scene\-Node $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classSnapshot_afa35ce833d0b5668eb04436bd581f2c0}
+\-Sets the scene node for this object. (\-Not used currently -\/ \-D\-E\-P\-R\-E\-C\-A\-T\-E\-D). 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classSnapshot_a0c9100c6611542fafa58b9bcde75bc3d}{\index{\-Snapshot@{\-Snapshot}!attached@{attached}}
+\index{attached@{attached}!Snapshot@{\-Snapshot}}
+\subsubsection[{attached}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Snapshot\-::attached}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshot_a0c9100c6611542fafa58b9bcde75bc3d}
+\-Was this snapshot already attached to its scene node? (\-Needed in place\-In\-Scene(...)) \hypertarget{classSnapshot_aa568adf9051f6eb80353f7f1673cdb33}{\index{\-Snapshot@{\-Snapshot}!depth\-Texture@{depth\-Texture}}
+\index{depth\-Texture@{depth\-Texture}!Snapshot@{\-Snapshot}}
+\subsubsection[{depth\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Texture\-Ptr {\bf \-Snapshot\-::depth\-Texture}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshot_aa568adf9051f6eb80353f7f1673cdb33}
+\-Pointer to the depth texture for this snapshot. \hypertarget{classSnapshot_af759834693d9319f38be4e3d3cbe48c0}{\index{\-Snapshot@{\-Snapshot}!rgb\-Texture@{rgb\-Texture}}
+\index{rgb\-Texture@{rgb\-Texture}!Snapshot@{\-Snapshot}}
+\subsubsection[{rgb\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Texture\-Ptr {\bf \-Snapshot\-::rgb\-Texture}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshot_af759834693d9319f38be4e3d3cbe48c0}
+\-Pointer to the rgb texture for this snapshot. \hypertarget{classSnapshot_a049a4347e562c85029ddc099dc019e17}{\index{\-Snapshot@{\-Snapshot}!snapshot@{snapshot}}
+\index{snapshot@{snapshot}!Snapshot@{\-Snapshot}}
+\subsubsection[{snapshot}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Entity$\ast$ {\bf \-Snapshot\-::snapshot}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshot_a049a4347e562c85029ddc099dc019e17}
+\-Ogre\-::\-Entity for this snapshot. (\-An instance of the camera geometry). \hypertarget{classSnapshot_ab86c0038377f46c94957bf5634c74b03}{\index{\-Snapshot@{\-Snapshot}!target\-Scene\-Node@{target\-Scene\-Node}}
+\index{target\-Scene\-Node@{target\-Scene\-Node}!Snapshot@{\-Snapshot}}
+\subsubsection[{target\-Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Scene\-Node$\ast$ {\bf \-Snapshot\-::target\-Scene\-Node}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classSnapshot_ab86c0038377f46c94957bf5634c74b03}
+\-This snapshot's scene node. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Snapshot.\-h\end{DoxyCompactItemize}

@@ -2,7 +2,7 @@
 #include <boost/lexical_cast.hpp>
 #include <stdio.h>
 
-SnapshotLibrary::SnapshotLibrary(Ogre::SceneManager *mSceneMgr, const Ogre::String &EntityPrototype, const Ogre::String &MaterialPrototype, int initSize, bool saveOnShutdown) : save(saveOnShutdown) {
+SnapshotLibrary::SnapshotLibrary(Ogre::SceneManager *mSceneMgr, const Ogre::String &EntityPrototype, const Ogre::String &MaterialPrototype, int initSize) {
 	currentSnapshot = 0;
 	maxSnapshots = 0;
 	this->mSceneMgr = mSceneMgr;
@@ -13,13 +13,7 @@ SnapshotLibrary::SnapshotLibrary(Ogre::SceneManager *mSceneMgr, const Ogre::Stri
 }
 
 SnapshotLibrary::~SnapshotLibrary() {
-	//~ // eventually save this map:
-	//~ 
-	//~ if (save) {
-		//~ saveMap();
-	//~ }
-	
-	//cleanup is done by OGRE, hopefully. TODO: check with valgrind!
+	//cleanup is done by OGRE, hopefully.
 	for (int i=0; i<library.size(); i++) {
 		if (library[i]) {
 			delete library[i];
@@ -28,11 +22,10 @@ SnapshotLibrary::~SnapshotLibrary() {
 	}
 }
 
-void SnapshotLibrary::setSaveOnShutdown(bool val) {
-	save = val;
-}
-
 void SnapshotLibrary::allocate(int nr) {
+	// allocate memory for a number of snapshots and preallocate textures and materials
+	/* Note: Since the material is statically linked to a specific texture, each snapshot needs its own material to link to
+	 * its corresponding textures */
 	int initStart = maxSnapshots;
 	maxSnapshots += nr;
 	library.reserve(maxSnapshots);
@@ -92,7 +85,7 @@ void SnapshotLibrary::allocate(int nr) {
 }
 
 bool SnapshotLibrary::placeInScene(const Ogre::Image &depth, const Ogre::Image &rgb, const Ogre::Vector3 &pos, const Ogre::Quaternion &ori) {
-
+	// check if we have enough memory, allocate if necessary and place the Snapshot
 	if (currentSnapshot < maxSnapshots) {
 		return library[currentSnapshot++]->placeInScene(depth, rgb, pos, ori);
 	} else {
@@ -102,29 +95,5 @@ bool SnapshotLibrary::placeInScene(const Ogre::Image &depth, const Ogre::Image &
 }
 
 void SnapshotLibrary::flipVisibility() {
-	mMasterSceneNode->flipVisibility(); // do not cascade to subrenderables
+	mMasterSceneNode->flipVisibility();
 }
-
-//~ void SnapshotLibrary::saveMap() {
-	//~ Ogre::Image depth;
-    //~ Ogre::Image rgb;
-    //~ for (int i=0;i<currentSnapshot;i++) {
-			//~ std::cout<<"Saving depth and rgb textures"<<std::endl;
-            //~ char filename_rgb[50];
-            //~ std::sprintf(filename_rgb,"Znap_rgb%d.jpg",i);
-            //~ char filename_depth[50];
-            //~ std::sprintf(filename_depth,"Znap_depth%d.png",i);
-            //~ std::ofstream myfile;
-            //~ char filename_pos[50];
-            //~ std::sprintf(filename_pos,"Znap_pos%d.txt",i);
-            //~ 
-            //~ library[i]->getAssignedDepthTexture()->convertToImage(depth);
-            //~ library[i]->getAssignedRGBTexture()->convertToImage(rgb);
-            //~ depth.save(filename_depth);
-            //~ rgb.save(filename_rgb);
-            //~ 
-            //~ myfile.open (filename_pos);
-            //~ myfile<<Ogre::StringConverter::toString(library[i]->getTargetSceneNode()->getPosition())<<"\n"<<Ogre::StringConverter::toString(library[i]->getTargetSceneNode()->getOrientation());
-            //~ myfile.close();
-	//~ }
-//~ }

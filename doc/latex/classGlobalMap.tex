@@ -1,0 +1,164 @@
+\hypertarget{classGlobalMap}{\section{\-Global\-Map \-Class \-Reference}
+\label{classGlobalMap}\index{\-Global\-Map@{\-Global\-Map}}
+}
+
+
+\-Utility class for the 2\-D map. \-This class handles the 2\-D map in the scene.  
+
+
+
+
+{\ttfamily \#include $<$\-Global\-Map.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classGlobalMap_a308deb321ce23efd983e1b531610fe74}{\-Global\-Map} (\-Scene\-Manager $\ast$)
+\item 
+\hyperlink{classGlobalMap_a72b4215462449c75b7758df8f6b34097}{$\sim$\-Global\-Map} ()
+\item 
+void \hyperlink{classGlobalMap_aeb2b21e3ddde44e8999837dd69445d9d}{insert\-W\-H\-R} (uint32, uint32, \-Real)
+\item 
+void \hyperlink{classGlobalMap_a1563668430b40d8714d1b276f54c544a}{set\-Origin} (\-Vector3)
+\item 
+void \hyperlink{classGlobalMap_aa3bb0eeddafa5949d86c3324ada09f6f}{include\-Map} (const \-Image \&)
+\item 
+void \hyperlink{classGlobalMap_a355f582edb923cc85a6ca3967f6cd70e}{flip\-Visibility} ()
+\item 
+\-Real \hyperlink{classGlobalMap_add6bc1a0cd3c67142d4e0839b285a03b}{get\-Width} ()
+\item 
+\-Real \hyperlink{classGlobalMap_a470de4de22c822d7fbb448775bd51be4}{get\-Height} ()
+\item 
+\-Real \hyperlink{classGlobalMap_a5b489c16007ddad138c9ad4b5ed9c4cf}{get\-Resolution} ()
+\item 
+\-Vector3 \hyperlink{classGlobalMap_a6263c44606f891c5ed167e58a7690597}{get\-Origin} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\-Real \hyperlink{classGlobalMap_adbd369e87c136942c600d7675595ebd7}{width}
+\item 
+\-Real \hyperlink{classGlobalMap_a8c44af901d0f19fb8a57845d03e24063}{height}
+\item 
+\-Real \hyperlink{classGlobalMap_a0bfaceb4b03dd0c79179f627565d3a8a}{resolution}
+\item 
+\-Vector3 \hyperlink{classGlobalMap_a79a33b5d851acd03cff2d74b1aaaf020}{origin}
+\item 
+\-Scene\-Manager $\ast$ \hyperlink{classGlobalMap_a58e2848e9c5f3abe6effaf12176c2c8e}{m\-Scene\-Mgr}
+\item 
+\-Manual\-Object $\ast$ \hyperlink{classGlobalMap_a59b1001eec405852745ecf64a47915be}{m\-Map\-Obj}
+\item 
+\-Scene\-Node $\ast$ \hyperlink{classGlobalMap_a3ef2cbe2c69a7257fbf17ef338e679c1}{p\-Scene\-Node}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Utility class for the 2\-D map. \-This class handles the 2\-D map in the scene. 
+
+$<$ 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classGlobalMap_a308deb321ce23efd983e1b531610fe74}{\index{\-Global\-Map@{\-Global\-Map}!\-Global\-Map@{\-Global\-Map}}
+\index{\-Global\-Map@{\-Global\-Map}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{\-Global\-Map}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Global\-Map\-::\-Global\-Map} (
+\begin{DoxyParamCaption}
+\item[{\-Scene\-Manager $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{classGlobalMap_a308deb321ce23efd983e1b531610fe74}
+\-Use this constructor to initialize the object! \hypertarget{classGlobalMap_a72b4215462449c75b7758df8f6b34097}{\index{\-Global\-Map@{\-Global\-Map}!$\sim$\-Global\-Map@{$\sim$\-Global\-Map}}
+\index{$\sim$\-Global\-Map@{$\sim$\-Global\-Map}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{$\sim$\-Global\-Map}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Global\-Map\-::$\sim$\-Global\-Map} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGlobalMap_a72b4215462449c75b7758df8f6b34097}
+\-Default destructor. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classGlobalMap_a355f582edb923cc85a6ca3967f6cd70e}{\index{\-Global\-Map@{\-Global\-Map}!flip\-Visibility@{flip\-Visibility}}
+\index{flip\-Visibility@{flip\-Visibility}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{flip\-Visibility}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Global\-Map\-::flip\-Visibility} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGlobalMap_a355f582edb923cc85a6ca3967f6cd70e}
+\-Trigger the visibility of the map. \hypertarget{classGlobalMap_a470de4de22c822d7fbb448775bd51be4}{\index{\-Global\-Map@{\-Global\-Map}!get\-Height@{get\-Height}}
+\index{get\-Height@{get\-Height}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{get\-Height}]{\setlength{\rightskip}{0pt plus 5cm}\-Real {\bf \-Global\-Map\-::get\-Height} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGlobalMap_a470de4de22c822d7fbb448775bd51be4}
+\-Return the height(depth) of the map. \hypertarget{classGlobalMap_a6263c44606f891c5ed167e58a7690597}{\index{\-Global\-Map@{\-Global\-Map}!get\-Origin@{get\-Origin}}
+\index{get\-Origin@{get\-Origin}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{get\-Origin}]{\setlength{\rightskip}{0pt plus 5cm}\-Vector3 {\bf \-Global\-Map\-::get\-Origin} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGlobalMap_a6263c44606f891c5ed167e58a7690597}
+\-Return the origin of the map. \hypertarget{classGlobalMap_a5b489c16007ddad138c9ad4b5ed9c4cf}{\index{\-Global\-Map@{\-Global\-Map}!get\-Resolution@{get\-Resolution}}
+\index{get\-Resolution@{get\-Resolution}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{get\-Resolution}]{\setlength{\rightskip}{0pt plus 5cm}\-Real {\bf \-Global\-Map\-::get\-Resolution} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGlobalMap_a5b489c16007ddad138c9ad4b5ed9c4cf}
+\-Return the resolution of the map. \hypertarget{classGlobalMap_add6bc1a0cd3c67142d4e0839b285a03b}{\index{\-Global\-Map@{\-Global\-Map}!get\-Width@{get\-Width}}
+\index{get\-Width@{get\-Width}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{get\-Width}]{\setlength{\rightskip}{0pt plus 5cm}\-Real {\bf \-Global\-Map\-::get\-Width} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGlobalMap_add6bc1a0cd3c67142d4e0839b285a03b}
+\-Return the width of the map. \hypertarget{classGlobalMap_aa3bb0eeddafa5949d86c3324ada09f6f}{\index{\-Global\-Map@{\-Global\-Map}!include\-Map@{include\-Map}}
+\index{include\-Map@{include\-Map}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{include\-Map}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Global\-Map\-::include\-Map} (
+\begin{DoxyParamCaption}
+\item[{const \-Image \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classGlobalMap_aa3bb0eeddafa5949d86c3324ada09f6f}
+\-Given the image, create the map plane and texture it with the image. \-Place the scene node in the world. \hypertarget{classGlobalMap_aeb2b21e3ddde44e8999837dd69445d9d}{\index{\-Global\-Map@{\-Global\-Map}!insert\-W\-H\-R@{insert\-W\-H\-R}}
+\index{insert\-W\-H\-R@{insert\-W\-H\-R}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{insert\-W\-H\-R}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Global\-Map\-::insert\-W\-H\-R} (
+\begin{DoxyParamCaption}
+\item[{uint32}]{, }
+\item[{uint32}]{, }
+\item[{\-Real}]{}
+\end{DoxyParamCaption}
+)}}\label{classGlobalMap_aeb2b21e3ddde44e8999837dd69445d9d}
+\-Set the width, height(depth), and resolution of the map-\/image. \hypertarget{classGlobalMap_a1563668430b40d8714d1b276f54c544a}{\index{\-Global\-Map@{\-Global\-Map}!set\-Origin@{set\-Origin}}
+\index{set\-Origin@{set\-Origin}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{set\-Origin}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Global\-Map\-::set\-Origin} (
+\begin{DoxyParamCaption}
+\item[{\-Vector3}]{}
+\end{DoxyParamCaption}
+)}}\label{classGlobalMap_a1563668430b40d8714d1b276f54c544a}
+\-Set the origin of the map. 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classGlobalMap_a8c44af901d0f19fb8a57845d03e24063}{\index{\-Global\-Map@{\-Global\-Map}!height@{height}}
+\index{height@{height}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{height}]{\setlength{\rightskip}{0pt plus 5cm}\-Real {\bf \-Global\-Map\-::height}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGlobalMap_a8c44af901d0f19fb8a57845d03e24063}
+\-The height(depth) of the map. \hypertarget{classGlobalMap_a59b1001eec405852745ecf64a47915be}{\index{\-Global\-Map@{\-Global\-Map}!m\-Map\-Obj@{m\-Map\-Obj}}
+\index{m\-Map\-Obj@{m\-Map\-Obj}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{m\-Map\-Obj}]{\setlength{\rightskip}{0pt plus 5cm}\-Manual\-Object$\ast$ {\bf \-Global\-Map\-::m\-Map\-Obj}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGlobalMap_a59b1001eec405852745ecf64a47915be}
+\-The manual object used to create the plane. \hypertarget{classGlobalMap_a58e2848e9c5f3abe6effaf12176c2c8e}{\index{\-Global\-Map@{\-Global\-Map}!m\-Scene\-Mgr@{m\-Scene\-Mgr}}
+\index{m\-Scene\-Mgr@{m\-Scene\-Mgr}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{m\-Scene\-Mgr}]{\setlength{\rightskip}{0pt plus 5cm}\-Scene\-Manager$\ast$ {\bf \-Global\-Map\-::m\-Scene\-Mgr}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGlobalMap_a58e2848e9c5f3abe6effaf12176c2c8e}
+\-The scene manager. \hypertarget{classGlobalMap_a79a33b5d851acd03cff2d74b1aaaf020}{\index{\-Global\-Map@{\-Global\-Map}!origin@{origin}}
+\index{origin@{origin}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{origin}]{\setlength{\rightskip}{0pt plus 5cm}\-Vector3 {\bf \-Global\-Map\-::origin}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGlobalMap_a79a33b5d851acd03cff2d74b1aaaf020}
+\-The origin of the map. \hypertarget{classGlobalMap_a3ef2cbe2c69a7257fbf17ef338e679c1}{\index{\-Global\-Map@{\-Global\-Map}!p\-Scene\-Node@{p\-Scene\-Node}}
+\index{p\-Scene\-Node@{p\-Scene\-Node}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{p\-Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}\-Scene\-Node$\ast$ {\bf \-Global\-Map\-::p\-Scene\-Node}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGlobalMap_a3ef2cbe2c69a7257fbf17ef338e679c1}
+\-The scene node that holds the map. \hypertarget{classGlobalMap_a0bfaceb4b03dd0c79179f627565d3a8a}{\index{\-Global\-Map@{\-Global\-Map}!resolution@{resolution}}
+\index{resolution@{resolution}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{resolution}]{\setlength{\rightskip}{0pt plus 5cm}\-Real {\bf \-Global\-Map\-::resolution}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGlobalMap_a0bfaceb4b03dd0c79179f627565d3a8a}
+\-The reolution of the map. \hypertarget{classGlobalMap_adbd369e87c136942c600d7675595ebd7}{\index{\-Global\-Map@{\-Global\-Map}!width@{width}}
+\index{width@{width}!GlobalMap@{\-Global\-Map}}
+\subsubsection[{width}]{\setlength{\rightskip}{0pt plus 5cm}\-Real {\bf \-Global\-Map\-::width}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGlobalMap_adbd369e87c136942c600d7675595ebd7}
+\-The width of the map. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Global\-Map.\-h\end{DoxyCompactItemize}

@@ -1,0 +1,147 @@
+\hypertarget{classVideo3D}{\section{\-Video3\-D \-Class \-Reference}
+\label{classVideo3D}\index{\-Video3\-D@{\-Video3\-D}}
+}
+
+
+\-Handles the 3\-D video stream. \-Similar to a \hyperlink{classSnapshot}{\-Snapshot}, but uses \-D\-Y\-N\-A\-M\-I\-C and \-D\-I\-S\-C\-A\-R\-D\-A\-B\-L\-E textures instead, which are updated, not placed. (\-Not the smartest implementation, should probably be inherit properties from \hyperlink{classSnapshot}{\-Snapshot}...)  
+
+
+
+
+{\ttfamily \#include $<$\-Video3\-D.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classVideo3D_aad8f80b8d60351bb34955a19c3f36d9b}{\-Video3\-D} (\-Ogre\-::\-Entity $\ast$, \-Ogre\-::\-Scene\-Node $\ast$, const \-Ogre\-::\-Texture\-Ptr \&, const \-Ogre\-::\-Texture\-Ptr \&)
+\item 
+\hyperlink{classVideo3D_a04f3933f882ba5f2e4fc36094e41abcf}{$\sim$\-Video3\-D} ()
+\item 
+virtual \-Ogre\-::\-Scene\-Node $\ast$ \hyperlink{classVideo3D_a19bafff8518433c46bb75cb9961fb8d6}{get\-Target\-Scene\-Node} ()
+\item 
+virtual \-Ogre\-::\-Texture\-Ptr \hyperlink{classVideo3D_aa1545fe5f983c6f9c51d43137b42b376}{get\-Assigned\-Depth\-Texture} ()
+\item 
+virtual \-Ogre\-::\-Texture\-Ptr \hyperlink{classVideo3D_a518e4f0e0cd61d33c55aad6a4ac17026}{get\-Assigned\-R\-G\-B\-Texture} ()
+\item 
+virtual void \hyperlink{classVideo3D_a1f2dc38dc3eee1286a550e97ce1685ec}{set\-Target\-Scene\-Node} (\-Ogre\-::\-Scene\-Node $\ast$)
+\item 
+virtual void \hyperlink{classVideo3D_a0be3f2fb99f5bba139d624077a55d640}{assign\-Depth\-Texture} (const \-Ogre\-::\-Texture\-Ptr \&)
+\item 
+virtual void \hyperlink{classVideo3D_a805bc17368571ce3826e98d45531cd2c}{assign\-R\-G\-B\-Texture} (const \-Ogre\-::\-Texture\-Ptr \&)
+\item 
+virtual bool \hyperlink{classVideo3D_a537270e52644622719f8765b86b00ec8}{update} (const \-Ogre\-::\-Image \&, const \-Ogre\-::\-Image \&, const \-Ogre\-::\-Vector3 \&, const \-Ogre\-::\-Quaternion \&)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\-Ogre\-::\-Entity $\ast$ \hyperlink{classVideo3D_ab8d19ec21e20d8e4fcb921db1f05c96e}{snapshot}
+\item 
+\-Ogre\-::\-Texture\-Ptr \hyperlink{classVideo3D_a1e9d633a5ac0c2b2468611190c2bba12}{depth\-Texture}
+\item 
+\-Ogre\-::\-Texture\-Ptr \hyperlink{classVideo3D_ae6ddba8b94b5f01dc4761255fcffdf81}{rgb\-Texture}
+\item 
+\-Ogre\-::\-Scene\-Node $\ast$ \hyperlink{classVideo3D_ab3e0e29264b1e813c3075bc0d562a2e8}{target\-Scene\-Node}
+\item 
+bool \hyperlink{classVideo3D_a4dc5c42b3005ccf0e6e9cffd26a6351d}{attached}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Handles the 3\-D video stream. \-Similar to a \hyperlink{classSnapshot}{\-Snapshot}, but uses \-D\-Y\-N\-A\-M\-I\-C and \-D\-I\-S\-C\-A\-R\-D\-A\-B\-L\-E textures instead, which are updated, not placed. (\-Not the smartest implementation, should probably be inherit properties from \hyperlink{classSnapshot}{\-Snapshot}...) 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classVideo3D_aad8f80b8d60351bb34955a19c3f36d9b}{\index{\-Video3\-D@{\-Video3\-D}!\-Video3\-D@{\-Video3\-D}}
+\index{\-Video3\-D@{\-Video3\-D}!Video3D@{\-Video3\-D}}
+\subsubsection[{\-Video3\-D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Video3\-D\-::\-Video3\-D} (
+\begin{DoxyParamCaption}
+\item[{\-Ogre\-::\-Entity $\ast$}]{, }
+\item[{\-Ogre\-::\-Scene\-Node $\ast$}]{, }
+\item[{const \-Ogre\-::\-Texture\-Ptr \&}]{, }
+\item[{const \-Ogre\-::\-Texture\-Ptr \&}]{}
+\end{DoxyParamCaption}
+)}}\label{classVideo3D_aad8f80b8d60351bb34955a19c3f36d9b}
+\-See constructor of \hyperlink{classSnapshot}{\-Snapshot} class. \hypertarget{classVideo3D_a04f3933f882ba5f2e4fc36094e41abcf}{\index{\-Video3\-D@{\-Video3\-D}!$\sim$\-Video3\-D@{$\sim$\-Video3\-D}}
+\index{$\sim$\-Video3\-D@{$\sim$\-Video3\-D}!Video3D@{\-Video3\-D}}
+\subsubsection[{$\sim$\-Video3\-D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Video3\-D\-::$\sim$\-Video3\-D} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classVideo3D_a04f3933f882ba5f2e4fc36094e41abcf}
+\-Default destructor. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classVideo3D_a0be3f2fb99f5bba139d624077a55d640}{\index{\-Video3\-D@{\-Video3\-D}!assign\-Depth\-Texture@{assign\-Depth\-Texture}}
+\index{assign\-Depth\-Texture@{assign\-Depth\-Texture}!Video3D@{\-Video3\-D}}
+\subsubsection[{assign\-Depth\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Video3\-D\-::assign\-Depth\-Texture} (
+\begin{DoxyParamCaption}
+\item[{const \-Ogre\-::\-Texture\-Ptr \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classVideo3D_a0be3f2fb99f5bba139d624077a55d640}
+\-Assign a depth texture. \hypertarget{classVideo3D_a805bc17368571ce3826e98d45531cd2c}{\index{\-Video3\-D@{\-Video3\-D}!assign\-R\-G\-B\-Texture@{assign\-R\-G\-B\-Texture}}
+\index{assign\-R\-G\-B\-Texture@{assign\-R\-G\-B\-Texture}!Video3D@{\-Video3\-D}}
+\subsubsection[{assign\-R\-G\-B\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Video3\-D\-::assign\-R\-G\-B\-Texture} (
+\begin{DoxyParamCaption}
+\item[{const \-Ogre\-::\-Texture\-Ptr \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classVideo3D_a805bc17368571ce3826e98d45531cd2c}
+\-Assign a rgb texture. \hypertarget{classVideo3D_aa1545fe5f983c6f9c51d43137b42b376}{\index{\-Video3\-D@{\-Video3\-D}!get\-Assigned\-Depth\-Texture@{get\-Assigned\-Depth\-Texture}}
+\index{get\-Assigned\-Depth\-Texture@{get\-Assigned\-Depth\-Texture}!Video3D@{\-Video3\-D}}
+\subsubsection[{get\-Assigned\-Depth\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Ogre\-::\-Texture\-Ptr {\bf \-Video3\-D\-::get\-Assigned\-Depth\-Texture} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classVideo3D_aa1545fe5f983c6f9c51d43137b42b376}
+\-Get tointer to the depth texture of the 3\-D stream. \hypertarget{classVideo3D_a518e4f0e0cd61d33c55aad6a4ac17026}{\index{\-Video3\-D@{\-Video3\-D}!get\-Assigned\-R\-G\-B\-Texture@{get\-Assigned\-R\-G\-B\-Texture}}
+\index{get\-Assigned\-R\-G\-B\-Texture@{get\-Assigned\-R\-G\-B\-Texture}!Video3D@{\-Video3\-D}}
+\subsubsection[{get\-Assigned\-R\-G\-B\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Ogre\-::\-Texture\-Ptr {\bf \-Video3\-D\-::get\-Assigned\-R\-G\-B\-Texture} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classVideo3D_a518e4f0e0cd61d33c55aad6a4ac17026}
+\-Get the pointer to the rgb texture of the stream. \hypertarget{classVideo3D_a19bafff8518433c46bb75cb9961fb8d6}{\index{\-Video3\-D@{\-Video3\-D}!get\-Target\-Scene\-Node@{get\-Target\-Scene\-Node}}
+\index{get\-Target\-Scene\-Node@{get\-Target\-Scene\-Node}!Video3D@{\-Video3\-D}}
+\subsubsection[{get\-Target\-Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Ogre\-::\-Scene\-Node$\ast$ {\bf \-Video3\-D\-::get\-Target\-Scene\-Node} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classVideo3D_a19bafff8518433c46bb75cb9961fb8d6}
+\-The scene node of the video stream. \hypertarget{classVideo3D_a1f2dc38dc3eee1286a550e97ce1685ec}{\index{\-Video3\-D@{\-Video3\-D}!set\-Target\-Scene\-Node@{set\-Target\-Scene\-Node}}
+\index{set\-Target\-Scene\-Node@{set\-Target\-Scene\-Node}!Video3D@{\-Video3\-D}}
+\subsubsection[{set\-Target\-Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Video3\-D\-::set\-Target\-Scene\-Node} (
+\begin{DoxyParamCaption}
+\item[{\-Ogre\-::\-Scene\-Node $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classVideo3D_a1f2dc38dc3eee1286a550e97ce1685ec}
+\-Set the scene node. (\-Not used, done during construction. \hypertarget{classVideo3D_a537270e52644622719f8765b86b00ec8}{\index{\-Video3\-D@{\-Video3\-D}!update@{update}}
+\index{update@{update}!Video3D@{\-Video3\-D}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Video3\-D\-::update} (
+\begin{DoxyParamCaption}
+\item[{const \-Ogre\-::\-Image \&}]{, }
+\item[{const \-Ogre\-::\-Image \&}]{, }
+\item[{const \-Ogre\-::\-Vector3 \&}]{, }
+\item[{const \-Ogre\-::\-Quaternion \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classVideo3D_a537270e52644622719f8765b86b00ec8}
+\-Update the video stream with the new\-: (1) depth image, (2) rgb image, (3) position and (4) orientation. 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classVideo3D_a4dc5c42b3005ccf0e6e9cffd26a6351d}{\index{\-Video3\-D@{\-Video3\-D}!attached@{attached}}
+\index{attached@{attached}!Video3D@{\-Video3\-D}}
+\subsubsection[{attached}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Video3\-D\-::attached}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classVideo3D_a4dc5c42b3005ccf0e6e9cffd26a6351d}
+\-Was this object already attached to its scene node? \hypertarget{classVideo3D_a1e9d633a5ac0c2b2468611190c2bba12}{\index{\-Video3\-D@{\-Video3\-D}!depth\-Texture@{depth\-Texture}}
+\index{depth\-Texture@{depth\-Texture}!Video3D@{\-Video3\-D}}
+\subsubsection[{depth\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Texture\-Ptr {\bf \-Video3\-D\-::depth\-Texture}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classVideo3D_a1e9d633a5ac0c2b2468611190c2bba12}
+\-Pointer to the depth texture. \hypertarget{classVideo3D_ae6ddba8b94b5f01dc4761255fcffdf81}{\index{\-Video3\-D@{\-Video3\-D}!rgb\-Texture@{rgb\-Texture}}
+\index{rgb\-Texture@{rgb\-Texture}!Video3D@{\-Video3\-D}}
+\subsubsection[{rgb\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Texture\-Ptr {\bf \-Video3\-D\-::rgb\-Texture}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classVideo3D_ae6ddba8b94b5f01dc4761255fcffdf81}
+\-Pointer to the rgb texture. \hypertarget{classVideo3D_ab8d19ec21e20d8e4fcb921db1f05c96e}{\index{\-Video3\-D@{\-Video3\-D}!snapshot@{snapshot}}
+\index{snapshot@{snapshot}!Video3D@{\-Video3\-D}}
+\subsubsection[{snapshot}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Entity$\ast$ {\bf \-Video3\-D\-::snapshot}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classVideo3D_ab8d19ec21e20d8e4fcb921db1f05c96e}
+\-The entity of the video. \hypertarget{classVideo3D_ab3e0e29264b1e813c3075bc0d562a2e8}{\index{\-Video3\-D@{\-Video3\-D}!target\-Scene\-Node@{target\-Scene\-Node}}
+\index{target\-Scene\-Node@{target\-Scene\-Node}!Video3D@{\-Video3\-D}}
+\subsubsection[{target\-Scene\-Node}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Scene\-Node$\ast$ {\bf \-Video3\-D\-::target\-Scene\-Node}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classVideo3D_ab3e0e29264b1e813c3075bc0d562a2e8}
+\-The scene node of the video. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Video3\-D.\-h\end{DoxyCompactItemize}

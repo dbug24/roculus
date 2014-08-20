@@ -1,0 +1,78 @@
+\hypertarget{classRoculus}{\section{\-Roculus \-Class \-Reference}
+\label{classRoculus}\index{\-Roculus@{\-Roculus}}
+}
+
+
+class to take care of the scene and object creation. \-This class fills the scene with objects and in most cases creates the geometries manually. \-It has a method to parse room recordings in folders in order to include them into the scene. \-Though it is the nominal main class, the majority of the implementation is found in the \hyperlink{classBaseApplication}{\-Base\-Application} class.  
+
+
+
+
+{\ttfamily \#include $<$\-Roculus.\-h$>$}
+
+\-Inheritance diagram for \-Roculus\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classRoculus}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRoculus_a73729ed3b3134557e18df7b67b4171c5}{\-Roculus} (void)
+\item 
+virtual \hyperlink{classRoculus_aa839f9c21064f6a6f59e1a6e60afdef9}{$\sim$\-Roculus} (void)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classRoculus_a2da8d57d448a37e544d86d51e610f9d6}{create\-Scene} (void)
+\item 
+virtual void \hyperlink{classRoculus_a47dc1fd07bd9cd79b2f4cb8b95e53a5a}{load\-Recorded\-Scene} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+class to take care of the scene and object creation. \-This class fills the scene with objects and in most cases creates the geometries manually. \-It has a method to parse room recordings in folders in order to include them into the scene. \-Though it is the nominal main class, the majority of the implementation is found in the \hyperlink{classBaseApplication}{\-Base\-Application} class. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classRoculus_a73729ed3b3134557e18df7b67b4171c5}{\index{\-Roculus@{\-Roculus}!\-Roculus@{\-Roculus}}
+\index{\-Roculus@{\-Roculus}!Roculus@{\-Roculus}}
+\subsubsection[{\-Roculus}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Roculus\-::\-Roculus} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{classRoculus_a73729ed3b3134557e18df7b67b4171c5}
+\-Default constructor \hypertarget{classRoculus_aa839f9c21064f6a6f59e1a6e60afdef9}{\index{\-Roculus@{\-Roculus}!$\sim$\-Roculus@{$\sim$\-Roculus}}
+\index{$\sim$\-Roculus@{$\sim$\-Roculus}!Roculus@{\-Roculus}}
+\subsubsection[{$\sim$\-Roculus}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf \-Roculus\-::$\sim$\-Roculus} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classRoculus_aa839f9c21064f6a6f59e1a6e60afdef9}
+\-Default destructor 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classRoculus_a2da8d57d448a37e544d86d51e610f9d6}{\index{\-Roculus@{\-Roculus}!create\-Scene@{create\-Scene}}
+\index{create\-Scene@{create\-Scene}!Roculus@{\-Roculus}}
+\subsubsection[{create\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Roculus\-::create\-Scene} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classRoculus_a2da8d57d448a37e544d86d51e610f9d6}
+\-Does the main work to compile the implemented manual objects into geometries (meshes) and to configure the materials and set up the \-Snapshot\-Libraries. \-N\-O\-T\-E\-: \-Includes hardcoded camera parameters for the standard geometry. 
+
+\-Implements \hyperlink{classBaseApplication_aa97beeb4059b17d0ec22eae33286ec2d}{\-Base\-Application}.
+
+\hypertarget{classRoculus_a47dc1fd07bd9cd79b2f4cb8b95e53a5a}{\index{\-Roculus@{\-Roculus}!load\-Recorded\-Scene@{load\-Recorded\-Scene}}
+\index{load\-Recorded\-Scene@{load\-Recorded\-Scene}!Roculus@{\-Roculus}}
+\subsubsection[{load\-Recorded\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Roculus\-::load\-Recorded\-Scene} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classRoculus_a47dc1fd07bd9cd79b2f4cb8b95e53a5a}
+\-Hardcodes the './map/' directory to be searched for room recordings and load them into a \hyperlink{classSnapshotLibrary}{\-Snapshot\-Library}. \-Includes smoothing for the depth images. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Roculus.\-h\end{DoxyCompactItemize}

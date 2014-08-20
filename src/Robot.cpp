@@ -5,14 +5,13 @@
 #include <tf/transform_datatypes.h>
 
 Robot::Robot(Ogre::SceneManager *mSceneMgr) {
+	// set everything up for display
 	robot = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	robot->setPosition(Ogre::Vector3(0.0f, 1.0f, 0.0f));
 	robot->attachObject(mSceneMgr->createEntity("Rosie.mesh"));
 }
 
-Robot::~Robot() {
-	
-}
+Robot::~Robot() { }
 
 void Robot::updateFrom(tf::TransformListener *tfListener) {
 	using namespace Ogre;
@@ -23,6 +22,7 @@ void Robot::updateFrom(tf::TransformListener *tfListener) {
 	static tfScalar yaw,pitch,roll;
 	static Matrix3 mRot;
 	
+	// get the latest robot position and orientation, transform them to Ogre and update the scene node	
 	try {
 		tfListener->lookupTransform("map","base_footprint",ros::Time(0), baseTF);
 		

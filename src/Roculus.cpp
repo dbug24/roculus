@@ -33,13 +33,15 @@ Roculus::~Roculus(void)
 //-------------------------------------------------------------------------------------
 void Roculus::createScene(void)
 {	
-	// Set camera resolution (X, Y, f) here
+	// Dummy object to generate manual objects and meshes
+	Ogre::ManualObject *mPCRender;
+	
+	// Set camera resolution (X, Y, f) here:
 	Ogre::Vector3 cam(640.0f, 480.0f, 574.0f);
 	cam = cam/2.0f; // Lower number of vertices (!), comment out for full resolution
-	// For better results adapt the invResolution parameter in vertexColours.material (!)
+	// For better results adapt the resolution parameter in vertexColours.material (!)
 
-	// Loading two dummy textures for the validity of the standard material
-	// Actually the textures can be reused for the video stream
+	// Loading two textures (rgb and depth) for the validity of the standard material and the video stream
 	Ogre::TexturePtr pT_RGB = Ogre::TextureManager::getSingleton().createManual(
 		"VideoRGBTexture", 				// name
 		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
@@ -58,6 +60,7 @@ void Roculus::createScene(void)
 		Ogre::PF_L16,     // pixel format
 		Ogre::TU_DYNAMIC_WRITE_ONLY_DISCARDABLE); 
 	
+	// Texture to hold the map image
 	Ogre::TexturePtr pT_GlobalMap = Ogre::TextureManager::getSingleton().createManual(
 		"GlobalMapTexture", 				// name
 		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
@@ -67,6 +70,7 @@ void Roculus::createScene(void)
 		Ogre::PF_BYTE_RGBA,     // pixel format
 		Ogre::TU_STATIC);
 			
+	// dummy image to prevent the textures from being dumped at rendering start
 	Ogre::Image imDefault;
 	imDefault.load("KAMEN320x240.jpg","Popular");
 	imDefault.resize(512,512);
@@ -74,75 +78,71 @@ void Roculus::createScene(void)
 	pT_Depth->loadImage(imDefault);
 	pT_GlobalMap->loadImage(imDefault);
 
+	// create the standard geometry for the Snapshots, taking into account the hardcoded 'cam' parameters above
+	// better solution: write a cfg file and corresponding parser (see GameCFGParser.h for example)
 	mPCRender= mSceneMgr->createManualObject();
 	mPCRender->estimateVertexCount(cam.x * cam.y);
 	mPCRender->estimateIndexCount(4 * cam.x * cam.y);
 	mPCRender->begin("roculus3D/DynamicTextureMaterial", Ogre::RenderOperation::OT_TRIANGLE_LIST);
-
-	float fake_z = 0.0f;
-	for (int w=0; w<cam.x; w++) {
-		for (int h=0; h<cam.y; h++) {
-			if (fake_z > -4.0f) fake_z -= 0.05f;
-			mPCRender->position(float(w - (cam.x-1.0f)/2.0f)/cam.z, float((cam.y-1.0f)/2.0f - h)/cam.z, fake_z);
-			mPCRender->textureCoord(float(w)/(cam.x-1.0f),float(h)/(cam.y-1.0f));
-			if (w>0 && h>0) {
-				mPCRender->quad(w*cam.y+h, (w-1)*cam.y+h, (w-1)*cam.y+h-1, w*cam.y+h-1);
-				mPCRender->quad(w*cam.y+h, w*cam.y+h-1, (w-1)*cam.y+h-1, (w-1)*cam.y+h);
+		float fake_z = 0.0f;
+		for (int w=0; w<cam.x; w++) {
+			for (int h=0; h<cam.y; h++) {
+				if (fake_z > -4.0f) fake_z -= 0.05f;
+				mPCRender->position(float(w - (cam.x-1.0f)/2.0f)/cam.z, float((cam.y-1.0f)/2.0f - h)/cam.z, fake_z);
+				mPCRender->textureCoord(float(w)/(cam.x-1.0f),float(h)/(cam.y-1.0f));
+				if (w>0 && h>0) {
+					mPCRender->quad(w*cam.y+h, (w-1)*cam.y+h, (w-1)*cam.y+h-1, w*cam.y+h-1);
+					mPCRender->quad(w*cam.y+h, w*cam.y+h-1, (w-1)*cam.y+h-1, (w-1)*cam.y+h);
+				}
 			}
 		}
-	}
-
 	mPCRender->end();
 	mPCRender->convertToMesh("CamGeometry");
 	
+	// create a simple coordinate system for debugging
 	mPCRender= mSceneMgr->createManualObject();
 	mPCRender->begin("roculus3D/BlankMaterial", Ogre::RenderOperation::OT_LINE_LIST);
+		mPCRender->position(0.0f,0.0f,0.0f);
+		mPCRender->colour(Ogre::ColourValue(1.0f, 1.0f, 1.0f, 1.0f));
+		mPCRender->position(1.0f,0.0f,0.0f);
+		mPCRender->colour(Ogre::ColourValue(1.0f, 0.0f, 0.0f, 1.0f));
+		mPCRender->position(0.0f,1.0f,0.0f);
+		mPCRender->colour(Ogre::ColourValue(0.0f, 1.0f, 0.0f, 1.0f));
+		mPCRender->position(0.0f,0.0f,1.0f);
+		mPCRender->colour(Ogre::ColourValue(0.0f, 0.0f, 1.0f, 1.0f));
 
-	mPCRender->position(0.0f,0.0f,0.0f);
-	mPCRender->colour(Ogre::ColourValue(1.0f, 1.0f, 1.0f, 1.0f));
-	mPCRender->position(1.0f,0.0f,0.0f);
-	mPCRender->colour(Ogre::ColourValue(1.0f, 0.0f, 0.0f, 1.0f));
-	mPCRender->position(0.0f,1.0f,0.0f);
-	mPCRender->colour(Ogre::ColourValue(0.0f, 1.0f, 0.0f, 1.0f));
-	mPCRender->position(0.0f,0.0f,1.0f);
-	mPCRender->colour(Ogre::ColourValue(0.0f, 0.0f, 1.0f, 1.0f));
-
-	mPCRender->index(0);
-	mPCRender->index(1);
-	mPCRender->index(0);
-	mPCRender->index(2);
-	mPCRender->index(0);
-	mPCRender->index(3);
-	
+		mPCRender->index(0);
+		mPCRender->index(1);
+		mPCRender->index(0);
+		mPCRender->index(2);
+		mPCRender->index(0);
+		mPCRender->index(3);
 	mPCRender->end();
-	
 	mPCRender->convertToMesh("CoordSystem");
 	
+	// create a circle as cursor 
 	mPCRender= mSceneMgr->createManualObject();
 	mPCRender->begin("roculus3D/BlankMaterial", Ogre::RenderOperation::OT_LINE_STRIP);
-	
-	float const radius = 0.3;
-    float const accuracy = 35; 
-    unsigned point_index = 0;
-    
-    for(float theta = 0; theta <= 2 * Math::PI; theta += Math::PI / accuracy) {
-        mPCRender->position(radius * cos(theta), 0.15f, radius * sin(theta));
-        mPCRender->colour(Ogre::ColourValue(0.0f, 1.0f, 0.0f, 1.0f));
-        mPCRender->index(point_index++);
-    }
-    mPCRender->index(0); // Rejoins the last point to the first.
- 
+		float const radius = 0.3;
+		float const accuracy = 35; 
+		unsigned point_index = 0;
+		for(float theta = 0; theta <= 2 * Math::PI; theta += Math::PI / accuracy) {
+			mPCRender->position(radius * cos(theta), 0.15f, radius * sin(theta));
+			mPCRender->colour(Ogre::ColourValue(0.0f, 1.0f, 0.0f, 1.0f));
+			mPCRender->index(point_index++);
+		}
+		mPCRender->index(0); // Rejoins the last point to the first.
 	mPCRender->end();
 	mPCRender->convertToMesh("CircleCursor");
 
+	// construct an instance of the cursor with circle and transparent flagg
 	cursor = mSceneMgr->getRootSceneNode()->createChildSceneNode("CircleCursor");
 	cursor->attachObject(mSceneMgr->createEntity("CircleCursor"));
 	Ogre::Entity *wpMarker = mSceneMgr->createEntity("Cylinder.mesh");
 	wpMarker->setMaterialName("roculus3D/WayPointMarkerTransparent");
 	cursor->attachObject(wpMarker);
 	
-	
-	
+	// set up the node for the video stream
 	vdVideo = new Video3D(mSceneMgr->createEntity("CamGeometry"), mSceneMgr->getRootSceneNode()->createChildSceneNode(), pT_Depth, pT_RGB);	
 	
 	/* Good for debugging: add some coordinate systems */
@@ -154,12 +154,14 @@ void Roculus::createScene(void)
     rsLib = new SnapshotLibrary(mSceneMgr, Ogre::String("CamGeometry"), Ogre::String("roculus3D/DynamicTextureMaterialSepia"), 10);
     
     // Load the prerecorded environment    
-	loadRecordedScene();
+	//~ loadRecordedScene();
     
 }
 
 void Roculus::loadRecordedScene() {
 	
+	// Rares' parser for the room recordings in a directory
+	// the parser was slightly modified to work on a subset of images (see indexing below)
 	SimpleSummaryParser<PointType> summary_parser("./map/index.xml");
     summary_parser.createSummaryXML("./map/");
     
@@ -167,7 +169,9 @@ void Roculus::loadRecordedScene() {
     SimpleXMLParser<PointType>::RoomData roomData;
     std::vector<Entities> allSweeps = summary_parser.getRooms();
 
-	std::set<size_t> idc2process; // store all indecies that shall be processed and displayed {you can specify higher indices that don't actually exist!}
+	// there is lots of overlap so a subset is actually sufficient:
+	// store all indecies that shall be processed and displayed {you can specify higher indices that don't actually exist!}
+	std::set<size_t> idc2process; 
 	idc2process.insert(0); 	idc2process.insert(2);	idc2process.insert(4);	idc2process.insert(6);	idc2process.insert(8);	idc2process.insert(10);
 	idc2process.insert(12);	idc2process.insert(14);	idc2process.insert(16);	
 	idc2process.insert(34); idc2process.insert(36);	idc2process.insert(38);	idc2process.insert(40);	idc2process.insert(42);	idc2process.insert(44);
@@ -175,25 +179,28 @@ void Roculus::loadRecordedScene() {
 	idc2process.insert(68);	idc2process.insert(70);	idc2process.insert(72);	idc2process.insert(74);	idc2process.insert(76);	idc2process.insert(78);
 	idc2process.insert(80); idc2process.insert(82);	idc2process.insert(84);
 	
+	// process the files and insert the Snapshots
 	Ogre::Image oi_rgb, oi_depth;
 	Ogre::Quaternion orientation;
 	Ogre::Vector3 position;
 	tfScalar yaw,pitch,roll;
 	Matrix3 mRot;
 	for (size_t i=0; i<allSweeps.size(); i++) {
-		
+		// load each room that was parsed
 		roomData = parser.loadRoomFromXML(allSweeps[i].roomXmlFile, &idc2process);
 		for (size_t i=0; i<roomData.vIntermediateRoomClouds.size(); i++)
 		{
 			const cv::Mat& rgbImg = roomData.vIntermediateRGBImages[i];
 			const cv::Mat& depthImg = roomData.vIntermediateDepthImages[i];
 					
-			// IMAGE FILTERING:
+			// IMAGE FILTERING (smoothing the depth image):
 			cv::GaussianBlur(depthImg, depthImg, cv::Size(11,11), 0, 0);
-					
+			
+			// load the images into the scene
 			oi_rgb.loadDynamicImage(static_cast<uchar*>(rgbImg.data), rgbImg.cols, rgbImg.rows, 1, Ogre::PF_BYTE_RGB);
 			oi_depth.loadDynamicImage(static_cast<uchar*>(depthImg.data), rgbImg.cols, rgbImg.rows, 1, Ogre::PF_L16);
 			
+			// load the corresponding camera transform
 			const tf::StampedTransform& tfCurrent = roomData.vIntermediateRoomCloudTransforms[i];
 			position.x = -tfCurrent.getOrigin().y();
 			position.y = tfCurrent.getOrigin().z();
@@ -203,6 +210,7 @@ void Roculus::loadRecordedScene() {
 			mRot.FromEulerAnglesXYZ(-Radian(pitch),Radian(yaw),-Radian(roll));
 			orientation.FromRotationMatrix(mRot);
 			
+			// place the object in the scene
 			rsLib->placeInScene(oi_depth, oi_rgb, position, orientation);
 		}
 	}

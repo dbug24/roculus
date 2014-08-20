@@ -1,0 +1,100 @@
+\hypertarget{classDoor}{\section{\-Door \-Class \-Reference}
+\label{classDoor}\index{\-Door@{\-Door}}
+}
+
+
+\-Represents a \hyperlink{classDoor}{\-Door} in the demo-\/game. \-A door is a \hyperlink{classGameObject}{\-Game\-Object} and takes care of the appearance, as well as the behaviour of a door.  
+
+
+
+
+{\ttfamily \#include $<$\-Door.\-h$>$}
+
+\-Inheritance diagram for \-Door\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classDoor}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classDoor_a658ddc4507a266a241ad8caa3288c922}{\-Door} (\-Scene\-Manager $\ast$, int)
+\item 
+virtual \-Game\-State \hyperlink{classDoor_a2e526ecea542d817e04771ed5487bebc}{frame\-Event\-Queued} (\hyperlink{classWayPoint}{\-Way\-Point} $\ast$current\-W\-P, \-Game\-State gs)
+\item 
+virtual void \hyperlink{classDoor_a6d9a56dd103f3f26b4beaf5682c22187}{init} (\hyperlink{classRoom}{\-Room} $\ast$\hyperlink{classGameObject_a9f63419cc03f2513f757a317a2e37557}{room})
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classDoor_a5191a649ed79b50f886e5c43b473c369}{\-Door} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\-Game\-State \hyperlink{classDoor_a3a6559434b958ebf3514348d5065c413}{keys}
+\item 
+const \-Vector3 \hyperlink{classDoor_a2e00eb490d6c7ea3a37759361fb3d188}{mask}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Represents a \hyperlink{classDoor}{\-Door} in the demo-\/game. \-A door is a \hyperlink{classGameObject}{\-Game\-Object} and takes care of the appearance, as well as the behaviour of a door. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classDoor_a5191a649ed79b50f886e5c43b473c369}{\index{\-Door@{\-Door}!\-Door@{\-Door}}
+\index{\-Door@{\-Door}!Door@{\-Door}}
+\subsubsection[{\-Door}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Door\-::\-Door} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classDoor_a5191a649ed79b50f886e5c43b473c369}
+\-Default constructor may not be used outside class scope. \hypertarget{classDoor_a658ddc4507a266a241ad8caa3288c922}{\index{\-Door@{\-Door}!\-Door@{\-Door}}
+\index{\-Door@{\-Door}!Door@{\-Door}}
+\subsubsection[{\-Door}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Door\-::\-Door} (
+\begin{DoxyParamCaption}
+\item[{\-Scene\-Manager $\ast$}]{, }
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{classDoor_a658ddc4507a266a241ad8caa3288c922}
+\-Constructor\-: initialized the elements for appearance and some game parameters. \-Takes the scene manager (to set up the scene node and entities) and the number of keys that are placed in the game. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classDoor_a2e526ecea542d817e04771ed5487bebc}{\index{\-Door@{\-Door}!frame\-Event\-Queued@{frame\-Event\-Queued}}
+\index{frame\-Event\-Queued@{frame\-Event\-Queued}!Door@{\-Door}}
+\subsubsection[{frame\-Event\-Queued}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Game\-State {\bf \-Door\-::frame\-Event\-Queued} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Way\-Point} $\ast$}]{current\-W\-P, }
+\item[{\-Game\-State}]{gs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classDoor_a2e526ecea542d817e04771ed5487bebc}
+\-If the game is in the door event \-Game\-State and the robot reached the trigger. \-Make the room accessible and the door disappear. 
+
+\-Reimplemented from \hyperlink{classGameObject_aa643df342c50df77f053eee2c703c619}{\-Game\-Object}.
+
+\hypertarget{classDoor_a6d9a56dd103f3f26b4beaf5682c22187}{\index{\-Door@{\-Door}!init@{init}}
+\index{init@{init}!Door@{\-Door}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Door\-::init} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Room} $\ast$}]{room}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classDoor_a6d9a56dd103f3f26b4beaf5682c22187}
+(\-Re)\-Initialize the door. \-Place it according to the given room specifications, lock the room and make the virtual door visible again. 
+
+\-Reimplemented from \hyperlink{classGameObject_ac3ab6708ce47b4ef8fd35d8bb43149dc}{\-Game\-Object}.
+
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classDoor_a3a6559434b958ebf3514348d5065c413}{\index{\-Door@{\-Door}!keys@{keys}}
+\index{keys@{keys}!Door@{\-Door}}
+\subsubsection[{keys}]{\setlength{\rightskip}{0pt plus 5cm}\-Game\-State {\bf \-Door\-::keys}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classDoor_a3a6559434b958ebf3514348d5065c413}
+\-Specifies in which \-Game\-State the \hyperlink{classDoor}{\-Door} event (to open/disappear) can be triggered. \hypertarget{classDoor_a2e00eb490d6c7ea3a37759361fb3d188}{\index{\-Door@{\-Door}!mask@{mask}}
+\index{mask@{mask}!Door@{\-Door}}
+\subsubsection[{mask}]{\setlength{\rightskip}{0pt plus 5cm}const \-Vector3 {\bf \-Door\-::mask}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classDoor_a2e00eb490d6c7ea3a37759361fb3d188}
+\-For internal calculation of the door position. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Door.\-h\end{DoxyCompactItemize}

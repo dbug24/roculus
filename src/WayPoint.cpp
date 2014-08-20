@@ -2,6 +2,7 @@
 using namespace Ogre;
 
 WayPoint::WayPoint(int id, SceneManager* mSceneMgr, Vector3 pos, Quaternion, WayPoint_Role role) {
+	// Initialize the waypoint and set up everything to display it
 	this->id = id;
 	this->mSceneMgr = mSceneMgr;
 	this->name = String("WayPoint")+String(boost::lexical_cast<std::string>(id));
@@ -17,6 +18,8 @@ WayPoint::WayPoint(int id, SceneManager* mSceneMgr, Vector3 pos, Quaternion, Way
 	wpSN->attachObject(wpEnt);
 	wpSN->setVisible(true);
 }
+
+/* Setters and getters + some utility, straight forward.*/
 
 String WayPoint::getName() {
 	return this->name;

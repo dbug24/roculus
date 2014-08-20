@@ -1,0 +1,113 @@
+\hypertarget{classOculus}{\section{\-Oculus \-Class \-Reference}
+\label{classOculus}\index{\-Oculus@{\-Oculus}}
+}
+
+
+\-Handler for the \hyperlink{classOculus}{\-Oculus} \-Rift using \-S\-D\-K1. \-Written by \-Kojack 2013 (\-C). \-Slightly modified to take the \-Plaber\-Body scene node as parent to the camera setup.  
+
+
+
+
+{\ttfamily \#include $<$\-Ogre\-Oculus.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classOculus_a6640889e484d897735691a03ae1d8384}{bool {\bfseries setup\-Oculus} ()}\label{classOculus_a6640889e484d897735691a03ae1d8384}
+
+\item 
+\hypertarget{classOculus_accdc766b373dbc47f116f54ac8c250ac}{bool {\bfseries setup\-Ogre} (\-Ogre\-::\-Scene\-Manager $\ast$sm, \-Ogre\-::\-Render\-Window $\ast$win, \-Ogre\-::\-Scene\-Node $\ast$parent=0)}\label{classOculus_accdc766b373dbc47f116f54ac8c250ac}
+
+\item 
+\hypertarget{classOculus_ace286547c90c6542791b262dfa23c121}{void {\bfseries shut\-Down\-Oculus} ()}\label{classOculus_ace286547c90c6542791b262dfa23c121}
+
+\item 
+\hypertarget{classOculus_ac81fab6972076af3163e32bc4b1b8cd9}{void {\bfseries shut\-Down\-Ogre} ()}\label{classOculus_ac81fab6972076af3163e32bc4b1b8cd9}
+
+\item 
+\hypertarget{classOculus_a12900a96969e29b205c91dc674fa6e3c}{bool {\bfseries is\-Ogre\-Ready} () const }\label{classOculus_a12900a96969e29b205c91dc674fa6e3c}
+
+\item 
+\hypertarget{classOculus_a900f90713f56a74b1d19be9f806d9948}{bool {\bfseries is\-Oculus\-Ready} () const }\label{classOculus_a900f90713f56a74b1d19be9f806d9948}
+
+\item 
+\hypertarget{classOculus_a8218c82da106443d8fbd05f0bfe326fd}{void \hyperlink{classOculus_a8218c82da106443d8fbd05f0bfe326fd}{update} ()}\label{classOculus_a8218c82da106443d8fbd05f0bfe326fd}
+
+\begin{DoxyCompactList}\small\item\em \-Update camera node using current \hyperlink{classOculus}{\-Oculus} orientation. \end{DoxyCompactList}\item 
+\hypertarget{classOculus_ae969c54fc823d9fdfbf53b06810bc364}{void \hyperlink{classOculus_ae969c54fc823d9fdfbf53b06810bc364}{reset\-Orientation} ()}\label{classOculus_ae969c54fc823d9fdfbf53b06810bc364}
+
+\begin{DoxyCompactList}\small\item\em \-Reset orientation of the sensor. \end{DoxyCompactList}\item 
+\hypertarget{classOculus_a39ba8ece6a11aa64b7785a7adfa1753f}{\-Ogre\-::\-Scene\-Node $\ast$ \hyperlink{classOculus_a39ba8ece6a11aa64b7785a7adfa1753f}{get\-Camera\-Node} ()}\label{classOculus_a39ba8ece6a11aa64b7785a7adfa1753f}
+
+\begin{DoxyCompactList}\small\item\em \-Retrieve the \-Scene\-Node that contains the two cameras used for stereo rendering. \end{DoxyCompactList}\item 
+\hypertarget{classOculus_aaa0656d504cf27b360e17aeb64e084b1}{\-Ogre\-::\-Quaternion \hyperlink{classOculus_aaa0656d504cf27b360e17aeb64e084b1}{get\-Orientation} () const }\label{classOculus_aaa0656d504cf27b360e17aeb64e084b1}
+
+\begin{DoxyCompactList}\small\item\em \-Retrieve the current orientation of the \hyperlink{classOculus}{\-Oculus} \-H\-M\-D. \end{DoxyCompactList}\item 
+\hypertarget{classOculus_af7b9faaba46ebab5832e7981f64f1ed2}{\-Ogre\-::\-Compositor\-Instance $\ast$ \hyperlink{classOculus_af7b9faaba46ebab5832e7981f64f1ed2}{get\-Compositor} (unsigned int i)}\label{classOculus_af7b9faaba46ebab5832e7981f64f1ed2}
+
+\begin{DoxyCompactList}\small\item\em \-Retrieve either of the two distortion compositors. \end{DoxyCompactList}\item 
+\hypertarget{classOculus_afc5ba0805fa77f79274ae02459a79f8e}{\-Ogre\-::\-Camera $\ast$ \hyperlink{classOculus_afc5ba0805fa77f79274ae02459a79f8e}{get\-Camera} (unsigned int i)}\label{classOculus_afc5ba0805fa77f79274ae02459a79f8e}
+
+\begin{DoxyCompactList}\small\item\em \-Retrieve either of the two cameras. \end{DoxyCompactList}\item 
+\hypertarget{classOculus_a43bb7c57f4a2f18ac068490920429c5e}{\-Ogre\-::\-Viewport $\ast$ \hyperlink{classOculus_a43bb7c57f4a2f18ac068490920429c5e}{get\-Viewport} (unsigned int i)}\label{classOculus_a43bb7c57f4a2f18ac068490920429c5e}
+
+\begin{DoxyCompactList}\small\item\em \-Retrieve either of the two viewports. \end{DoxyCompactList}\item 
+\hypertarget{classOculus_a9c65adc0a6cc2e033dea0106919b88d6}{float \hyperlink{classOculus_a9c65adc0a6cc2e033dea0106919b88d6}{get\-Centre\-Offset} () const }\label{classOculus_a9c65adc0a6cc2e033dea0106919b88d6}
+
+\begin{DoxyCompactList}\small\item\em \-Retrieve the projection centre offset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classOculus_a7d43a3c841aa6c2992bc221a2478abce}{\-O\-V\-R\-::\-Device\-Manager $\ast$ {\bfseries m\-\_\-device\-Manager}}\label{classOculus_a7d43a3c841aa6c2992bc221a2478abce}
+
+\item 
+\hypertarget{classOculus_a4a51d56710b55e8e120e78c7873d63ed}{\-O\-V\-R\-::\-H\-M\-D\-Device $\ast$ {\bfseries m\-\_\-hmd}}\label{classOculus_a4a51d56710b55e8e120e78c7873d63ed}
+
+\item 
+\hypertarget{classOculus_a808e6236420bb27f20efab835cebd297}{\-O\-V\-R\-::\-Util\-::\-Render\-::\-Stereo\-Config $\ast$ {\bfseries m\-\_\-stereo\-Config}}\label{classOculus_a808e6236420bb27f20efab835cebd297}
+
+\item 
+\hypertarget{classOculus_a6b7deac9a91f5cd60da0bde86de0a2de}{\-O\-V\-R\-::\-Sensor\-Device $\ast$ {\bfseries m\-\_\-sensor}}\label{classOculus_a6b7deac9a91f5cd60da0bde86de0a2de}
+
+\item 
+\hypertarget{classOculus_a743d46cc9f7111e8a2e217225ae668b5}{\-O\-V\-R\-::\-Sensor\-Fusion $\ast$ {\bfseries m\-\_\-sensor\-Fusion}}\label{classOculus_a743d46cc9f7111e8a2e217225ae668b5}
+
+\item 
+\hypertarget{classOculus_af1bce77bc8933b499925ee2842d08a2b}{bool {\bfseries m\-\_\-oculus\-Ready}}\label{classOculus_af1bce77bc8933b499925ee2842d08a2b}
+
+\item 
+\hypertarget{classOculus_ad88758400d60938fb7d74da9ab805ffe}{bool \hyperlink{classOculus_ad88758400d60938fb7d74da9ab805ffe}{m\-\_\-ogre\-Ready}}\label{classOculus_ad88758400d60938fb7d74da9ab805ffe}
+
+\begin{DoxyCompactList}\small\item\em \-Has the oculus rift been fully initialised? \end{DoxyCompactList}\item 
+\hypertarget{classOculus_abf5ac2474b1aa243ae840467b9463b0a}{\-Ogre\-::\-Scene\-Manager $\ast$ \hyperlink{classOculus_abf5ac2474b1aa243ae840467b9463b0a}{m\-\_\-scene\-Manager}}\label{classOculus_abf5ac2474b1aa243ae840467b9463b0a}
+
+\begin{DoxyCompactList}\small\item\em \-Has ogre been fully initialised? \end{DoxyCompactList}\item 
+\hypertarget{classOculus_a1ac55f89c6d988f8377dc11209d2cf9d}{\-Ogre\-::\-Render\-Window $\ast$ {\bfseries m\-\_\-window}}\label{classOculus_a1ac55f89c6d988f8377dc11209d2cf9d}
+
+\item 
+\hypertarget{classOculus_a489d1f3bf93522faf43791955a6f61e9}{\-Ogre\-::\-Scene\-Node $\ast$ {\bfseries m\-\_\-camera\-Node}}\label{classOculus_a489d1f3bf93522faf43791955a6f61e9}
+
+\item 
+\hypertarget{classOculus_a22e177e8bffd008880590d3a4d644b9c}{\-Ogre\-::\-Quaternion {\bfseries m\-\_\-orientation}}\label{classOculus_a22e177e8bffd008880590d3a4d644b9c}
+
+\item 
+\hypertarget{classOculus_a0948264e389c8aa60f75610b604fa7a4}{float {\bfseries m\-\_\-centre\-Offset}}\label{classOculus_a0948264e389c8aa60f75610b604fa7a4}
+
+\item 
+\hypertarget{classOculus_afa92c115efd3146fe412a45efd513618}{\-Ogre\-::\-Camera $\ast$ \hyperlink{classOculus_afa92c115efd3146fe412a45efd513618}{m\-\_\-cameras} \mbox{[}2\mbox{]}}\label{classOculus_afa92c115efd3146fe412a45efd513618}
+
+\begin{DoxyCompactList}\small\item\em \-Projection centre offset. \end{DoxyCompactList}\item 
+\hypertarget{classOculus_a348c71e89c1fc6f0ffdd585605206d7c}{\-Ogre\-::\-Viewport $\ast$ {\bfseries m\-\_\-viewports} \mbox{[}2\mbox{]}}\label{classOculus_a348c71e89c1fc6f0ffdd585605206d7c}
+
+\item 
+\hypertarget{classOculus_a5b734ee68ae041602af9b55af2c5a2de}{\-Ogre\-::\-Compositor\-Instance $\ast$ {\bfseries m\-\_\-compositors} \mbox{[}2\mbox{]}}\label{classOculus_a5b734ee68ae041602af9b55af2c5a2de}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Handler for the \hyperlink{classOculus}{\-Oculus} \-Rift using \-S\-D\-K1. \-Written by \-Kojack 2013 (\-C). \-Slightly modified to take the \-Plaber\-Body scene node as parent to the camera setup. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Ogre\-Oculus.\-h\end{DoxyCompactItemize}

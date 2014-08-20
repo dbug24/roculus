@@ -1,0 +1,110 @@
+\hypertarget{classLock}{\section{\-Lock \-Class \-Reference}
+\label{classLock}\index{\-Lock@{\-Lock}}
+}
+
+
+\-Describes a \hyperlink{classLock}{\-Lock} in a \hyperlink{classGame}{\-Game}. \-This class specifies the details to display a lock and implements its behaviour.  
+
+
+
+
+{\ttfamily \#include $<$\-Lock.\-h$>$}
+
+\-Inheritance diagram for \-Lock\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classLock}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classLock_aae94a6576b49afad57330bf537a8edfc}{\-Lock} (\-Scene\-Manager $\ast$, int)
+\item 
+virtual \-Game\-State \hyperlink{classLock_a286412e42f06eff3d38b03028300cc01}{frame\-Event\-Queued} (\hyperlink{classWayPoint}{\-Way\-Point} $\ast$current\-W\-P, \-Game\-State gs)
+\item 
+virtual void \hyperlink{classLock_a357536468a884a9c2943b15b5fc6b39c}{init} (\hyperlink{classRoom}{\-Room} $\ast$\hyperlink{classGameObject_a9f63419cc03f2513f757a317a2e37557}{room})
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classLock_a9944623567d8138b95e74fadc7190adb}{\-Lock} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\-Game\-State \hyperlink{classLock_aa3796f83850ec610bf5f34ee05b6bdfd}{react}
+\item 
+\-Entity $\ast$ \hyperlink{classLock_ab92f200ca97e214793f439bfa512159c}{ent}
+\item 
+int \hyperlink{classLock_a7d5ea9a673fdfc9378bf54633a3c7885}{idx}
+\item 
+bool \hyperlink{classLock_a3f84294da55d52499fe63886b4673d6f}{locked}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Describes a \hyperlink{classLock}{\-Lock} in a \hyperlink{classGame}{\-Game}. \-This class specifies the details to display a lock and implements its behaviour. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classLock_a9944623567d8138b95e74fadc7190adb}{\index{\-Lock@{\-Lock}!\-Lock@{\-Lock}}
+\index{\-Lock@{\-Lock}!Lock@{\-Lock}}
+\subsubsection[{\-Lock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Lock\-::\-Lock} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}\label{classLock_a9944623567d8138b95e74fadc7190adb}
+\-Default constructor. \-Not to be used outside class scope. \hypertarget{classLock_aae94a6576b49afad57330bf537a8edfc}{\index{\-Lock@{\-Lock}!\-Lock@{\-Lock}}
+\index{\-Lock@{\-Lock}!Lock@{\-Lock}}
+\subsubsection[{\-Lock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Lock\-::\-Lock} (
+\begin{DoxyParamCaption}
+\item[{\-Scene\-Manager $\ast$}]{, }
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{classLock_aae94a6576b49afad57330bf537a8edfc}
+\-Initialize the \hyperlink{classLock}{\-Lock} with the scene manager (to set up the display) and the number of the key to respond to for the game logic. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classLock_a286412e42f06eff3d38b03028300cc01}{\index{\-Lock@{\-Lock}!frame\-Event\-Queued@{frame\-Event\-Queued}}
+\index{frame\-Event\-Queued@{frame\-Event\-Queued}!Lock@{\-Lock}}
+\subsubsection[{frame\-Event\-Queued}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Game\-State {\bf \-Lock\-::frame\-Event\-Queued} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Way\-Point} $\ast$}]{current\-W\-P, }
+\item[{\-Game\-State}]{gs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classLock_a286412e42f06eff3d38b03028300cc01}
+\-Reimplements \hyperlink{classGameObject_aa643df342c50df77f053eee2c703c619}{\-Game\-Object\-::frame\-Event\-Queued}(...). \-Given the inputs, derive next \-Game\-State. 
+
+\-Reimplemented from \hyperlink{classGameObject_aa643df342c50df77f053eee2c703c619}{\-Game\-Object}.
+
+\hypertarget{classLock_a357536468a884a9c2943b15b5fc6b39c}{\index{\-Lock@{\-Lock}!init@{init}}
+\index{init@{init}!Lock@{\-Lock}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Lock\-::init} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Room} $\ast$}]{room}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classLock_a357536468a884a9c2943b15b5fc6b39c}
+\-Reinitialize the \hyperlink{classLock}{\-Lock} for a new game. 
+
+\-Reimplemented from \hyperlink{classGameObject_ac3ab6708ce47b4ef8fd35d8bb43149dc}{\-Game\-Object}.
+
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classLock_ab92f200ca97e214793f439bfa512159c}{\index{\-Lock@{\-Lock}!ent@{ent}}
+\index{ent@{ent}!Lock@{\-Lock}}
+\subsubsection[{ent}]{\setlength{\rightskip}{0pt plus 5cm}\-Entity$\ast$ {\bf \-Lock\-::ent}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classLock_ab92f200ca97e214793f439bfa512159c}
+\-Remembers its entity in order to be able to change the material. \hypertarget{classLock_a7d5ea9a673fdfc9378bf54633a3c7885}{\index{\-Lock@{\-Lock}!idx@{idx}}
+\index{idx@{idx}!Lock@{\-Lock}}
+\subsubsection[{idx}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Lock\-::idx}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classLock_a7d5ea9a673fdfc9378bf54633a3c7885}
+\-Number of the key that triggers the lock. \hypertarget{classLock_a3f84294da55d52499fe63886b4673d6f}{\index{\-Lock@{\-Lock}!locked@{locked}}
+\index{locked@{locked}!Lock@{\-Lock}}
+\subsubsection[{locked}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Lock\-::locked}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classLock_a3f84294da55d52499fe63886b4673d6f}
+\-Is this \hyperlink{classLock}{\-Lock} locked, or open? \hypertarget{classLock_aa3796f83850ec610bf5f34ee05b6bdfd}{\index{\-Lock@{\-Lock}!react@{react}}
+\index{react@{react}!Lock@{\-Lock}}
+\subsubsection[{react}]{\setlength{\rightskip}{0pt plus 5cm}\-Game\-State {\bf \-Lock\-::react}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classLock_aa3796f83850ec610bf5f34ee05b6bdfd}
+\-The \-Game\-State this lock will respond to (open). 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Lock.\-h\end{DoxyCompactItemize}

@@ -1,0 +1,619 @@
+\hypertarget{classBaseApplication}{\section{\-Base\-Application \-Class \-Reference}
+\label{classBaseApplication}\index{\-Base\-Application@{\-Base\-Application}}
+}
+
+
+\-Ogre \hyperlink{classBaseApplication}{\-Base\-Application} class \-The \hyperlink{classBaseApplication}{\-Base\-Application} class is the central class in the project. \-It brings all systems together\-: $\ast$initialization and control of the rendering process $\ast$handling keyboard/mouse input $\ast$connection to \-R\-O\-S for joystick input, image sensor data, waypoint data, etc. $\ast$cleaning up after the application finished.  
+
+
+
+
+{\ttfamily \#include $<$\-Base\-Application.\-h$>$}
+
+\-Inheritance diagram for \-Base\-Application\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classBaseApplication}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classBaseApplication_a7c897f08816cc064568ae1ec71026719}{\-Base\-Application} (void)
+\item 
+virtual \hyperlink{classBaseApplication_a39133f736b9eb70263cebaca3e6d2cad}{$\sim$\-Base\-Application} (void)
+\item 
+virtual void \hyperlink{classBaseApplication_aed497661d1817ed9d659fb4de671ac1c}{go} (void)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classBaseApplication_ae548b5e3ac0cf92d4dc7d478a8f01922}{setup} ()
+\item 
+virtual bool \hyperlink{classBaseApplication_a7882a8f2e08e8d6cde00e8c29b2153b0}{configure} (void)
+\item 
+virtual void \hyperlink{classBaseApplication_a0cf5e311b1c7426590ad6831e4c5352a}{choose\-Scene\-Manager} (void)
+\item 
+virtual void \hyperlink{classBaseApplication_ab672d2b969b8530ee753f8b000d219c6}{create\-Frame\-Listener} (void)
+\item 
+virtual void \hyperlink{classBaseApplication_aa97beeb4059b17d0ec22eae33286ec2d}{create\-Scene} (void)=0
+\item 
+virtual void \hyperlink{classBaseApplication_ab61c91a38b99f98ff369ce8098a91133}{destroy\-Scene} (void)
+\item 
+virtual void \hyperlink{classBaseApplication_aa71428aeca821504352f5f795e6a9226}{setup\-Resources} (void)
+\item 
+virtual void \hyperlink{classBaseApplication_a9e916d51e4d73e355091d0662c175d85}{create\-Resource\-Listener} (void)
+\item 
+virtual void \hyperlink{classBaseApplication_a7d72de4f9e3d17ce0a4a034d780baf67}{load\-Resources} (void)
+\item 
+virtual bool \hyperlink{classBaseApplication_af6c816b6ea18980a887d9fc92179f33b}{frame\-Started} (const \-Ogre\-::\-Frame\-Event \&evt)
+\item 
+virtual bool \hyperlink{classBaseApplication_adea8d433b93b66ec7ab48b7e244661df}{frame\-Rendering\-Queued} (const \-Ogre\-::\-Frame\-Event \&evt)
+\item 
+virtual bool \hyperlink{classBaseApplication_a0f1c9d085cafd1ead25cc8a85e944864}{frame\-Ended} (const \-Ogre\-::\-Frame\-Event \&evt)
+\item 
+virtual bool \hyperlink{classBaseApplication_ad79efa8c9d6f0f6a3cf8a34c25a1bd5f}{key\-Pressed} (const \-O\-I\-S\-::\-Key\-Event \&arg)
+\item 
+virtual bool \hyperlink{classBaseApplication_a72dbb7e590af8f96904bc55eb1875a56}{key\-Released} (const \-O\-I\-S\-::\-Key\-Event \&arg)
+\item 
+virtual bool \hyperlink{classBaseApplication_abbb67365fb496300701dc7a6953936fe}{mouse\-Moved} (const \-O\-I\-S\-::\-Mouse\-Event \&arg)
+\item 
+virtual bool \hyperlink{classBaseApplication_a51b515984916eb7a1582499ee3309ac5}{mouse\-Pressed} (const \-O\-I\-S\-::\-Mouse\-Event \&arg, \-O\-I\-S\-::\-Mouse\-Button\-I\-D id)
+\item 
+virtual bool \hyperlink{classBaseApplication_ae347f583327e4ba1eb83f2df286c1d76}{mouse\-Released} (const \-O\-I\-S\-::\-Mouse\-Event \&arg, \-O\-I\-S\-::\-Mouse\-Button\-I\-D id)
+\item 
+virtual void \hyperlink{classBaseApplication_ab5a43497cbab09b76cbe7a4708b7134f}{init\-R\-O\-S} ()
+\item 
+virtual void \hyperlink{classBaseApplication_ab51382d0741e40aa647e20a3315f84e8}{destroy\-R\-O\-S} ()
+\item 
+virtual void \hyperlink{classBaseApplication_a420db6b234d9201c678aea3bf32779b5}{joy\-Callback} (const sensor\-\_\-msgs\-::\-Joy\-::\-Const\-Ptr \&)
+\item 
+virtual void \hyperlink{classBaseApplication_a1b61407bd716b52034e43a53d6409267}{map\-Callback} (const nav\-\_\-msgs\-::\-Occupancy\-Grid\-::\-Const\-Ptr \&)
+\item 
+virtual void \hyperlink{classBaseApplication_a63abfe637034ac7f620ad62c57a9b899}{sync\-Video\-Callback} (const sensor\-\_\-msgs\-::\-Compressed\-Image\-Const\-Ptr \&, const sensor\-\_\-msgs\-::\-Compressed\-Image\-Const\-Ptr \&)
+\item 
+virtual void \hyperlink{classBaseApplication_a89d5c75390a28253d2ad3755334d9558}{topo\-Nodes\-C\-B} (const visualization\-\_\-msgs\-::\-Interactive\-Marker\-Init\-::\-Const\-Ptr \&)
+\item 
+virtual void \hyperlink{classBaseApplication_ac12e0269774652b57894b58ffdbfc4d5}{closest\-Way\-Point\-C\-B} (const std\-\_\-msgs\-::\-String\-::\-Const\-Ptr \&)
+\item 
+virtual void \hyperlink{classBaseApplication_afe5d7ca9e0f0575b4046c1412e314e69}{window\-Resized} (\-Ogre\-::\-Render\-Window $\ast$rw)
+\item 
+virtual void \hyperlink{classBaseApplication_aa7130c376136aa3a9b121e2dee561aed}{window\-Closed} (\-Ogre\-::\-Render\-Window $\ast$rw)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\-Ogre\-::\-Root $\ast$ \hyperlink{classBaseApplication_add84ba707dc6c57e6283f214b1274110}{m\-Root}
+\item 
+\-Ogre\-::\-Scene\-Manager $\ast$ \hyperlink{classBaseApplication_a8a7684f4f9a57ed3089048ad1a913b2d}{m\-Scene\-Mgr}
+\item 
+\-Ogre\-::\-Render\-Window $\ast$ \hyperlink{classBaseApplication_ac5d8e9c81e036897bc82f81eff8c570f}{m\-Window}
+\item 
+\-Ogre\-::\-String \hyperlink{classBaseApplication_a765e0df01c141a16df3178ab4f17afe6}{m\-Resources\-Cfg}
+\item 
+\-Ogre\-::\-String \hyperlink{classBaseApplication_a04f2fe47fa164fd78d986dc0df70b7fb}{m\-Plugins\-Cfg}
+\item 
+\-Ogre\-::\-Overlay\-System $\ast$ \hyperlink{classBaseApplication_a17ccdacc654eff8ac0d09f025311fbb5}{m\-Overlay\-System}
+\item 
+\-Ogre\-Bites\-::\-Input\-Context \hyperlink{classBaseApplication_a7da63f46f2ccf2c6385723c11c03301f}{m\-Input\-Context}
+\item 
+\-Ogre\-Bites\-::\-Sdk\-Tray\-Manager $\ast$ \hyperlink{classBaseApplication_a7faa397f4f4861ee8c361a01e90b4416}{m\-Tray\-Mgr}
+\item 
+\-Ogre\-Bites\-::\-Params\-Panel $\ast$ \hyperlink{classBaseApplication_a6a11054ca61efdf558e0ff1b2de43a12}{m\-Details\-Panel}
+\item 
+bool \hyperlink{classBaseApplication_ac7e861799862cb645f1d78b170aef80d}{m\-Cursor\-Was\-Visible}
+\item 
+bool \hyperlink{classBaseApplication_a755f26d3a9915aaf830750d877e39d86}{m\-Shut\-Down}
+\item 
+\-O\-I\-S\-::\-Input\-Manager $\ast$ \hyperlink{classBaseApplication_abc9503c8462e225b5d0d55c952d9e4a9}{m\-Input\-Manager}
+\item 
+\-O\-I\-S\-::\-Mouse $\ast$ \hyperlink{classBaseApplication_add9b97fbe64da2814d3af113bac58c43}{m\-Mouse}
+\item 
+\-O\-I\-S\-::\-Keyboard $\ast$ \hyperlink{classBaseApplication_a9d6e19cf50c47379fbaae55bff28079c}{m\-Keyboard}
+\item 
+\hyperlink{classPlayerBody}{\-Player\-Body} $\ast$ \hyperlink{classBaseApplication_a741eec58ff4787a66ce1533517afe1b1}{m\-Player}
+\item 
+\-Ogre\-::\-Scene\-Node $\ast$ \hyperlink{classBaseApplication_a8c690de5ec96338aa911ae113115da66}{m\-Player\-Body\-Node}
+\item 
+\hyperlink{classOculus}{\-Oculus} $\ast$ \hyperlink{classBaseApplication_a2edad3c6709f1ff6af45350308a62c8f}{oculus}
+\item 
+\-Client $\ast$ \hyperlink{classBaseApplication_a2a8d2bd4faf3c20800191f8dd0525983}{ros\-P\-T\-U\-Client}
+\item 
+boost\-::thread $\ast$ \hyperlink{classBaseApplication_ac9c68350fd4e5888c3256a77db02278e}{ptu\-Sweep}
+\item 
+ros\-::\-Async\-Spinner $\ast$ \hyperlink{classBaseApplication_abbd36e6d2077310432b8c4f33df7383a}{h\-Ros\-Spinner}
+\item 
+ros\-::\-Node\-Handle $\ast$ \hyperlink{classBaseApplication_a35b356ea9b074e3f5f1e0b5e66800194}{h\-Ros\-Node}
+\item 
+ros\-::\-Subscriber $\ast$ \hyperlink{classBaseApplication_ad5628cfeba6fec0ad0cc5b7df4bdbf78}{h\-Ros\-Sub\-Joy}
+\item 
+ros\-::\-Subscriber $\ast$ \hyperlink{classBaseApplication_a29e8c4acc87f2e63a6d8d360468b56a6}{h\-Ros\-Sub\-Map}
+\item 
+ros\-::\-Subscriber $\ast$ \hyperlink{classBaseApplication_a92ef2e57f67f525b9910151619f92f37}{h\-Ros\-Sub\-Nodes}
+\item 
+ros\-::\-Subscriber $\ast$ \hyperlink{classBaseApplication_a244ec7daa7f9247b9121a742b302905c}{h\-Ros\-Sub\-Close\-W\-P}
+\item 
+message\-\_\-filters\-::\-Subscriber\*
+$<$ sensor\-\_\-msgs\-::\-Compressed\-Image $>$ $\ast$ \hyperlink{classBaseApplication_a6ca1659d73ae918a940dcf0e360f1628}{h\-Ros\-Sub\-R\-G\-B}
+\item 
+message\-\_\-filters\-::\-Subscriber\*
+$<$ sensor\-\_\-msgs\-::\-Compressed\-Image $>$ $\ast$ \hyperlink{classBaseApplication_a4a3265b7368e09d95ebaeab383a3d4a5}{h\-Ros\-Sub\-Depth}
+\item 
+message\-\_\-filters\-::\-Subscriber\*
+$<$ sensor\-\_\-msgs\-::\-Compressed\-Image $>$ $\ast$ \hyperlink{classBaseApplication_af475693cdd420f8f8e18269f242fc0af}{h\-Ros\-Sub\-R\-G\-B\-Vid}
+\item 
+message\-\_\-filters\-::\-Subscriber\*
+$<$ sensor\-\_\-msgs\-::\-Compressed\-Image $>$ $\ast$ \hyperlink{classBaseApplication_aa867681d76ee90600daaa741dbdc146d}{h\-Ros\-Sub\-Depth\-Vid}
+\item 
+message\-\_\-filters\-::\-Synchronizer\*
+$<$ \-Approximate\-Time\-Policy $>$ $\ast$ \hyperlink{classBaseApplication_a61075324a878878f31706cd03eac163e}{ros\-Msg\-Sync}
+\item 
+message\-\_\-filters\-::\-Synchronizer\*
+$<$ \-Approximate\-Time\-Policy $>$ $\ast$ \hyperlink{classBaseApplication_a40d9d7bce284716b4f58e5ebf596104b}{ros\-Video\-Sync}
+\item 
+tf\-::\-Transform\-Listener $\ast$ \hyperlink{classBaseApplication_afed20466bdf46149a1bcad505a3e8022}{tf\-Listener}
+\item 
+\hyperlink{classRobot}{\-Robot} $\ast$ \hyperlink{classBaseApplication_a884bd9efccf3e8ab710ac74a1a819e69}{robot\-Model}
+\item 
+\hyperlink{classGlobalMap}{\-Global\-Map} $\ast$ \hyperlink{classBaseApplication_a2f5e751177a5e6d87593fa208ea7ffa3}{global\-Map}
+\item 
+\-Ogre\-::\-Image \hyperlink{classBaseApplication_a0b2012a7ec70e1b7583b89f40c657320}{dep\-Image}
+\item 
+\-Ogre\-::\-Image \hyperlink{classBaseApplication_a91123c8ea1b0c3e1562e64b7879de5e4}{tex\-Image}
+\item 
+\-Ogre\-::\-Image \hyperlink{classBaseApplication_a5851500faacd7d3792ce7a6f6184888e}{dep\-Video}
+\item 
+\-Ogre\-::\-Image \hyperlink{classBaseApplication_ab70dda7e59099d2309d9fdd4bf11c53a}{tex\-Video}
+\item 
+\-Ogre\-::\-Image \hyperlink{classBaseApplication_a254410dc2906d4860d66d085f7217ace}{map\-Image}
+\item 
+cv\-::\-Mat \hyperlink{classBaseApplication_a48295806a980665f17d787215c5f90c6}{cv\-\_\-depth}
+\item 
+cv\-::\-Mat \hyperlink{classBaseApplication_ad21a1772f66fec18c20a2924ad943d1b}{cv\-\_\-rgb}
+\item 
+\hyperlink{classSnapshotLibrary}{\-Snapshot\-Library} $\ast$ \hyperlink{classBaseApplication_a51cd2f82fb21d523d6940f5f557b2dff}{sn\-Lib}
+\item 
+\hyperlink{classSnapshotLibrary}{\-Snapshot\-Library} $\ast$ \hyperlink{classBaseApplication_a804cbbaeae6ea76b47fce0692460451b}{rs\-Lib}
+\item 
+\hyperlink{classVideo3D}{\-Video3\-D} $\ast$ \hyperlink{classBaseApplication_a3768ce4e283c7cc09b78adba043024be}{vd\-Video}
+\item 
+\-Ogre\-::\-Vector3 \hyperlink{classBaseApplication_a7762b8555eb6aabd8687b34fafae2405}{sn\-Pos}
+\item 
+\-Ogre\-::\-Vector3 \hyperlink{classBaseApplication_adec41f9fd119d45e6594749a0147334d}{vd\-Pos}
+\item 
+\-Ogre\-::\-Quaternion \hyperlink{classBaseApplication_a60cc66a44a0900ec65d19b3903168ca5}{sn\-Ori}
+\item 
+\-Ogre\-::\-Quaternion \hyperlink{classBaseApplication_ae855031951285ecc5c368fca44af62d5}{vd\-Ori}
+\item 
+volatile bool \hyperlink{classBaseApplication_a921d190dc1981ae57a49972c3b7ffbc9}{synced\-Update}
+\item 
+volatile bool \hyperlink{classBaseApplication_abbf6dd8d322875c5dc66d4eaee58049d}{video\-Update}
+\item 
+volatile bool \hyperlink{classBaseApplication_af7b2240ae783b353704370debc7092ba}{take\-Snapshot}
+\item 
+volatile bool \hyperlink{classBaseApplication_a5129489840c94ca7bcc092ebe5bea689}{map\-Arrived}
+\item 
+volatile bool \hyperlink{classBaseApplication_a37fa2d6256de90b4babeee56bcd143d4}{received\-W\-Ps}
+\item 
+\-Scene\-Node $\ast$ \hyperlink{classBaseApplication_af66eb984ef0ef903c272b79a852cce93}{cursor}
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classBaseApplication_a1f77aab5b657f16b4aa44200cf12d662}{selected\-W\-P}
+\item 
+\-Ogre\-::\-String \hyperlink{classBaseApplication_a3aff6a781058410dc648c0d07fd7afb8}{target\-W\-P\-Name}
+\item 
+int \hyperlink{classBaseApplication_a5dcf0fddc75e2b46d35fd8b9ed592dc9}{closest\-W\-P}
+\item 
+actionlib\-::\-Simple\-Action\-Client\*
+$<$ topological\-\_\-navigation\-::\-Goto\-Node\-Action $>$ $\ast$ \hyperlink{classBaseApplication_a48fdcb84193361574ad803e3e9529b9f}{rosie\-Action\-Client}
+\item 
+boost\-::recursive\-\_\-mutex \hyperlink{classBaseApplication_a2b3c5be6607bdf48ac909bafe48d3a89}{\-G\-A\-M\-E\-\_\-\-M\-U\-T\-E\-X}
+\item 
+\-Ogre\-::\-String \hyperlink{classBaseApplication_ad96aabaabb2aeaf7bbb88e995b82eb02}{m\-\_\-\-Resource\-Path}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Ogre \hyperlink{classBaseApplication}{\-Base\-Application} class \-The \hyperlink{classBaseApplication}{\-Base\-Application} class is the central class in the project. \-It brings all systems together\-: $\ast$initialization and control of the rendering process $\ast$handling keyboard/mouse input $\ast$connection to \-R\-O\-S for joystick input, image sensor data, waypoint data, etc. $\ast$cleaning up after the application finished. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classBaseApplication_a7c897f08816cc064568ae1ec71026719}{\index{\-Base\-Application@{\-Base\-Application}!\-Base\-Application@{\-Base\-Application}}
+\index{\-Base\-Application@{\-Base\-Application}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{\-Base\-Application}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Base\-Application\-::\-Base\-Application} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{classBaseApplication_a7c897f08816cc064568ae1ec71026719}
+\-Default constructor. \-Initialize all members to default values. \hypertarget{classBaseApplication_a39133f736b9eb70263cebaca3e6d2cad}{\index{\-Base\-Application@{\-Base\-Application}!$\sim$\-Base\-Application@{$\sim$\-Base\-Application}}
+\index{$\sim$\-Base\-Application@{$\sim$\-Base\-Application}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{$\sim$\-Base\-Application}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf \-Base\-Application\-::$\sim$\-Base\-Application} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classBaseApplication_a39133f736b9eb70263cebaca3e6d2cad}
+\-Default destructor. \-Final cleanup of elements. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classBaseApplication_a0cf5e311b1c7426590ad6831e4c5352a}{\index{\-Base\-Application@{\-Base\-Application}!choose\-Scene\-Manager@{choose\-Scene\-Manager}}
+\index{choose\-Scene\-Manager@{choose\-Scene\-Manager}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{choose\-Scene\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::choose\-Scene\-Manager} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_a0cf5e311b1c7426590ad6831e4c5352a}
+\-Set up a \-G\-E\-N\-E\-R\-I\-C scene manager and initiate the \-Overlay \-System. \hypertarget{classBaseApplication_ac12e0269774652b57894b58ffdbfc4d5}{\index{\-Base\-Application@{\-Base\-Application}!closest\-Way\-Point\-C\-B@{closest\-Way\-Point\-C\-B}}
+\index{closest\-Way\-Point\-C\-B@{closest\-Way\-Point\-C\-B}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{closest\-Way\-Point\-C\-B}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::closest\-Way\-Point\-C\-B} (
+\begin{DoxyParamCaption}
+\item[{const std\-\_\-msgs\-::\-String\-::\-Const\-Ptr \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_ac12e0269774652b57894b58ffdbfc4d5}
+\-Update the closest waypoint (or current waypoint) the \hyperlink{classRobot}{\-Robot} is located at. \hypertarget{classBaseApplication_a7882a8f2e08e8d6cde00e8c29b2153b0}{\index{\-Base\-Application@{\-Base\-Application}!configure@{configure}}
+\index{configure@{configure}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{configure}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Base\-Application\-::configure} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_a7882a8f2e08e8d6cde00e8c29b2153b0}
+\-Parse the file ogre.\-cfg, or show the config dialog if the file is corrupt. \hypertarget{classBaseApplication_ab672d2b969b8530ee753f8b000d219c6}{\index{\-Base\-Application@{\-Base\-Application}!create\-Frame\-Listener@{create\-Frame\-Listener}}
+\index{create\-Frame\-Listener@{create\-Frame\-Listener}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{create\-Frame\-Listener}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::create\-Frame\-Listener} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_ab672d2b969b8530ee753f8b000d219c6}
+\-Sets up the \-Frame\-Listener, which will register the input components handled by \-O\-I\-S (\-Object \-Oriented \-Input \-System) and configure the info-\/panels \hypertarget{classBaseApplication_a9e916d51e4d73e355091d0662c175d85}{\index{\-Base\-Application@{\-Base\-Application}!create\-Resource\-Listener@{create\-Resource\-Listener}}
+\index{create\-Resource\-Listener@{create\-Resource\-Listener}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{create\-Resource\-Listener}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::create\-Resource\-Listener} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_a9e916d51e4d73e355091d0662c175d85}
+\-Default method from \-Ogre. \-Not used currently. \-Resource listeners can be applied to react on changes in the resource system. \hypertarget{classBaseApplication_aa97beeb4059b17d0ec22eae33286ec2d}{\index{\-Base\-Application@{\-Base\-Application}!create\-Scene@{create\-Scene}}
+\index{create\-Scene@{create\-Scene}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{create\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::create\-Scene} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}\label{classBaseApplication_aa97beeb4059b17d0ec22eae33286ec2d}
+\-Create the displayed environment. \-This method has to be reimplemented in the \hyperlink{classRoculus}{\-Roculus} class. 
+
+\-Implemented in \hyperlink{classRoculus_a2da8d57d448a37e544d86d51e610f9d6}{\-Roculus}.
+
+\hypertarget{classBaseApplication_ab51382d0741e40aa647e20a3315f84e8}{\index{\-Base\-Application@{\-Base\-Application}!destroy\-R\-O\-S@{destroy\-R\-O\-S}}
+\index{destroy\-R\-O\-S@{destroy\-R\-O\-S}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{destroy\-R\-O\-S}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::destroy\-R\-O\-S} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_ab51382d0741e40aa647e20a3315f84e8}
+\-Clean up the various \-R\-O\-S pointers (node-\/handle, subscribers, clients,...) \hypertarget{classBaseApplication_ab61c91a38b99f98ff369ce8098a91133}{\index{\-Base\-Application@{\-Base\-Application}!destroy\-Scene@{destroy\-Scene}}
+\index{destroy\-Scene@{destroy\-Scene}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{destroy\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::destroy\-Scene} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_ab61c91a38b99f98ff369ce8098a91133}
+\-Clean-\/up the displayed environment (if necessary). \-Currenty does nothing. \hypertarget{classBaseApplication_a0f1c9d085cafd1ead25cc8a85e944864}{\index{\-Base\-Application@{\-Base\-Application}!frame\-Ended@{frame\-Ended}}
+\index{frame\-Ended@{frame\-Ended}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{frame\-Ended}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Base\-Application\-::frame\-Ended} (
+\begin{DoxyParamCaption}
+\item[{const \-Ogre\-::\-Frame\-Event \&}]{evt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_a0f1c9d085cafd1ead25cc8a85e944864}
+\-Started when the frame processing is nearly finished. \-Used to balance the frame rate. \hypertarget{classBaseApplication_adea8d433b93b66ec7ab48b7e244661df}{\index{\-Base\-Application@{\-Base\-Application}!frame\-Rendering\-Queued@{frame\-Rendering\-Queued}}
+\index{frame\-Rendering\-Queued@{frame\-Rendering\-Queued}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{frame\-Rendering\-Queued}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Base\-Application\-::frame\-Rendering\-Queued} (
+\begin{DoxyParamCaption}
+\item[{const \-Ogre\-::\-Frame\-Event \&}]{evt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_adea8d433b93b66ec7ab48b7e244661df}
+\-Started once the render system is processing, the mean-\/time is used to update the overlay-\/panels and to process the \-G\-A\-M\-E logic. \hypertarget{classBaseApplication_af6c816b6ea18980a887d9fc92179f33b}{\index{\-Base\-Application@{\-Base\-Application}!frame\-Started@{frame\-Started}}
+\index{frame\-Started@{frame\-Started}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{frame\-Started}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Base\-Application\-::frame\-Started} (
+\begin{DoxyParamCaption}
+\item[{const \-Ogre\-::\-Frame\-Event \&}]{evt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_af6c816b6ea18980a887d9fc92179f33b}
+\-Started before the rendering-\/process handles the current frame. \-Used to update the \-Video stream and eventually record \-Snapshots. \hypertarget{classBaseApplication_aed497661d1817ed9d659fb4de671ac1c}{\index{\-Base\-Application@{\-Base\-Application}!go@{go}}
+\index{go@{go}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{go}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::go} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classBaseApplication_aed497661d1817ed9d659fb4de671ac1c}
+\-Start the application (reimplemented in \-Roculus.\-cpp). \hypertarget{classBaseApplication_ab5a43497cbab09b76cbe7a4708b7134f}{\index{\-Base\-Application@{\-Base\-Application}!init\-R\-O\-S@{init\-R\-O\-S}}
+\index{init\-R\-O\-S@{init\-R\-O\-S}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{init\-R\-O\-S}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::init\-R\-O\-S} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_ab5a43497cbab09b76cbe7a4708b7134f}
+\-Initialize the \-R\-O\-S \-System. \-Configure all subscribers, method synchronization and action clients and register the corresponding callbacks. \-This method initializes as well an \-Async\-Spinner with a single independent message thread. \hypertarget{classBaseApplication_a420db6b234d9201c678aea3bf32779b5}{\index{\-Base\-Application@{\-Base\-Application}!joy\-Callback@{joy\-Callback}}
+\index{joy\-Callback@{joy\-Callback}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{joy\-Callback}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::joy\-Callback} (
+\begin{DoxyParamCaption}
+\item[{const sensor\-\_\-msgs\-::\-Joy\-::\-Const\-Ptr \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_a420db6b234d9201c678aea3bf32779b5}
+\-Handle the \-Joy\-::\-Const\-Ptr messages from the \-R\-O\-S system. \-The message is checked for the state of the interesting triggers and buttons and communicates the resulting actions to e.\-g. the \hyperlink{classPlayerBody}{\-Player\-Body} class. \hypertarget{classBaseApplication_ad79efa8c9d6f0f6a3cf8a34c25a1bd5f}{\index{\-Base\-Application@{\-Base\-Application}!key\-Pressed@{key\-Pressed}}
+\index{key\-Pressed@{key\-Pressed}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{key\-Pressed}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Base\-Application\-::key\-Pressed} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Key\-Event \&}]{arg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_ad79efa8c9d6f0f6a3cf8a34c25a1bd5f}
+\-React on key-\/pressed events (\-O\-I\-S handler). \hypertarget{classBaseApplication_a72dbb7e590af8f96904bc55eb1875a56}{\index{\-Base\-Application@{\-Base\-Application}!key\-Released@{key\-Released}}
+\index{key\-Released@{key\-Released}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{key\-Released}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Base\-Application\-::key\-Released} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Key\-Event \&}]{arg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_a72dbb7e590af8f96904bc55eb1875a56}
+\-React on key-\/release events (\-O\-I\-S handler). \hypertarget{classBaseApplication_a7d72de4f9e3d17ce0a4a034d780baf67}{\index{\-Base\-Application@{\-Base\-Application}!load\-Resources@{load\-Resources}}
+\index{load\-Resources@{load\-Resources}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{load\-Resources}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::load\-Resources} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_a7d72de4f9e3d17ce0a4a034d780baf67}
+\-Load all resources that were parsed in 'setup\-Resources' \hypertarget{classBaseApplication_a1b61407bd716b52034e43a53d6409267}{\index{\-Base\-Application@{\-Base\-Application}!map\-Callback@{map\-Callback}}
+\index{map\-Callback@{map\-Callback}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{map\-Callback}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::map\-Callback} (
+\begin{DoxyParamCaption}
+\item[{const nav\-\_\-msgs\-::\-Occupancy\-Grid\-::\-Const\-Ptr \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_a1b61407bd716b52034e43a53d6409267}
+\-Receive the 2\-D ground map and make it available for rendering. \-Unpacks the msg. stores it in the corresponding \-Ogre\-::\-Image, unsubscribes from the topic and sets the flag for map arrival. \hypertarget{classBaseApplication_abbb67365fb496300701dc7a6953936fe}{\index{\-Base\-Application@{\-Base\-Application}!mouse\-Moved@{mouse\-Moved}}
+\index{mouse\-Moved@{mouse\-Moved}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{mouse\-Moved}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Base\-Application\-::mouse\-Moved} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Mouse\-Event \&}]{arg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_abbb67365fb496300701dc7a6953936fe}
+\-React on mouse-\/moved events (\-O\-I\-S handler). \hypertarget{classBaseApplication_a51b515984916eb7a1582499ee3309ac5}{\index{\-Base\-Application@{\-Base\-Application}!mouse\-Pressed@{mouse\-Pressed}}
+\index{mouse\-Pressed@{mouse\-Pressed}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{mouse\-Pressed}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Base\-Application\-::mouse\-Pressed} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Mouse\-Event \&}]{arg, }
+\item[{\-O\-I\-S\-::\-Mouse\-Button\-I\-D}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_a51b515984916eb7a1582499ee3309ac5}
+\-React on mouse-\/button-\/pressed events (\-O\-I\-S handler). \hypertarget{classBaseApplication_ae347f583327e4ba1eb83f2df286c1d76}{\index{\-Base\-Application@{\-Base\-Application}!mouse\-Released@{mouse\-Released}}
+\index{mouse\-Released@{mouse\-Released}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{mouse\-Released}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Base\-Application\-::mouse\-Released} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Mouse\-Event \&}]{arg, }
+\item[{\-O\-I\-S\-::\-Mouse\-Button\-I\-D}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_ae347f583327e4ba1eb83f2df286c1d76}
+\-React on mouse-\/button-\/released events (\-O\-I\-S handler). \hypertarget{classBaseApplication_ae548b5e3ac0cf92d4dc7d478a8f01922}{\index{\-Base\-Application@{\-Base\-Application}!setup@{setup}}
+\index{setup@{setup}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf \-Base\-Application\-::setup} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_ae548b5e3ac0cf92d4dc7d478a8f01922}
+\-Take all necessary steps to setup the application. \-Chose the \-Scene\-Mgr., create resource listenener, create the scene and initiate \hyperlink{classGame}{\-Game} and \-R\-O\-S \hypertarget{classBaseApplication_aa71428aeca821504352f5f795e6a9226}{\index{\-Base\-Application@{\-Base\-Application}!setup\-Resources@{setup\-Resources}}
+\index{setup\-Resources@{setup\-Resources}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{setup\-Resources}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::setup\-Resources} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_aa71428aeca821504352f5f795e6a9226}
+\-Parses the resource.\-cfg to load the specified files (scripts, textures, shaders, ...) into memory. \hypertarget{classBaseApplication_a63abfe637034ac7f620ad62c57a9b899}{\index{\-Base\-Application@{\-Base\-Application}!sync\-Video\-Callback@{sync\-Video\-Callback}}
+\index{sync\-Video\-Callback@{sync\-Video\-Callback}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{sync\-Video\-Callback}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::sync\-Video\-Callback} (
+\begin{DoxyParamCaption}
+\item[{const sensor\-\_\-msgs\-::\-Compressed\-Image\-Const\-Ptr \&}]{, }
+\item[{const sensor\-\_\-msgs\-::\-Compressed\-Image\-Const\-Ptr \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_a63abfe637034ac7f620ad62c57a9b899}
+\-Synchronized message processing for the depth-\/rgb messages of the video-\/stream (used for snapshots as well). \-Smoothing of the arrived depth image, color transformation of the rgb image and mapping of the camera transformation into \-Ogre coordinates. \-Signalizes the arrival of a video update with a boolean flag. \hypertarget{classBaseApplication_a89d5c75390a28253d2ad3755334d9558}{\index{\-Base\-Application@{\-Base\-Application}!topo\-Nodes\-C\-B@{topo\-Nodes\-C\-B}}
+\index{topo\-Nodes\-C\-B@{topo\-Nodes\-C\-B}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{topo\-Nodes\-C\-B}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::topo\-Nodes\-C\-B} (
+\begin{DoxyParamCaption}
+\item[{const visualization\-\_\-msgs\-::\-Interactive\-Marker\-Init\-::\-Const\-Ptr \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_a89d5c75390a28253d2ad3755334d9558}
+\-Receive the waypoint markers from \-R\-O\-S, extract and set the required parameters for the \hyperlink{classGame}{\-Game}. \hypertarget{classBaseApplication_aa7130c376136aa3a9b121e2dee561aed}{\index{\-Base\-Application@{\-Base\-Application}!window\-Closed@{window\-Closed}}
+\index{window\-Closed@{window\-Closed}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{window\-Closed}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::window\-Closed} (
+\begin{DoxyParamCaption}
+\item[{\-Ogre\-::\-Render\-Window $\ast$}]{rw}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_aa7130c376136aa3a9b121e2dee561aed}
+\-Detach the \-O\-I\-S system before the engine shuts down, in order to make the devices available for other applications again. \hypertarget{classBaseApplication_afe5d7ca9e0f0575b4046c1412e314e69}{\index{\-Base\-Application@{\-Base\-Application}!window\-Resized@{window\-Resized}}
+\index{window\-Resized@{window\-Resized}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{window\-Resized}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Base\-Application\-::window\-Resized} (
+\begin{DoxyParamCaption}
+\item[{\-Ogre\-::\-Render\-Window $\ast$}]{rw}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}\label{classBaseApplication_afe5d7ca9e0f0575b4046c1412e314e69}
+\-Adjust the clipping area, if the application is running in a window and is resized. 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classBaseApplication_a5dcf0fddc75e2b46d35fd8b9ed592dc9}{\index{\-Base\-Application@{\-Base\-Application}!closest\-W\-P@{closest\-W\-P}}
+\index{closest\-W\-P@{closest\-W\-P}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{closest\-W\-P}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Base\-Application\-::closest\-W\-P}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a5dcf0fddc75e2b46d35fd8b9ed592dc9}
+\-I\-D of the closest waypoint (or current waypoint, depending on the subscription). \hypertarget{classBaseApplication_af66eb984ef0ef903c272b79a852cce93}{\index{\-Base\-Application@{\-Base\-Application}!cursor@{cursor}}
+\index{cursor@{cursor}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{cursor}]{\setlength{\rightskip}{0pt plus 5cm}\-Scene\-Node$\ast$ {\bf \-Base\-Application\-::cursor}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_af66eb984ef0ef903c272b79a852cce93}
+\-Added for the \hyperlink{classGame}{\-Game}. \-Holds the cursor, which is projected onto the ground from the \hyperlink{classOculus}{\-Oculus} \-Rift position and orientation. \hypertarget{classBaseApplication_a48295806a980665f17d787215c5f90c6}{\index{\-Base\-Application@{\-Base\-Application}!cv\-\_\-depth@{cv\-\_\-depth}}
+\index{cv\-\_\-depth@{cv\-\_\-depth}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{cv\-\_\-depth}]{\setlength{\rightskip}{0pt plus 5cm}cv\-::\-Mat {\bf \-Base\-Application\-::cv\-\_\-depth}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a48295806a980665f17d787215c5f90c6}
+\-Open\-C\-V image (cv\-::\-Mat) for preprocessing of the incomming depth image (video, smoothing). \hypertarget{classBaseApplication_ad21a1772f66fec18c20a2924ad943d1b}{\index{\-Base\-Application@{\-Base\-Application}!cv\-\_\-rgb@{cv\-\_\-rgb}}
+\index{cv\-\_\-rgb@{cv\-\_\-rgb}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{cv\-\_\-rgb}]{\setlength{\rightskip}{0pt plus 5cm}cv\-::\-Mat {\bf \-Base\-Application\-::cv\-\_\-rgb}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_ad21a1772f66fec18c20a2924ad943d1b}
+\-Open\-C\-V image (cv\-::\-Mat) for preprocessing of the incomming rgb image (video, color transformation). \hypertarget{classBaseApplication_a0b2012a7ec70e1b7583b89f40c657320}{\index{\-Base\-Application@{\-Base\-Application}!dep\-Image@{dep\-Image}}
+\index{dep\-Image@{dep\-Image}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{dep\-Image}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Image {\bf \-Base\-Application\-::dep\-Image}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a0b2012a7ec70e1b7583b89f40c657320}
+\-Image to transfer the incomming depth image (room sweep) into the rendering thread. \hypertarget{classBaseApplication_a5851500faacd7d3792ce7a6f6184888e}{\index{\-Base\-Application@{\-Base\-Application}!dep\-Video@{dep\-Video}}
+\index{dep\-Video@{dep\-Video}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{dep\-Video}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Image {\bf \-Base\-Application\-::dep\-Video}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a5851500faacd7d3792ce7a6f6184888e}
+\-Image to transfer the incomming depth image (video) into the rendering thread. \hypertarget{classBaseApplication_a2b3c5be6607bdf48ac909bafe48d3a89}{\index{\-Base\-Application@{\-Base\-Application}!\-G\-A\-M\-E\-\_\-\-M\-U\-T\-E\-X@{\-G\-A\-M\-E\-\_\-\-M\-U\-T\-E\-X}}
+\index{\-G\-A\-M\-E\-\_\-\-M\-U\-T\-E\-X@{\-G\-A\-M\-E\-\_\-\-M\-U\-T\-E\-X}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{\-G\-A\-M\-E\-\_\-\-M\-U\-T\-E\-X}]{\setlength{\rightskip}{0pt plus 5cm}boost\-::recursive\-\_\-mutex {\bf \-Base\-Application\-::\-G\-A\-M\-E\-\_\-\-M\-U\-T\-E\-X}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a2b3c5be6607bdf48ac909bafe48d3a89}
+\-Mutex to block collision between incomming waypoint update and rendering thread accessing \-G\-A\-M\-E parameters. \hypertarget{classBaseApplication_a2f5e751177a5e6d87593fa208ea7ffa3}{\index{\-Base\-Application@{\-Base\-Application}!global\-Map@{global\-Map}}
+\index{global\-Map@{global\-Map}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{global\-Map}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Global\-Map}$\ast$ {\bf \-Base\-Application\-::global\-Map}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a2f5e751177a5e6d87593fa208ea7ffa3}
+\-Display and manage the global map. \hypertarget{classBaseApplication_a35b356ea9b074e3f5f1e0b5e66800194}{\index{\-Base\-Application@{\-Base\-Application}!h\-Ros\-Node@{h\-Ros\-Node}}
+\index{h\-Ros\-Node@{h\-Ros\-Node}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{h\-Ros\-Node}]{\setlength{\rightskip}{0pt plus 5cm}ros\-::\-Node\-Handle$\ast$ {\bf \-Base\-Application\-::h\-Ros\-Node}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a35b356ea9b074e3f5f1e0b5e66800194}
+\-R\-O\-S node handle, necessary to run this application as a ros node. \hypertarget{classBaseApplication_abbd36e6d2077310432b8c4f33df7383a}{\index{\-Base\-Application@{\-Base\-Application}!h\-Ros\-Spinner@{h\-Ros\-Spinner}}
+\index{h\-Ros\-Spinner@{h\-Ros\-Spinner}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{h\-Ros\-Spinner}]{\setlength{\rightskip}{0pt plus 5cm}ros\-::\-Async\-Spinner$\ast$ {\bf \-Base\-Application\-::h\-Ros\-Spinner}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_abbd36e6d2077310432b8c4f33df7383a}
+\-R\-O\-S \-Async\-Spinner, will start the message handling in a separate thread. \hypertarget{classBaseApplication_a244ec7daa7f9247b9121a742b302905c}{\index{\-Base\-Application@{\-Base\-Application}!h\-Ros\-Sub\-Close\-W\-P@{h\-Ros\-Sub\-Close\-W\-P}}
+\index{h\-Ros\-Sub\-Close\-W\-P@{h\-Ros\-Sub\-Close\-W\-P}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{h\-Ros\-Sub\-Close\-W\-P}]{\setlength{\rightskip}{0pt plus 5cm}ros\-::\-Subscriber $\ast$ {\bf \-Base\-Application\-::h\-Ros\-Sub\-Close\-W\-P}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a244ec7daa7f9247b9121a742b302905c}
+\-Subscriber for the closest/actual waypoint. \hypertarget{classBaseApplication_a4a3265b7368e09d95ebaeab383a3d4a5}{\index{\-Base\-Application@{\-Base\-Application}!h\-Ros\-Sub\-Depth@{h\-Ros\-Sub\-Depth}}
+\index{h\-Ros\-Sub\-Depth@{h\-Ros\-Sub\-Depth}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{h\-Ros\-Sub\-Depth}]{\setlength{\rightskip}{0pt plus 5cm}message\-\_\-filters\-::\-Subscriber$<$sensor\-\_\-msgs\-::\-Compressed\-Image$>$ $\ast$ {\bf \-Base\-Application\-::h\-Ros\-Sub\-Depth}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a4a3265b7368e09d95ebaeab383a3d4a5}
+\-Message filtering to be able to synchronize the image streams. \hypertarget{classBaseApplication_aa867681d76ee90600daaa741dbdc146d}{\index{\-Base\-Application@{\-Base\-Application}!h\-Ros\-Sub\-Depth\-Vid@{h\-Ros\-Sub\-Depth\-Vid}}
+\index{h\-Ros\-Sub\-Depth\-Vid@{h\-Ros\-Sub\-Depth\-Vid}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{h\-Ros\-Sub\-Depth\-Vid}]{\setlength{\rightskip}{0pt plus 5cm}message\-\_\-filters\-::\-Subscriber$<$sensor\-\_\-msgs\-::\-Compressed\-Image$>$ $\ast$ {\bf \-Base\-Application\-::h\-Ros\-Sub\-Depth\-Vid}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_aa867681d76ee90600daaa741dbdc146d}
+\-Message filtering to be able to synchronize the image streams. \hypertarget{classBaseApplication_ad5628cfeba6fec0ad0cc5b7df4bdbf78}{\index{\-Base\-Application@{\-Base\-Application}!h\-Ros\-Sub\-Joy@{h\-Ros\-Sub\-Joy}}
+\index{h\-Ros\-Sub\-Joy@{h\-Ros\-Sub\-Joy}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{h\-Ros\-Sub\-Joy}]{\setlength{\rightskip}{0pt plus 5cm}ros\-::\-Subscriber$\ast$ {\bf \-Base\-Application\-::h\-Ros\-Sub\-Joy}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_ad5628cfeba6fec0ad0cc5b7df4bdbf78}
+\-Subscriber for the joystick topic. \hypertarget{classBaseApplication_a29e8c4acc87f2e63a6d8d360468b56a6}{\index{\-Base\-Application@{\-Base\-Application}!h\-Ros\-Sub\-Map@{h\-Ros\-Sub\-Map}}
+\index{h\-Ros\-Sub\-Map@{h\-Ros\-Sub\-Map}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{h\-Ros\-Sub\-Map}]{\setlength{\rightskip}{0pt plus 5cm}ros\-::\-Subscriber $\ast$ {\bf \-Base\-Application\-::h\-Ros\-Sub\-Map}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a29e8c4acc87f2e63a6d8d360468b56a6}
+\-Subscriber for the map topic. \hypertarget{classBaseApplication_a92ef2e57f67f525b9910151619f92f37}{\index{\-Base\-Application@{\-Base\-Application}!h\-Ros\-Sub\-Nodes@{h\-Ros\-Sub\-Nodes}}
+\index{h\-Ros\-Sub\-Nodes@{h\-Ros\-Sub\-Nodes}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{h\-Ros\-Sub\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}ros\-::\-Subscriber $\ast$ {\bf \-Base\-Application\-::h\-Ros\-Sub\-Nodes}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a92ef2e57f67f525b9910151619f92f37}
+\-Subscriber for the waypoints. \hypertarget{classBaseApplication_a6ca1659d73ae918a940dcf0e360f1628}{\index{\-Base\-Application@{\-Base\-Application}!h\-Ros\-Sub\-R\-G\-B@{h\-Ros\-Sub\-R\-G\-B}}
+\index{h\-Ros\-Sub\-R\-G\-B@{h\-Ros\-Sub\-R\-G\-B}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{h\-Ros\-Sub\-R\-G\-B}]{\setlength{\rightskip}{0pt plus 5cm}message\-\_\-filters\-::\-Subscriber$<$sensor\-\_\-msgs\-::\-Compressed\-Image$>$$\ast$ {\bf \-Base\-Application\-::h\-Ros\-Sub\-R\-G\-B}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a6ca1659d73ae918a940dcf0e360f1628}
+\-Message filtering to be able to synchronize the image streams. \hypertarget{classBaseApplication_af475693cdd420f8f8e18269f242fc0af}{\index{\-Base\-Application@{\-Base\-Application}!h\-Ros\-Sub\-R\-G\-B\-Vid@{h\-Ros\-Sub\-R\-G\-B\-Vid}}
+\index{h\-Ros\-Sub\-R\-G\-B\-Vid@{h\-Ros\-Sub\-R\-G\-B\-Vid}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{h\-Ros\-Sub\-R\-G\-B\-Vid}]{\setlength{\rightskip}{0pt plus 5cm}message\-\_\-filters\-::\-Subscriber$<$sensor\-\_\-msgs\-::\-Compressed\-Image$>$ $\ast$ {\bf \-Base\-Application\-::h\-Ros\-Sub\-R\-G\-B\-Vid}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_af475693cdd420f8f8e18269f242fc0af}
+\-Message filtering to be able to synchronize the image streams. \hypertarget{classBaseApplication_ad96aabaabb2aeaf7bbb88e995b82eb02}{\index{\-Base\-Application@{\-Base\-Application}!m\-\_\-\-Resource\-Path@{m\-\_\-\-Resource\-Path}}
+\index{m\-\_\-\-Resource\-Path@{m\-\_\-\-Resource\-Path}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-\_\-\-Resource\-Path}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-String {\bf \-Base\-Application\-::m\-\_\-\-Resource\-Path}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_ad96aabaabb2aeaf7bbb88e995b82eb02}
+\-Additional path variable for \-Mac compatibility. \hypertarget{classBaseApplication_a5129489840c94ca7bcc092ebe5bea689}{\index{\-Base\-Application@{\-Base\-Application}!map\-Arrived@{map\-Arrived}}
+\index{map\-Arrived@{map\-Arrived}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{map\-Arrived}]{\setlength{\rightskip}{0pt plus 5cm}volatile bool {\bf \-Base\-Application\-::map\-Arrived}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a5129489840c94ca7bcc092ebe5bea689}
+\-Flag to communicate the arrival of the map between message and rendering thread. \hypertarget{classBaseApplication_a254410dc2906d4860d66d085f7217ace}{\index{\-Base\-Application@{\-Base\-Application}!map\-Image@{map\-Image}}
+\index{map\-Image@{map\-Image}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{map\-Image}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Image {\bf \-Base\-Application\-::map\-Image}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a254410dc2906d4860d66d085f7217ace}
+\-Image to transfer the incomming messages into the rendering thread. \hypertarget{classBaseApplication_ac7e861799862cb645f1d78b170aef80d}{\index{\-Base\-Application@{\-Base\-Application}!m\-Cursor\-Was\-Visible@{m\-Cursor\-Was\-Visible}}
+\index{m\-Cursor\-Was\-Visible@{m\-Cursor\-Was\-Visible}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Cursor\-Was\-Visible}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Base\-Application\-::m\-Cursor\-Was\-Visible}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_ac7e861799862cb645f1d78b170aef80d}
+\-Was the cursor visible before the \-Dialog was shown. \hypertarget{classBaseApplication_a6a11054ca61efdf558e0ff1b2de43a12}{\index{\-Base\-Application@{\-Base\-Application}!m\-Details\-Panel@{m\-Details\-Panel}}
+\index{m\-Details\-Panel@{m\-Details\-Panel}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Details\-Panel}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-Bites\-::\-Params\-Panel$\ast$ {\bf \-Base\-Application\-::m\-Details\-Panel}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a6a11054ca61efdf558e0ff1b2de43a12}
+\-Panel for the details. \hypertarget{classBaseApplication_a7da63f46f2ccf2c6385723c11c03301f}{\index{\-Base\-Application@{\-Base\-Application}!m\-Input\-Context@{m\-Input\-Context}}
+\index{m\-Input\-Context@{m\-Input\-Context}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Input\-Context}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-Bites\-::\-Input\-Context {\bf \-Base\-Application\-::m\-Input\-Context}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a7da63f46f2ccf2c6385723c11c03301f}
+\-Registers the inputs from \-O\-I\-S. \hypertarget{classBaseApplication_abc9503c8462e225b5d0d55c952d9e4a9}{\index{\-Base\-Application@{\-Base\-Application}!m\-Input\-Manager@{m\-Input\-Manager}}
+\index{m\-Input\-Manager@{m\-Input\-Manager}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Input\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}\-O\-I\-S\-::\-Input\-Manager$\ast$ {\bf \-Base\-Application\-::m\-Input\-Manager}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_abc9503c8462e225b5d0d55c952d9e4a9}
+\-The input manager for the \-O\-I\-S devices. \hypertarget{classBaseApplication_a9d6e19cf50c47379fbaae55bff28079c}{\index{\-Base\-Application@{\-Base\-Application}!m\-Keyboard@{m\-Keyboard}}
+\index{m\-Keyboard@{m\-Keyboard}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Keyboard}]{\setlength{\rightskip}{0pt plus 5cm}\-O\-I\-S\-::\-Keyboard$\ast$ {\bf \-Base\-Application\-::m\-Keyboard}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a9d6e19cf50c47379fbaae55bff28079c}
+\-The default keyboard. \hypertarget{classBaseApplication_add9b97fbe64da2814d3af113bac58c43}{\index{\-Base\-Application@{\-Base\-Application}!m\-Mouse@{m\-Mouse}}
+\index{m\-Mouse@{m\-Mouse}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Mouse}]{\setlength{\rightskip}{0pt plus 5cm}\-O\-I\-S\-::\-Mouse$\ast$ {\bf \-Base\-Application\-::m\-Mouse}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_add9b97fbe64da2814d3af113bac58c43}
+\-The default mouse. \hypertarget{classBaseApplication_a17ccdacc654eff8ac0d09f025311fbb5}{\index{\-Base\-Application@{\-Base\-Application}!m\-Overlay\-System@{m\-Overlay\-System}}
+\index{m\-Overlay\-System@{m\-Overlay\-System}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Overlay\-System}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Overlay\-System$\ast$ {\bf \-Base\-Application\-::m\-Overlay\-System}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a17ccdacc654eff8ac0d09f025311fbb5}
+\-Overlay \-System to display info-\/panels. \hypertarget{classBaseApplication_a741eec58ff4787a66ce1533517afe1b1}{\index{\-Base\-Application@{\-Base\-Application}!m\-Player@{m\-Player}}
+\index{m\-Player@{m\-Player}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Player}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Player\-Body}$\ast$ {\bf \-Base\-Application\-::m\-Player}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a741eec58ff4787a66ce1533517afe1b1}
+\-Member of the \hyperlink{classPlayerBody}{\-Player\-Body} class (part of the src). \hypertarget{classBaseApplication_a8c690de5ec96338aa911ae113115da66}{\index{\-Base\-Application@{\-Base\-Application}!m\-Player\-Body\-Node@{m\-Player\-Body\-Node}}
+\index{m\-Player\-Body\-Node@{m\-Player\-Body\-Node}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Player\-Body\-Node}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Scene\-Node$\ast$ {\bf \-Base\-Application\-::m\-Player\-Body\-Node}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a8c690de5ec96338aa911ae113115da66}
+\-Scene\-Node to keep track of the player position. \hypertarget{classBaseApplication_a04f2fe47fa164fd78d986dc0df70b7fb}{\index{\-Base\-Application@{\-Base\-Application}!m\-Plugins\-Cfg@{m\-Plugins\-Cfg}}
+\index{m\-Plugins\-Cfg@{m\-Plugins\-Cfg}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Plugins\-Cfg}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-String {\bf \-Base\-Application\-::m\-Plugins\-Cfg}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a04f2fe47fa164fd78d986dc0df70b7fb}
+\-Path/\-Name of the plugins.\-cfg file. \hypertarget{classBaseApplication_a765e0df01c141a16df3178ab4f17afe6}{\index{\-Base\-Application@{\-Base\-Application}!m\-Resources\-Cfg@{m\-Resources\-Cfg}}
+\index{m\-Resources\-Cfg@{m\-Resources\-Cfg}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Resources\-Cfg}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-String {\bf \-Base\-Application\-::m\-Resources\-Cfg}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a765e0df01c141a16df3178ab4f17afe6}
+\-Path/\-Name of the resources.\-cfg file. \hypertarget{classBaseApplication_add84ba707dc6c57e6283f214b1274110}{\index{\-Base\-Application@{\-Base\-Application}!m\-Root@{m\-Root}}
+\index{m\-Root@{m\-Root}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Root}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Root$\ast$ {\bf \-Base\-Application\-::m\-Root}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_add84ba707dc6c57e6283f214b1274110}
+\-The \-O\-G\-R\-E root. \hypertarget{classBaseApplication_a8a7684f4f9a57ed3089048ad1a913b2d}{\index{\-Base\-Application@{\-Base\-Application}!m\-Scene\-Mgr@{m\-Scene\-Mgr}}
+\index{m\-Scene\-Mgr@{m\-Scene\-Mgr}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Scene\-Mgr}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Scene\-Manager$\ast$ {\bf \-Base\-Application\-::m\-Scene\-Mgr}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a8a7684f4f9a57ed3089048ad1a913b2d}
+\-The scene manager. \hypertarget{classBaseApplication_a755f26d3a9915aaf830750d877e39d86}{\index{\-Base\-Application@{\-Base\-Application}!m\-Shut\-Down@{m\-Shut\-Down}}
+\index{m\-Shut\-Down@{m\-Shut\-Down}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Shut\-Down}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Base\-Application\-::m\-Shut\-Down}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a755f26d3a9915aaf830750d877e39d86}
+\-Shut down all systems (broadcasted by this flag). \hypertarget{classBaseApplication_a7faa397f4f4861ee8c361a01e90b4416}{\index{\-Base\-Application@{\-Base\-Application}!m\-Tray\-Mgr@{m\-Tray\-Mgr}}
+\index{m\-Tray\-Mgr@{m\-Tray\-Mgr}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Tray\-Mgr}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-Bites\-::\-Sdk\-Tray\-Manager$\ast$ {\bf \-Base\-Application\-::m\-Tray\-Mgr}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a7faa397f4f4861ee8c361a01e90b4416}
+\-The tray manager (for the panels). \hypertarget{classBaseApplication_ac5d8e9c81e036897bc82f81eff8c570f}{\index{\-Base\-Application@{\-Base\-Application}!m\-Window@{m\-Window}}
+\index{m\-Window@{m\-Window}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{m\-Window}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Render\-Window$\ast$ {\bf \-Base\-Application\-::m\-Window}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_ac5d8e9c81e036897bc82f81eff8c570f}
+\-The application window. \hypertarget{classBaseApplication_a2edad3c6709f1ff6af45350308a62c8f}{\index{\-Base\-Application@{\-Base\-Application}!oculus@{oculus}}
+\index{oculus@{oculus}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{oculus}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Oculus}$\ast$ {\bf \-Base\-Application\-::oculus}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a2edad3c6709f1ff6af45350308a62c8f}
+\-Handler for the \-O\-C\-U\-L\-U\-S \-R\-I\-F\-T (\-S\-D\-K1), by community member \-Kojack (see \-Ogre \-Forum). \hypertarget{classBaseApplication_ac9c68350fd4e5888c3256a77db02278e}{\index{\-Base\-Application@{\-Base\-Application}!ptu\-Sweep@{ptu\-Sweep}}
+\index{ptu\-Sweep@{ptu\-Sweep}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{ptu\-Sweep}]{\setlength{\rightskip}{0pt plus 5cm}boost\-::thread$\ast$ {\bf \-Base\-Application\-::ptu\-Sweep}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_ac9c68350fd4e5888c3256a77db02278e}
+\-Thread to launch the \-P\-T\-U sweeps without blocking the rendering. \hypertarget{classBaseApplication_a37fa2d6256de90b4babeee56bcd143d4}{\index{\-Base\-Application@{\-Base\-Application}!received\-W\-Ps@{received\-W\-Ps}}
+\index{received\-W\-Ps@{received\-W\-Ps}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{received\-W\-Ps}]{\setlength{\rightskip}{0pt plus 5cm}volatile bool {\bf \-Base\-Application\-::received\-W\-Ps}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a37fa2d6256de90b4babeee56bcd143d4}
+\-Flag to communicate the arrival of the waypoints between message and rendering thread. \hypertarget{classBaseApplication_a884bd9efccf3e8ab710ac74a1a819e69}{\index{\-Base\-Application@{\-Base\-Application}!robot\-Model@{robot\-Model}}
+\index{robot\-Model@{robot\-Model}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{robot\-Model}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Robot}$\ast$ {\bf \-Base\-Application\-::robot\-Model}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a884bd9efccf3e8ab710ac74a1a819e69}
+\-Display and manage the robot avatar. \hypertarget{classBaseApplication_a48fdcb84193361574ad803e3e9529b9f}{\index{\-Base\-Application@{\-Base\-Application}!rosie\-Action\-Client@{rosie\-Action\-Client}}
+\index{rosie\-Action\-Client@{rosie\-Action\-Client}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{rosie\-Action\-Client}]{\setlength{\rightskip}{0pt plus 5cm}actionlib\-::\-Simple\-Action\-Client$<$topological\-\_\-navigation\-::\-Goto\-Node\-Action$>$$\ast$ {\bf \-Base\-Application\-::rosie\-Action\-Client}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a48fdcb84193361574ad803e3e9529b9f}
+\-Client for the communication of navigation targets. \hypertarget{classBaseApplication_a61075324a878878f31706cd03eac163e}{\index{\-Base\-Application@{\-Base\-Application}!ros\-Msg\-Sync@{ros\-Msg\-Sync}}
+\index{ros\-Msg\-Sync@{ros\-Msg\-Sync}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{ros\-Msg\-Sync}]{\setlength{\rightskip}{0pt plus 5cm}message\-\_\-filters\-::\-Synchronizer$<$\-Approximate\-Time\-Policy$>$$\ast$ {\bf \-Base\-Application\-::ros\-Msg\-Sync}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a61075324a878878f31706cd03eac163e}
+\-Synchronization of the room sweep images. \hypertarget{classBaseApplication_a2a8d2bd4faf3c20800191f8dd0525983}{\index{\-Base\-Application@{\-Base\-Application}!ros\-P\-T\-U\-Client@{ros\-P\-T\-U\-Client}}
+\index{ros\-P\-T\-U\-Client@{ros\-P\-T\-U\-Client}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{ros\-P\-T\-U\-Client}]{\setlength{\rightskip}{0pt plus 5cm}\-Client$\ast$ {\bf \-Base\-Application\-::ros\-P\-T\-U\-Client}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a2a8d2bd4faf3c20800191f8dd0525983}
+\-R\-O\-S action-\/client for the \-P\-T\-U commands. \hypertarget{classBaseApplication_a40d9d7bce284716b4f58e5ebf596104b}{\index{\-Base\-Application@{\-Base\-Application}!ros\-Video\-Sync@{ros\-Video\-Sync}}
+\index{ros\-Video\-Sync@{ros\-Video\-Sync}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{ros\-Video\-Sync}]{\setlength{\rightskip}{0pt plus 5cm}message\-\_\-filters\-::\-Synchronizer$<$\-Approximate\-Time\-Policy$>$ $\ast$ {\bf \-Base\-Application\-::ros\-Video\-Sync}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a40d9d7bce284716b4f58e5ebf596104b}
+\-Synchronization of the video image streams. \hypertarget{classBaseApplication_a804cbbaeae6ea76b47fce0692460451b}{\index{\-Base\-Application@{\-Base\-Application}!rs\-Lib@{rs\-Lib}}
+\index{rs\-Lib@{rs\-Lib}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{rs\-Lib}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Snapshot\-Library} $\ast$ {\bf \-Base\-Application\-::rs\-Lib}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a804cbbaeae6ea76b47fce0692460451b}
+\-Stores prerecorded \-Snapshots (part of the src). \hypertarget{classBaseApplication_a1f77aab5b657f16b4aa44200cf12d662}{\index{\-Base\-Application@{\-Base\-Application}!selected\-W\-P@{selected\-W\-P}}
+\index{selected\-W\-P@{selected\-W\-P}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{selected\-W\-P}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Base\-Application\-::selected\-W\-P}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a1f77aab5b657f16b4aa44200cf12d662}
+\-The currently selected waypoint. \hypertarget{classBaseApplication_a51cd2f82fb21d523d6940f5f557b2dff}{\index{\-Base\-Application@{\-Base\-Application}!sn\-Lib@{sn\-Lib}}
+\index{sn\-Lib@{sn\-Lib}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{sn\-Lib}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Snapshot\-Library}$\ast$ {\bf \-Base\-Application\-::sn\-Lib}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a51cd2f82fb21d523d6940f5f557b2dff}
+\-Stores manually recorded \-Snapshots (part of the src). \hypertarget{classBaseApplication_a60cc66a44a0900ec65d19b3903168ca5}{\index{\-Base\-Application@{\-Base\-Application}!sn\-Ori@{sn\-Ori}}
+\index{sn\-Ori@{sn\-Ori}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{sn\-Ori}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Quaternion {\bf \-Base\-Application\-::sn\-Ori}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a60cc66a44a0900ec65d19b3903168ca5}
+\-Quaternion to transfer the orientation on incomming (synchronized) image messages from the room sweep. \hypertarget{classBaseApplication_a7762b8555eb6aabd8687b34fafae2405}{\index{\-Base\-Application@{\-Base\-Application}!sn\-Pos@{sn\-Pos}}
+\index{sn\-Pos@{sn\-Pos}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{sn\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Vector3 {\bf \-Base\-Application\-::sn\-Pos}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a7762b8555eb6aabd8687b34fafae2405}
+\-Vector to transfer the position of incomming (synchronized) image messages from the room sweep. \hypertarget{classBaseApplication_a921d190dc1981ae57a49972c3b7ffbc9}{\index{\-Base\-Application@{\-Base\-Application}!synced\-Update@{synced\-Update}}
+\index{synced\-Update@{synced\-Update}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{synced\-Update}]{\setlength{\rightskip}{0pt plus 5cm}volatile bool {\bf \-Base\-Application\-::synced\-Update}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a921d190dc1981ae57a49972c3b7ffbc9}
+\-Flag to communicate the arrival of a (synchronized) image update between message and rendering thread (room sweep). \hypertarget{classBaseApplication_af7b2240ae783b353704370debc7092ba}{\index{\-Base\-Application@{\-Base\-Application}!take\-Snapshot@{take\-Snapshot}}
+\index{take\-Snapshot@{take\-Snapshot}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{take\-Snapshot}]{\setlength{\rightskip}{0pt plus 5cm}volatile bool {\bf \-Base\-Application\-::take\-Snapshot}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_af7b2240ae783b353704370debc7092ba}
+\-Indicator that a snapshot is requested. \hypertarget{classBaseApplication_a3aff6a781058410dc648c0d07fd7afb8}{\index{\-Base\-Application@{\-Base\-Application}!target\-W\-P\-Name@{target\-W\-P\-Name}}
+\index{target\-W\-P\-Name@{target\-W\-P\-Name}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{target\-W\-P\-Name}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-String {\bf \-Base\-Application\-::target\-W\-P\-Name}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a3aff6a781058410dc648c0d07fd7afb8}
+\-The name of the waypoint that was selected as a navigation target. \hypertarget{classBaseApplication_a91123c8ea1b0c3e1562e64b7879de5e4}{\index{\-Base\-Application@{\-Base\-Application}!tex\-Image@{tex\-Image}}
+\index{tex\-Image@{tex\-Image}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{tex\-Image}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Image {\bf \-Base\-Application\-::tex\-Image}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a91123c8ea1b0c3e1562e64b7879de5e4}
+\-Image to transfer the incomming rgb image (room sweep) into the rendering thread. \hypertarget{classBaseApplication_ab70dda7e59099d2309d9fdd4bf11c53a}{\index{\-Base\-Application@{\-Base\-Application}!tex\-Video@{tex\-Video}}
+\index{tex\-Video@{tex\-Video}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{tex\-Video}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Image {\bf \-Base\-Application\-::tex\-Video}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_ab70dda7e59099d2309d9fdd4bf11c53a}
+\-Image to transfer the incomming rgb image (video) into the rendering thread. \hypertarget{classBaseApplication_afed20466bdf46149a1bcad505a3e8022}{\index{\-Base\-Application@{\-Base\-Application}!tf\-Listener@{tf\-Listener}}
+\index{tf\-Listener@{tf\-Listener}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{tf\-Listener}]{\setlength{\rightskip}{0pt plus 5cm}tf\-::\-Transform\-Listener$\ast$ {\bf \-Base\-Application\-::tf\-Listener}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_afed20466bdf46149a1bcad505a3e8022}
+\-Keeps track of all coordinate frames. \-Enables application to compute arbitrary transformations between \-R\-O\-S coordinate frames (see frames.\-pdf). \hypertarget{classBaseApplication_ae855031951285ecc5c368fca44af62d5}{\index{\-Base\-Application@{\-Base\-Application}!vd\-Ori@{vd\-Ori}}
+\index{vd\-Ori@{vd\-Ori}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{vd\-Ori}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Quaternion {\bf \-Base\-Application\-::vd\-Ori}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_ae855031951285ecc5c368fca44af62d5}
+\-Quaternion to transfer the orientation on incomming (synchronized) image messages from the video stream. \hypertarget{classBaseApplication_adec41f9fd119d45e6594749a0147334d}{\index{\-Base\-Application@{\-Base\-Application}!vd\-Pos@{vd\-Pos}}
+\index{vd\-Pos@{vd\-Pos}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{vd\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Vector3 {\bf \-Base\-Application\-::vd\-Pos}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_adec41f9fd119d45e6594749a0147334d}
+\-Vector to transfer the position of incomming (synchronized) image messages from the video stream. \hypertarget{classBaseApplication_a3768ce4e283c7cc09b78adba043024be}{\index{\-Base\-Application@{\-Base\-Application}!vd\-Video@{vd\-Video}}
+\index{vd\-Video@{vd\-Video}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{vd\-Video}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Video3\-D}$\ast$ {\bf \-Base\-Application\-::vd\-Video}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_a3768ce4e283c7cc09b78adba043024be}
+\-Manages the live-\/feed from the kinect-\/like camera on the robot. \hypertarget{classBaseApplication_abbf6dd8d322875c5dc66d4eaee58049d}{\index{\-Base\-Application@{\-Base\-Application}!video\-Update@{video\-Update}}
+\index{video\-Update@{video\-Update}!BaseApplication@{\-Base\-Application}}
+\subsubsection[{video\-Update}]{\setlength{\rightskip}{0pt plus 5cm}volatile bool {\bf \-Base\-Application\-::video\-Update}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classBaseApplication_abbf6dd8d322875c5dc66d4eaee58049d}
+\-Flag to communicate the arrival of a (synchronized) image update between message and rendering thread (video stream). 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Base\-Application.\-h\end{DoxyCompactItemize}

@@ -1,5 +1,7 @@
 #include <Room.h>
 
+/* This is no magic, just take a look at the methods... */
+
 Room::Room(int id) {
 	this->id = id;
 	locked = false;

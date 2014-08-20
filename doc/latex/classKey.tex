@@ -1,0 +1,94 @@
+\hypertarget{classKey}{\section{\-Key \-Class \-Reference}
+\label{classKey}\index{\-Key@{\-Key}}
+}
+
+
+\-Represents a \hyperlink{classKey}{\-Key} in a \hyperlink{classGame}{\-Game}. \-This class is a more detailed description of the \hyperlink{classGameObject}{\-Game\-Object} \hyperlink{classKey}{\-Key}. \-It specifies how to display and what to do with a key.  
+
+
+
+
+{\ttfamily \#include $<$\-Key.\-h$>$}
+
+\-Inheritance diagram for \-Key\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classKey}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classKey_ae07b933c3599eb3d74eb1b61f91066fb}{\-Key} (\-Scene\-Manager $\ast$)
+\item 
+virtual \-Game\-State \hyperlink{classKey_a0ed28ed2112095183608b764e4453f9b}{frame\-Event\-Queued} (\hyperlink{classWayPoint}{\-Way\-Point} $\ast$current\-W\-P, \-Game\-State gs)
+\item 
+virtual void \hyperlink{classKey_a2c7e2bc5cc7099a52676ec8885142fde}{init} (\hyperlink{classRoom}{\-Room} $\ast$\hyperlink{classGameObject_a9f63419cc03f2513f757a317a2e37557}{room})
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classKey_a22e51dbebb18c1d33ee8bba93a1b3b4d}{\-Key} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classKey_a030a1f58ce504bb15802f19287252de9}{found}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Represents a \hyperlink{classKey}{\-Key} in a \hyperlink{classGame}{\-Game}. \-This class is a more detailed description of the \hyperlink{classGameObject}{\-Game\-Object} \hyperlink{classKey}{\-Key}. \-It specifies how to display and what to do with a key. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classKey_a22e51dbebb18c1d33ee8bba93a1b3b4d}{\index{\-Key@{\-Key}!\-Key@{\-Key}}
+\index{\-Key@{\-Key}!Key@{\-Key}}
+\subsubsection[{\-Key}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Key\-::\-Key} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classKey_a22e51dbebb18c1d33ee8bba93a1b3b4d}
+\-Default constructor. \-Not to be used outside class scope. \hypertarget{classKey_ae07b933c3599eb3d74eb1b61f91066fb}{\index{\-Key@{\-Key}!\-Key@{\-Key}}
+\index{\-Key@{\-Key}!Key@{\-Key}}
+\subsubsection[{\-Key}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Key\-::\-Key} (
+\begin{DoxyParamCaption}
+\item[{\-Scene\-Manager $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{classKey_ae07b933c3599eb3d74eb1b61f91066fb}
+\-Initializes the key object and sets it up for display. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classKey_a0ed28ed2112095183608b764e4453f9b}{\index{\-Key@{\-Key}!frame\-Event\-Queued@{frame\-Event\-Queued}}
+\index{frame\-Event\-Queued@{frame\-Event\-Queued}!Key@{\-Key}}
+\subsubsection[{frame\-Event\-Queued}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Game\-State {\bf \-Key\-::frame\-Event\-Queued} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Way\-Point} $\ast$}]{current\-W\-P, }
+\item[{\-Game\-State}]{gs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classKey_a0ed28ed2112095183608b764e4453f9b}
+\-Reimplements \hyperlink{classGameObject_aa643df342c50df77f053eee2c703c619}{\-Game\-Object\-::frame\-Event\-Queued}(...). \-Processes the current robot \hyperlink{classWayPoint}{\-Way\-Point} and \-Game\-State to derive if the next state is effected by this key. 
+
+\-Reimplemented from \hyperlink{classGameObject_aa643df342c50df77f053eee2c703c619}{\-Game\-Object}.
+
+\hypertarget{classKey_a2c7e2bc5cc7099a52676ec8885142fde}{\index{\-Key@{\-Key}!init@{init}}
+\index{init@{init}!Key@{\-Key}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Key\-::init} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Room} $\ast$}]{room}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classKey_a2c7e2bc5cc7099a52676ec8885142fde}
+\-Reinitializes the object for a new game session. 
+
+\-Reimplemented from \hyperlink{classGameObject_ac3ab6708ce47b4ef8fd35d8bb43149dc}{\-Game\-Object}.
+
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classKey_a030a1f58ce504bb15802f19287252de9}{\index{\-Key@{\-Key}!found@{found}}
+\index{found@{found}!Key@{\-Key}}
+\subsubsection[{found}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Key\-::found}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classKey_a030a1f58ce504bb15802f19287252de9}
+\-Was this key found, or not? 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Key.\-h\end{DoxyCompactItemize}

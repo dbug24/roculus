@@ -1,0 +1,193 @@
+\hypertarget{classRoom}{\section{\-Room \-Class \-Reference}
+\label{classRoom}\index{\-Room@{\-Room}}
+}
+
+
+\-Describes a \hyperlink{classRoom}{\-Room} in a \hyperlink{classGame}{\-Game}. \-This class collects all parameters for a \hyperlink{classRoom}{\-Room}. \-It keeps track of the corresponding \-Way\-Points, \hyperlink{classDoor}{\-Door} nodes and event nodes and provides some utility functions.  
+
+
+
+
+{\ttfamily \#include $<$\-Room.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRoom_aeca494ef2b98b46ab80620ddda354bdb}{\-Room} (int)
+\item 
+std\-::vector$<$ \hyperlink{classWayPoint}{\-Way\-Point} $\ast$ $>$ \& \hyperlink{classRoom_a8ada2aba11643989125c52056f21fdfb}{get\-W\-Ps} ()
+\item 
+std\-::vector$<$ \hyperlink{classWayPoint}{\-Way\-Point} $\ast$ $>$ \& \hyperlink{classRoom_a969be8dbe4444e7be92b4107337c8109}{get\-W\-Ps2\-Use} ()
+\item 
+bool \hyperlink{classRoom_adc25ce4a3d509baf2d74ce4feaadcfbd}{is\-Locked} ()
+\item 
+void \hyperlink{classRoom_a90ca4dec3d3040ac2ab9558da6bd024a}{lock} ()
+\item 
+void \hyperlink{classRoom_a58285cba499484ecbbdba37e81b7205f}{unlock} ()
+\item 
+int \hyperlink{classRoom_a2d9554ac5bb8f261fd38238eab0e6f02}{get\-Room\-Id} ()
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classRoom_a289489d94ab8471aa9213e57f31fdbfd}{get\-Door\-Evt} ()
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classRoom_a2a5c4f4ebb5fab1f30c7ef2507352269}{get\-Door\-W\-P} ()
+\item 
+void \hyperlink{classRoom_af7a4019ac279db263ac1aaa3daeb6452}{set\-Door\-Evt} (\hyperlink{classWayPoint}{\-Way\-Point} $\ast$)
+\item 
+void \hyperlink{classRoom_a0969d7fef8ee5df46f4f7f092356e727}{add\-Room\-Point} (\hyperlink{classWayPoint}{\-Way\-Point} $\ast$)
+\item 
+void \hyperlink{classRoom_add8ba3c88fb1d25e5e7ef45871de33d1}{add\-Use\-Point} (\hyperlink{classWayPoint}{\-Way\-Point} $\ast$)
+\item 
+void \hyperlink{classRoom_a1a07570c9de0f1830b54378daea77107}{set\-Door} (\hyperlink{classWayPoint}{\-Way\-Point} $\ast$)
+\item 
+void \hyperlink{classRoom_a8d4ac41b692d89e589b695b53b8cb8f6}{print} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classRoom_af51865ded79b022a93c6af4bd613d41c}{id}
+\item 
+std\-::vector$<$ \hyperlink{classWayPoint}{\-Way\-Point} $\ast$ $>$ \hyperlink{classRoom_a672a853c876de647aec33a2ad4da0471}{room\-Points}
+\item 
+bool \hyperlink{classRoom_a7d1c69d12f2fe191ad142be4fec461d4}{locked}
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classRoom_a44fa43dc49bfee1a50fa7c39075bf1cb}{door}
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classRoom_ab39232499fc239f45e16c26226ca842e}{door\-Event\-W\-P}
+\item 
+std\-::vector$<$ \hyperlink{classWayPoint}{\-Way\-Point} $\ast$ $>$ \hyperlink{classRoom_a56e6a07d53a2514d7538b72f56bcbf45}{use\-Points}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Describes a \hyperlink{classRoom}{\-Room} in a \hyperlink{classGame}{\-Game}. \-This class collects all parameters for a \hyperlink{classRoom}{\-Room}. \-It keeps track of the corresponding \-Way\-Points, \hyperlink{classDoor}{\-Door} nodes and event nodes and provides some utility functions. 
+
+$<$ 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classRoom_aeca494ef2b98b46ab80620ddda354bdb}{\index{\-Room@{\-Room}!\-Room@{\-Room}}
+\index{\-Room@{\-Room}!Room@{\-Room}}
+\subsubsection[{\-Room}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Room\-::\-Room} (
+\begin{DoxyParamCaption}
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_aeca494ef2b98b46ab80620ddda354bdb}
+\-Initialize the room, assigning its \-I\-D. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classRoom_a0969d7fef8ee5df46f4f7f092356e727}{\index{\-Room@{\-Room}!add\-Room\-Point@{add\-Room\-Point}}
+\index{add\-Room\-Point@{add\-Room\-Point}!Room@{\-Room}}
+\subsubsection[{add\-Room\-Point}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Room\-::add\-Room\-Point} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Way\-Point} $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_a0969d7fef8ee5df46f4f7f092356e727}
+\-Add a \hyperlink{classWayPoint}{\-Way\-Point} to the room. \hypertarget{classRoom_add8ba3c88fb1d25e5e7ef45871de33d1}{\index{\-Room@{\-Room}!add\-Use\-Point@{add\-Use\-Point}}
+\index{add\-Use\-Point@{add\-Use\-Point}!Room@{\-Room}}
+\subsubsection[{add\-Use\-Point}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Room\-::add\-Use\-Point} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Way\-Point} $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_add8ba3c88fb1d25e5e7ef45871de33d1}
+\-Add a \hyperlink{classWayPoint}{\-Way\-Point} to the set of \-Way\-Points to use for \-Keys/\-Treasures. \hypertarget{classRoom_a289489d94ab8471aa9213e57f31fdbfd}{\index{\-Room@{\-Room}!get\-Door\-Evt@{get\-Door\-Evt}}
+\index{get\-Door\-Evt@{get\-Door\-Evt}!Room@{\-Room}}
+\subsubsection[{get\-Door\-Evt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Room\-::get\-Door\-Evt} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_a289489d94ab8471aa9213e57f31fdbfd}
+\-Returns the \hyperlink{classWayPoint}{\-Way\-Point} which triggers the door event. \hypertarget{classRoom_a2a5c4f4ebb5fab1f30c7ef2507352269}{\index{\-Room@{\-Room}!get\-Door\-W\-P@{get\-Door\-W\-P}}
+\index{get\-Door\-W\-P@{get\-Door\-W\-P}!Room@{\-Room}}
+\subsubsection[{get\-Door\-W\-P}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Room\-::get\-Door\-W\-P} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_a2a5c4f4ebb5fab1f30c7ef2507352269}
+\-Returns the \hyperlink{classWayPoint}{\-Way\-Point} which denotes the door. \-In fact the door will be placed half way between the door\-W\-P and the door\-Event\-W\-P. \hypertarget{classRoom_a2d9554ac5bb8f261fd38238eab0e6f02}{\index{\-Room@{\-Room}!get\-Room\-Id@{get\-Room\-Id}}
+\index{get\-Room\-Id@{get\-Room\-Id}!Room@{\-Room}}
+\subsubsection[{get\-Room\-Id}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Room\-::get\-Room\-Id} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_a2d9554ac5bb8f261fd38238eab0e6f02}
+\-Returns the \-I\-D of this room. \hypertarget{classRoom_a8ada2aba11643989125c52056f21fdfb}{\index{\-Room@{\-Room}!get\-W\-Ps@{get\-W\-Ps}}
+\index{get\-W\-Ps@{get\-W\-Ps}!Room@{\-Room}}
+\subsubsection[{get\-W\-Ps}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf \-Way\-Point}$\ast$$>$\& {\bf \-Room\-::get\-W\-Ps} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_a8ada2aba11643989125c52056f21fdfb}
+\-Returns the vector of all \-Way\-Points that are in this room. \hypertarget{classRoom_a969be8dbe4444e7be92b4107337c8109}{\index{\-Room@{\-Room}!get\-W\-Ps2\-Use@{get\-W\-Ps2\-Use}}
+\index{get\-W\-Ps2\-Use@{get\-W\-Ps2\-Use}!Room@{\-Room}}
+\subsubsection[{get\-W\-Ps2\-Use}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf \-Way\-Point}$\ast$$>$\& {\bf \-Room\-::get\-W\-Ps2\-Use} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_a969be8dbe4444e7be92b4107337c8109}
+\-Returns the vector of \-Way\-Points that can be used to place \-Keys/\-Treasures. \hypertarget{classRoom_adc25ce4a3d509baf2d74ce4feaadcfbd}{\index{\-Room@{\-Room}!is\-Locked@{is\-Locked}}
+\index{is\-Locked@{is\-Locked}!Room@{\-Room}}
+\subsubsection[{is\-Locked}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Room\-::is\-Locked} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_adc25ce4a3d509baf2d74ce4feaadcfbd}
+\-Is this room locked? \hypertarget{classRoom_a90ca4dec3d3040ac2ab9558da6bd024a}{\index{\-Room@{\-Room}!lock@{lock}}
+\index{lock@{lock}!Room@{\-Room}}
+\subsubsection[{lock}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Room\-::lock} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_a90ca4dec3d3040ac2ab9558da6bd024a}
+\hyperlink{classLock}{\-Lock} this room\-: make its \-Way\-Points unavailable for selection. \hypertarget{classRoom_a8d4ac41b692d89e589b695b53b8cb8f6}{\index{\-Room@{\-Room}!print@{print}}
+\index{print@{print}!Room@{\-Room}}
+\subsubsection[{print}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Room\-::print} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_a8d4ac41b692d89e589b695b53b8cb8f6}
+\-Utility function. \-Print the room configuration on the console. \-Useful for debugging. \hypertarget{classRoom_a1a07570c9de0f1830b54378daea77107}{\index{\-Room@{\-Room}!set\-Door@{set\-Door}}
+\index{set\-Door@{set\-Door}!Room@{\-Room}}
+\subsubsection[{set\-Door}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Room\-::set\-Door} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Way\-Point} $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_a1a07570c9de0f1830b54378daea77107}
+\-Set the \hyperlink{classWayPoint}{\-Way\-Point} which denotes the door. \hypertarget{classRoom_af7a4019ac279db263ac1aaa3daeb6452}{\index{\-Room@{\-Room}!set\-Door\-Evt@{set\-Door\-Evt}}
+\index{set\-Door\-Evt@{set\-Door\-Evt}!Room@{\-Room}}
+\subsubsection[{set\-Door\-Evt}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Room\-::set\-Door\-Evt} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Way\-Point} $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_af7a4019ac279db263ac1aaa3daeb6452}
+\-Set the \hyperlink{classWayPoint}{\-Way\-Point} which triggers the door event. \hypertarget{classRoom_a58285cba499484ecbbdba37e81b7205f}{\index{\-Room@{\-Room}!unlock@{unlock}}
+\index{unlock@{unlock}!Room@{\-Room}}
+\subsubsection[{unlock}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Room\-::unlock} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classRoom_a58285cba499484ecbbdba37e81b7205f}
+\-Unlock the room\-: make its \-Way\-Points accessible again. 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classRoom_a44fa43dc49bfee1a50fa7c39075bf1cb}{\index{\-Room@{\-Room}!door@{door}}
+\index{door@{door}!Room@{\-Room}}
+\subsubsection[{door}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Room\-::door}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classRoom_a44fa43dc49bfee1a50fa7c39075bf1cb}
+\-In case this room will be used as \hyperlink{classTreasure}{\-Treasure} chamber, which \hyperlink{classWayPoint}{\-Way\-Point} marks the \hyperlink{classDoor}{\-Door}? \hypertarget{classRoom_ab39232499fc239f45e16c26226ca842e}{\index{\-Room@{\-Room}!door\-Event\-W\-P@{door\-Event\-W\-P}}
+\index{door\-Event\-W\-P@{door\-Event\-W\-P}!Room@{\-Room}}
+\subsubsection[{door\-Event\-W\-P}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Room\-::door\-Event\-W\-P}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classRoom_ab39232499fc239f45e16c26226ca842e}
+\-In case this room will be used as \hyperlink{classTreasure}{\-Treasure} chamber, which \hyperlink{classWayPoint}{\-Way\-Point} triggers the \hyperlink{classDoor}{\-Door} event? \hypertarget{classRoom_af51865ded79b022a93c6af4bd613d41c}{\index{\-Room@{\-Room}!id@{id}}
+\index{id@{id}!Room@{\-Room}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Room\-::id}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classRoom_af51865ded79b022a93c6af4bd613d41c}
+\-The number/\-I\-D of this room. \hypertarget{classRoom_a7d1c69d12f2fe191ad142be4fec461d4}{\index{\-Room@{\-Room}!locked@{locked}}
+\index{locked@{locked}!Room@{\-Room}}
+\subsubsection[{locked}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Room\-::locked}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classRoom_a7d1c69d12f2fe191ad142be4fec461d4}
+\-Stores if the room is locked. \hypertarget{classRoom_a672a853c876de647aec33a2ad4da0471}{\index{\-Room@{\-Room}!room\-Points@{room\-Points}}
+\index{room\-Points@{room\-Points}!Room@{\-Room}}
+\subsubsection[{room\-Points}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf \-Way\-Point}$\ast$$>$ {\bf \-Room\-::room\-Points}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classRoom_a672a853c876de647aec33a2ad4da0471}
+\-All \-Way\-Points that belong to this room. \hypertarget{classRoom_a56e6a07d53a2514d7538b72f56bcbf45}{\index{\-Room@{\-Room}!use\-Points@{use\-Points}}
+\index{use\-Points@{use\-Points}!Room@{\-Room}}
+\subsubsection[{use\-Points}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf \-Way\-Point}$\ast$$>$ {\bf \-Room\-::use\-Points}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classRoom_a56e6a07d53a2514d7538b72f56bcbf45}
+\-Which \-Way\-Points can be used to place \-Keys or the \hyperlink{classTreasure}{\-Treasure}? 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Room.\-h\end{DoxyCompactItemize}

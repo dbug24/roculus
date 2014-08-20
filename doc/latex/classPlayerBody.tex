@@ -1,0 +1,236 @@
+\hypertarget{classPlayerBody}{\section{\-Player\-Body \-Class \-Reference}
+\label{classPlayerBody}\index{\-Player\-Body@{\-Player\-Body}}
+}
+
+
+\-Handles the \hyperlink{classPlayerBody}{\-Player\-Body} motion. \-Extension class to handle the player motion independent from the \hyperlink{classOculus}{\-Oculus} \-Rift head motion. \-The \hyperlink{classOculus}{\-Oculus} motion happens on top of this, which is achieved by making the \hyperlink{classPlayerBody}{\-Player\-Body}'s scene node the parent for the \hyperlink{classOculus}{\-Oculus} handler. \-Since this was one of my first implementations (very unclean) this step, in fact, happens in \hyperlink{classBaseApplication}{\-Base\-Application}.  
+
+
+
+
+{\ttfamily \#include $<$\-Player\-Body.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classPlayerBody_acb15ca4d34a86bffcad6b00ce35d126b}{\-Player\-Body} (\-Ogre\-::\-Scene\-Node $\ast$m\-Stereo\-Camera\-Parent)
+\item 
+\hyperlink{classPlayerBody_aacd45e58011ac14ea72a2323cd0d1099}{$\sim$\-Player\-Body} ()
+\item 
+\-Ogre\-::\-Vector3 \hyperlink{classPlayerBody_ab8f4395174911c4dbbdfbfe7f920fe31}{get\-Position} ()
+\item 
+float \hyperlink{classPlayerBody_a087fe642e3fce240e9dd1aad99146632}{get\-Max\-Speed} ()
+\item 
+void \hyperlink{classPlayerBody_ad38c930b63eb6932a8e0aa3d02e2f7ba}{set\-Max\-Speed} (float max\-Speed)
+\item 
+void \hyperlink{classPlayerBody_a88ee65b1a7bde139f08f3d42fb6be93a}{set\-Position} (\-Ogre\-::\-Vector3 position)
+\item 
+void \hyperlink{classPlayerBody_ab76bcf5cc871429f084c31b163c9f4e0}{inject\-Mouse\-Move} (const \-O\-I\-S\-::\-Mouse\-Event \&evt)
+\item 
+void \hyperlink{classPlayerBody_acbb6f13451daa2b31d26483a5f32d871}{inject\-Mouse\-Down} (const \-O\-I\-S\-::\-Mouse\-Event \&evt, const \-O\-I\-S\-::\-Mouse\-Button\-I\-D \&id)
+\item 
+void \hyperlink{classPlayerBody_a82db56db31131985c575e8e8f7dc01c3}{inject\-Mouse\-Up} (const \-O\-I\-S\-::\-Mouse\-Event \&evt, const \-O\-I\-S\-::\-Mouse\-Button\-I\-D \&id)
+\item 
+void \hyperlink{classPlayerBody_a0a4d5790b5d7f762e228b93fea1a486f}{inject\-Key\-Down} (const \-O\-I\-S\-::\-Key\-Event \&evt)
+\item 
+void \hyperlink{classPlayerBody_ae4281332cffc0db75de977d9a0b48613}{inject\-Key\-Up} (const \-O\-I\-S\-::\-Key\-Event \&evt)
+\item 
+void \hyperlink{classPlayerBody_a31986795b00331e48fc3dc160676a143}{inject\-P\-O\-V\-Changed} (const \-O\-I\-S\-::\-Joy\-Stick\-Event \&arg, int pov)
+\item 
+void \hyperlink{classPlayerBody_a28b2eae6067e2ad2c30efc96b0005ca5}{inject\-Axis\-Moved} (const \-O\-I\-S\-::\-Joy\-Stick\-Event \&e, int axis)
+\item 
+void \hyperlink{classPlayerBody_ae7dfd55490816113a27a8424ed175b12}{inject\-Slider\-Moved} (const \-O\-I\-S\-::\-Joy\-Stick\-Event \&e, int slider\-I\-D)
+\item 
+void \hyperlink{classPlayerBody_a4232ab059277ab6258f0efa8ea38e6a6}{inject\-Button\-Down} (const \-O\-I\-S\-::\-Joy\-Stick\-Event \&e, int button)
+\item 
+void \hyperlink{classPlayerBody_a70d896fc815d013934f144d6d3c18c9a}{inject\-Button\-Up} (const \-O\-I\-S\-::\-Joy\-Stick\-Event \&e, int button)
+\item 
+void \hyperlink{classPlayerBody_ac8085b6f1a32beb188d198cec800bfff}{inject\-R\-O\-S\-Joy} (const sensor\-\_\-msgs\-::\-Joy\-::\-Const\-Ptr \&joy)
+\item 
+void \hyperlink{classPlayerBody_abc2ddad0523749a1c331e781bc45b810}{frame\-Rendering\-Queued} (const \-Ogre\-::\-Frame\-Event \&evt)
+\item 
+void \hyperlink{classPlayerBody_a27acbaf54e05dc302ace0c5482a4b6d2}{frame\-Rendering\-Queued} (\hyperlink{classRobot}{\-Robot} $\ast$robot)
+\item 
+void \hyperlink{classPlayerBody_a00e5cc5360085f4e11227047faf62f6a}{toggle\-First\-Person\-Mode} ()
+\item 
+bool \hyperlink{classPlayerBody_ac7be2d15c10f7619e5fca44ce40aa814}{is\-First\-Person} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const int \hyperlink{classPlayerBody_a82eef395a2ecbc593ffcb074178dbf69}{\-J\-O\-Y\-\_\-\-T\-R\-I\-G\-G\-E\-R\-\_\-\-L\-I\-M\-I\-T} = 256
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Handles the \hyperlink{classPlayerBody}{\-Player\-Body} motion. \-Extension class to handle the player motion independent from the \hyperlink{classOculus}{\-Oculus} \-Rift head motion. \-The \hyperlink{classOculus}{\-Oculus} motion happens on top of this, which is achieved by making the \hyperlink{classPlayerBody}{\-Player\-Body}'s scene node the parent for the \hyperlink{classOculus}{\-Oculus} handler. \-Since this was one of my first implementations (very unclean) this step, in fact, happens in \hyperlink{classBaseApplication}{\-Base\-Application}. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classPlayerBody_acb15ca4d34a86bffcad6b00ce35d126b}{\index{\-Player\-Body@{\-Player\-Body}!\-Player\-Body@{\-Player\-Body}}
+\index{\-Player\-Body@{\-Player\-Body}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{\-Player\-Body}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Player\-Body\-::\-Player\-Body} (
+\begin{DoxyParamCaption}
+\item[{\-Ogre\-::\-Scene\-Node $\ast$}]{m\-Stereo\-Camera\-Parent}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_acb15ca4d34a86bffcad6b00ce35d126b}
+\-Constructor. \-Sets up the \hyperlink{classPlayerBody}{\-Player\-Body} object, based on the given scene node. (\-Could be changed to \-Scene\-Mgr and create the node itself...) \hypertarget{classPlayerBody_aacd45e58011ac14ea72a2323cd0d1099}{\index{\-Player\-Body@{\-Player\-Body}!$\sim$\-Player\-Body@{$\sim$\-Player\-Body}}
+\index{$\sim$\-Player\-Body@{$\sim$\-Player\-Body}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{$\sim$\-Player\-Body}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Player\-Body\-::$\sim$\-Player\-Body} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_aacd45e58011ac14ea72a2323cd0d1099}
+\-Default destructor. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classPlayerBody_abc2ddad0523749a1c331e781bc45b810}{\index{\-Player\-Body@{\-Player\-Body}!frame\-Rendering\-Queued@{frame\-Rendering\-Queued}}
+\index{frame\-Rendering\-Queued@{frame\-Rendering\-Queued}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{frame\-Rendering\-Queued}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::frame\-Rendering\-Queued} (
+\begin{DoxyParamCaption}
+\item[{const \-Ogre\-::\-Frame\-Event \&}]{evt}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_abc2ddad0523749a1c331e781bc45b810}
+\-Given a \-Ogre\-::\-Frame\-Event, apply all commands that result from the various inputs. \hypertarget{classPlayerBody_a27acbaf54e05dc302ace0c5482a4b6d2}{\index{\-Player\-Body@{\-Player\-Body}!frame\-Rendering\-Queued@{frame\-Rendering\-Queued}}
+\index{frame\-Rendering\-Queued@{frame\-Rendering\-Queued}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{frame\-Rendering\-Queued}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::frame\-Rendering\-Queued} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Robot} $\ast$}]{robot}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_a27acbaf54e05dc302ace0c5482a4b6d2}
+\-Given a \hyperlink{classRobot}{\-Robot}, update the player position to the robot's posititon. \-This effectively is the first-\/person mode. \hypertarget{classPlayerBody_a087fe642e3fce240e9dd1aad99146632}{\index{\-Player\-Body@{\-Player\-Body}!get\-Max\-Speed@{get\-Max\-Speed}}
+\index{get\-Max\-Speed@{get\-Max\-Speed}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{get\-Max\-Speed}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf \-Player\-Body\-::get\-Max\-Speed} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_a087fe642e3fce240e9dd1aad99146632}
+\-Returns the maximum speed. \hypertarget{classPlayerBody_ab8f4395174911c4dbbdfbfe7f920fe31}{\index{\-Player\-Body@{\-Player\-Body}!get\-Position@{get\-Position}}
+\index{get\-Position@{get\-Position}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{get\-Position}]{\setlength{\rightskip}{0pt plus 5cm}\-Ogre\-::\-Vector3 {\bf \-Player\-Body\-::get\-Position} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_ab8f4395174911c4dbbdfbfe7f920fe31}
+\-Returns the current player position. \hypertarget{classPlayerBody_a28b2eae6067e2ad2c30efc96b0005ca5}{\index{\-Player\-Body@{\-Player\-Body}!inject\-Axis\-Moved@{inject\-Axis\-Moved}}
+\index{inject\-Axis\-Moved@{inject\-Axis\-Moved}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{inject\-Axis\-Moved}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::inject\-Axis\-Moved} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Joy\-Stick\-Event \&}]{e, }
+\item[{int}]{axis}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_a28b2eae6067e2ad2c30efc96b0005ca5}
+\-O\-I\-S\-: \-Process the movement of an axis. \hypertarget{classPlayerBody_a4232ab059277ab6258f0efa8ea38e6a6}{\index{\-Player\-Body@{\-Player\-Body}!inject\-Button\-Down@{inject\-Button\-Down}}
+\index{inject\-Button\-Down@{inject\-Button\-Down}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{inject\-Button\-Down}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::inject\-Button\-Down} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Joy\-Stick\-Event \&}]{e, }
+\item[{int}]{button}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_a4232ab059277ab6258f0efa8ea38e6a6}
+\-O\-I\-S\-: \-Process a button event on the joystick. \hypertarget{classPlayerBody_a70d896fc815d013934f144d6d3c18c9a}{\index{\-Player\-Body@{\-Player\-Body}!inject\-Button\-Up@{inject\-Button\-Up}}
+\index{inject\-Button\-Up@{inject\-Button\-Up}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{inject\-Button\-Up}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::inject\-Button\-Up} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Joy\-Stick\-Event \&}]{e, }
+\item[{int}]{button}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_a70d896fc815d013934f144d6d3c18c9a}
+\-O\-I\-S\-: \-Process a button event on the joystick. \hypertarget{classPlayerBody_a0a4d5790b5d7f762e228b93fea1a486f}{\index{\-Player\-Body@{\-Player\-Body}!inject\-Key\-Down@{inject\-Key\-Down}}
+\index{inject\-Key\-Down@{inject\-Key\-Down}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{inject\-Key\-Down}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::inject\-Key\-Down} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Key\-Event \&}]{evt}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_a0a4d5790b5d7f762e228b93fea1a486f}
+\-O\-I\-S\-: \-Process a keyboard event. \hypertarget{classPlayerBody_ae4281332cffc0db75de977d9a0b48613}{\index{\-Player\-Body@{\-Player\-Body}!inject\-Key\-Up@{inject\-Key\-Up}}
+\index{inject\-Key\-Up@{inject\-Key\-Up}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{inject\-Key\-Up}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::inject\-Key\-Up} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Key\-Event \&}]{evt}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_ae4281332cffc0db75de977d9a0b48613}
+\-O\-I\-S\-: \-Process a keyboard event. \hypertarget{classPlayerBody_acbb6f13451daa2b31d26483a5f32d871}{\index{\-Player\-Body@{\-Player\-Body}!inject\-Mouse\-Down@{inject\-Mouse\-Down}}
+\index{inject\-Mouse\-Down@{inject\-Mouse\-Down}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{inject\-Mouse\-Down}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::inject\-Mouse\-Down} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Mouse\-Event \&}]{evt, }
+\item[{const \-O\-I\-S\-::\-Mouse\-Button\-I\-D \&}]{id}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_acbb6f13451daa2b31d26483a5f32d871}
+\-O\-I\-S\-: \-Process a mouse button event, forwarded from the \hyperlink{classBaseApplication}{\-Base\-Application}. \hypertarget{classPlayerBody_ab76bcf5cc871429f084c31b163c9f4e0}{\index{\-Player\-Body@{\-Player\-Body}!inject\-Mouse\-Move@{inject\-Mouse\-Move}}
+\index{inject\-Mouse\-Move@{inject\-Mouse\-Move}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{inject\-Mouse\-Move}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::inject\-Mouse\-Move} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Mouse\-Event \&}]{evt}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_ab76bcf5cc871429f084c31b163c9f4e0}
+\-O\-I\-S\-: \-Process a mouse movement, forwarded from the \hyperlink{classBaseApplication}{\-Base\-Application}. \hypertarget{classPlayerBody_a82db56db31131985c575e8e8f7dc01c3}{\index{\-Player\-Body@{\-Player\-Body}!inject\-Mouse\-Up@{inject\-Mouse\-Up}}
+\index{inject\-Mouse\-Up@{inject\-Mouse\-Up}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{inject\-Mouse\-Up}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::inject\-Mouse\-Up} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Mouse\-Event \&}]{evt, }
+\item[{const \-O\-I\-S\-::\-Mouse\-Button\-I\-D \&}]{id}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_a82db56db31131985c575e8e8f7dc01c3}
+\-O\-I\-S\-: \-Process a mouse button event, forwarded from the \hyperlink{classBaseApplication}{\-Base\-Application}. \hypertarget{classPlayerBody_a31986795b00331e48fc3dc160676a143}{\index{\-Player\-Body@{\-Player\-Body}!inject\-P\-O\-V\-Changed@{inject\-P\-O\-V\-Changed}}
+\index{inject\-P\-O\-V\-Changed@{inject\-P\-O\-V\-Changed}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{inject\-P\-O\-V\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::inject\-P\-O\-V\-Changed} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Joy\-Stick\-Event \&}]{arg, }
+\item[{int}]{pov}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_a31986795b00331e48fc3dc160676a143}
+\-O\-I\-S\-: \-Process a \-P\-O\-V-\/joystick event. \hypertarget{classPlayerBody_ac8085b6f1a32beb188d198cec800bfff}{\index{\-Player\-Body@{\-Player\-Body}!inject\-R\-O\-S\-Joy@{inject\-R\-O\-S\-Joy}}
+\index{inject\-R\-O\-S\-Joy@{inject\-R\-O\-S\-Joy}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{inject\-R\-O\-S\-Joy}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::inject\-R\-O\-S\-Joy} (
+\begin{DoxyParamCaption}
+\item[{const sensor\-\_\-msgs\-::\-Joy\-::\-Const\-Ptr \&}]{joy}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_ac8085b6f1a32beb188d198cec800bfff}
+\-R\-O\-S\-: \-Process an incomming joystick message from \-R\-O\-S. \-This combines the various events from the \-O\-I\-S system by processing the entire joystick state. \hypertarget{classPlayerBody_ae7dfd55490816113a27a8424ed175b12}{\index{\-Player\-Body@{\-Player\-Body}!inject\-Slider\-Moved@{inject\-Slider\-Moved}}
+\index{inject\-Slider\-Moved@{inject\-Slider\-Moved}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{inject\-Slider\-Moved}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::inject\-Slider\-Moved} (
+\begin{DoxyParamCaption}
+\item[{const \-O\-I\-S\-::\-Joy\-Stick\-Event \&}]{e, }
+\item[{int}]{slider\-I\-D}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_ae7dfd55490816113a27a8424ed175b12}
+\-O\-I\-S\-: \-Process the movement of a slider. \hypertarget{classPlayerBody_ac7be2d15c10f7619e5fca44ce40aa814}{\index{\-Player\-Body@{\-Player\-Body}!is\-First\-Person@{is\-First\-Person}}
+\index{is\-First\-Person@{is\-First\-Person}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{is\-First\-Person}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Player\-Body\-::is\-First\-Person} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_ac7be2d15c10f7619e5fca44ce40aa814}
+\-Returns if the \hyperlink{classPlayerBody}{\-Player\-Body} shall be mounted to a \hyperlink{classRobot}{\-Robot} or not. \hypertarget{classPlayerBody_ad38c930b63eb6932a8e0aa3d02e2f7ba}{\index{\-Player\-Body@{\-Player\-Body}!set\-Max\-Speed@{set\-Max\-Speed}}
+\index{set\-Max\-Speed@{set\-Max\-Speed}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{set\-Max\-Speed}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::set\-Max\-Speed} (
+\begin{DoxyParamCaption}
+\item[{float}]{max\-Speed}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_ad38c930b63eb6932a8e0aa3d02e2f7ba}
+\-Sets the maximum speed. \hypertarget{classPlayerBody_a88ee65b1a7bde139f08f3d42fb6be93a}{\index{\-Player\-Body@{\-Player\-Body}!set\-Position@{set\-Position}}
+\index{set\-Position@{set\-Position}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{set\-Position}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::set\-Position} (
+\begin{DoxyParamCaption}
+\item[{\-Ogre\-::\-Vector3}]{position}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_a88ee65b1a7bde139f08f3d42fb6be93a}
+\-Sets the \-Player\-Position. \-Usually not used -\/$>$ standard is event injection. \hypertarget{classPlayerBody_a00e5cc5360085f4e11227047faf62f6a}{\index{\-Player\-Body@{\-Player\-Body}!toggle\-First\-Person\-Mode@{toggle\-First\-Person\-Mode}}
+\index{toggle\-First\-Person\-Mode@{toggle\-First\-Person\-Mode}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{toggle\-First\-Person\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Player\-Body\-::toggle\-First\-Person\-Mode} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classPlayerBody_a00e5cc5360085f4e11227047faf62f6a}
+\-Mark the \hyperlink{classPlayerBody}{\-Player\-Body} to run in first-\/person or free-\/view mode. \-Note that this will just set the boolean flag -\/ the behaviour change is achieved by calling different frame\-Rendering\-Queued methods. 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classPlayerBody_a82eef395a2ecbc593ffcb074178dbf69}{\index{\-Player\-Body@{\-Player\-Body}!\-J\-O\-Y\-\_\-\-T\-R\-I\-G\-G\-E\-R\-\_\-\-L\-I\-M\-I\-T@{\-J\-O\-Y\-\_\-\-T\-R\-I\-G\-G\-E\-R\-\_\-\-L\-I\-M\-I\-T}}
+\index{\-J\-O\-Y\-\_\-\-T\-R\-I\-G\-G\-E\-R\-\_\-\-L\-I\-M\-I\-T@{\-J\-O\-Y\-\_\-\-T\-R\-I\-G\-G\-E\-R\-\_\-\-L\-I\-M\-I\-T}!PlayerBody@{\-Player\-Body}}
+\subsubsection[{\-J\-O\-Y\-\_\-\-T\-R\-I\-G\-G\-E\-R\-\_\-\-L\-I\-M\-I\-T}]{\setlength{\rightskip}{0pt plus 5cm}const int {\bf \-Player\-Body\-::\-J\-O\-Y\-\_\-\-T\-R\-I\-G\-G\-E\-R\-\_\-\-L\-I\-M\-I\-T} = 256\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{classPlayerBody_a82eef395a2ecbc593ffcb074178dbf69}
+\-Minimal trigger signal to accept inputs. (\-Cancelling noise). 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Player\-Body.\-h\end{DoxyCompactItemize}

@@ -23,26 +23,28 @@ void GlobalMap::setOrigin(Vector3 origin) {
 }
 
 void GlobalMap::includeMap(const Image& map) {
+	// Load the image into the texture, prepared in Roculus::createScene()
 	TextureManager::getSingleton().getByName("GlobalMapTexture")->unload();
 	TextureManager::getSingleton().getByName("GlobalMapTexture")->loadImage(map);
+	
+	// Create a simple plane to project paint the 2D map on
 	mMapObj = mSceneMgr->createManualObject("GlobalMap");
 	mMapObj->estimateVertexCount(4);
 	mMapObj->estimateIndexCount(6);
 	mMapObj->begin("roculus3D/GlobalMapMaterial", RenderOperation::OT_TRIANGLE_LIST);
-	
-	mMapObj->position(Vector3(-height/2.0f, -0.05f, width/2.0f)*resolution);
-	mMapObj->textureCoord(0.0f,1.0f);
-	mMapObj->position(Vector3(height/2.0f, -0.05f, width/2.0f)*resolution);
-	mMapObj->textureCoord(0.0f,0.0f);
-	mMapObj->position(Vector3(height/2.0f, -0.05f, -width/2.0f)*resolution);
-	mMapObj->textureCoord(1.0f,0.0f);
-	mMapObj->position(Vector3(-height/2.0f, -0.05f, -width/2.0f)*resolution);
-	mMapObj->textureCoord(1.0f,1.0f);
-	
-	
-	mMapObj->quad(0,1,2,3);
+		mMapObj->position(Vector3(-height/2.0f, -0.05f, width/2.0f)*resolution);
+		mMapObj->textureCoord(0.0f,1.0f);
+		mMapObj->position(Vector3(height/2.0f, -0.05f, width/2.0f)*resolution);
+		mMapObj->textureCoord(0.0f,0.0f);
+		mMapObj->position(Vector3(height/2.0f, -0.05f, -width/2.0f)*resolution);
+		mMapObj->textureCoord(1.0f,0.0f);
+		mMapObj->position(Vector3(-height/2.0f, -0.05f, -width/2.0f)*resolution);
+		mMapObj->textureCoord(1.0f,1.0f);
+			
+		mMapObj->quad(0,1,2,3);
 	mMapObj->end();
 	
+	// display the object=map
 	pSceneNode->attachObject(mMapObj);
 	pSceneNode->setPosition(2.0f*origin); // Why 2.0f times? - I have no idea...
 }

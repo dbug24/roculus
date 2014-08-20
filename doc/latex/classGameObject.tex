@@ -1,0 +1,182 @@
+\hypertarget{classGameObject}{\section{\-Game\-Object \-Class \-Reference}
+\label{classGameObject}\index{\-Game\-Object@{\-Game\-Object}}
+}
+
+
+\-Describes a generic game object. \-This class is an abstract description of a game object. \-It give some default functionality and is otherwise used to inherit the properties to its child classes\-: \hyperlink{classDoor}{\-Door}, \hyperlink{classKey}{\-Key}, \hyperlink{classTreasure}{\-Treasure} and \hyperlink{classLock}{\-Lock}.  
+
+
+
+
+{\ttfamily \#include $<$\-Game\-Object.\-h$>$}
+
+\-Inheritance diagram for \-Game\-Object\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classGameObject}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classGameObject_a0996f1381d0512d9db0a89121e07335a}{\-Game\-Object} (\-Scene\-Manager $\ast$m\-Scene\-Mgr)
+\item 
+void \hyperlink{classGameObject_aa9a2c30e2cc2f6a7ddbb55d46dd9b45d}{place\-Object\-On\-W\-P} (\hyperlink{classWayPoint}{\-Way\-Point} $\ast$location)
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classGameObject_a0000c172fae6c5609ecd34ca0c335d8c}{get\-Trigger} ()
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classGameObject_a2e858346bacb7c0c078284dee036a927}{get\-W\-P} () const 
+\item 
+\-Game\-Object\-Type \hyperlink{classGameObject_a248b04d1269cb1d28c8b0cc2e886c1cb}{get\-Type} ()
+\item 
+virtual \-Game\-State \hyperlink{classGameObject_aa643df342c50df77f053eee2c703c619}{frame\-Event\-Queued} (\hyperlink{classWayPoint}{\-Way\-Point} $\ast$current\-W\-P, \-Game\-State gs)
+\item 
+void \hyperlink{classGameObject_a1f5648272592844af52605d1c83cc347}{set\-Visible} (bool val)
+\item 
+virtual void \hyperlink{classGameObject_ac3ab6708ce47b4ef8fd35d8bb43149dc}{init} (\hyperlink{classRoom}{\-Room} $\ast$\hyperlink{classGameObject_a9f63419cc03f2513f757a317a2e37557}{room})
+\item 
+void \hyperlink{classGameObject_afaea76d5acbb65e5f808bce98d8fda20}{reset\-Init} ()
+\item 
+bool \hyperlink{classGameObject_a5b3972654914248d6e757d409b596a96}{is\-Initialized} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classGameObject_a0348e3ee2e83d56eafca7a3547f432c4}{\-Game\-Object} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\-Scene\-Node $\ast$ \hyperlink{classGameObject_a44fbbf424125cebcb1e9a071946b6567}{my\-Node}
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classGameObject_ae8983dfdcfe7bcd2e81fe20a674bb3e6}{place}
+\item 
+\hyperlink{classWayPoint}{\-Way\-Point} $\ast$ \hyperlink{classGameObject_ace2db5f1940d0489b8766a77f0832069}{trigger}
+\item 
+\hyperlink{classRoom}{\-Room} $\ast$ \hyperlink{classGameObject_a9f63419cc03f2513f757a317a2e37557}{room}
+\item 
+bool \hyperlink{classGameObject_af98cecb661e1ffaa19d0d92041020319}{initialized}
+\item 
+\-Game\-Object\-Type \hyperlink{classGameObject_a6f5c85c8b3a4cb373efb1faa229fc9f3}{type}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Describes a generic game object. \-This class is an abstract description of a game object. \-It give some default functionality and is otherwise used to inherit the properties to its child classes\-: \hyperlink{classDoor}{\-Door}, \hyperlink{classKey}{\-Key}, \hyperlink{classTreasure}{\-Treasure} and \hyperlink{classLock}{\-Lock}. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classGameObject_a0348e3ee2e83d56eafca7a3547f432c4}{\index{\-Game\-Object@{\-Game\-Object}!\-Game\-Object@{\-Game\-Object}}
+\index{\-Game\-Object@{\-Game\-Object}!GameObject@{\-Game\-Object}}
+\subsubsection[{\-Game\-Object}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Game\-Object\-::\-Game\-Object} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}\label{classGameObject_a0348e3ee2e83d56eafca7a3547f432c4}
+\-Default constructor. \-Not to be used outside class scope. \hypertarget{classGameObject_a0996f1381d0512d9db0a89121e07335a}{\index{\-Game\-Object@{\-Game\-Object}!\-Game\-Object@{\-Game\-Object}}
+\index{\-Game\-Object@{\-Game\-Object}!GameObject@{\-Game\-Object}}
+\subsubsection[{\-Game\-Object}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Game\-Object\-::\-Game\-Object} (
+\begin{DoxyParamCaption}
+\item[{\-Scene\-Manager $\ast$}]{m\-Scene\-Mgr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classGameObject_a0996f1381d0512d9db0a89121e07335a}
+\-Do some standard initialization, needed by all object types. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classGameObject_aa643df342c50df77f053eee2c703c619}{\index{\-Game\-Object@{\-Game\-Object}!frame\-Event\-Queued@{frame\-Event\-Queued}}
+\index{frame\-Event\-Queued@{frame\-Event\-Queued}!GameObject@{\-Game\-Object}}
+\subsubsection[{frame\-Event\-Queued}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Game\-State {\bf \-Game\-Object\-::frame\-Event\-Queued} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Way\-Point} $\ast$}]{current\-W\-P, }
+\item[{\-Game\-State}]{gs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}\label{classGameObject_aa643df342c50df77f053eee2c703c619}
+\-Process the \-Game\-State and the current robot \hyperlink{classWayPoint}{\-Way\-Point} to derive the next \-Game\-State. 
+
+\-Reimplemented in \hyperlink{classTreasure_a31089b8e8c8478e7c3e950b80bdb3785}{\-Treasure}, \hyperlink{classLock_a286412e42f06eff3d38b03028300cc01}{\-Lock}, \hyperlink{classDoor_a2e526ecea542d817e04771ed5487bebc}{\-Door}, and \hyperlink{classKey_a0ed28ed2112095183608b764e4453f9b}{\-Key}.
+
+\hypertarget{classGameObject_a0000c172fae6c5609ecd34ca0c335d8c}{\index{\-Game\-Object@{\-Game\-Object}!get\-Trigger@{get\-Trigger}}
+\index{get\-Trigger@{get\-Trigger}!GameObject@{\-Game\-Object}}
+\subsubsection[{get\-Trigger}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Game\-Object\-::get\-Trigger} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classGameObject_a0000c172fae6c5609ecd34ca0c335d8c}
+\-Return the triggering \hyperlink{classWayPoint}{\-Way\-Point}. \hypertarget{classGameObject_a248b04d1269cb1d28c8b0cc2e886c1cb}{\index{\-Game\-Object@{\-Game\-Object}!get\-Type@{get\-Type}}
+\index{get\-Type@{get\-Type}!GameObject@{\-Game\-Object}}
+\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}\-Game\-Object\-Type {\bf \-Game\-Object\-::get\-Type} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classGameObject_a248b04d1269cb1d28c8b0cc2e886c1cb}
+\-Return the type/use of this object. \hypertarget{classGameObject_a2e858346bacb7c0c078284dee036a927}{\index{\-Game\-Object@{\-Game\-Object}!get\-W\-P@{get\-W\-P}}
+\index{get\-W\-P@{get\-W\-P}!GameObject@{\-Game\-Object}}
+\subsubsection[{get\-W\-P}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Game\-Object\-::get\-W\-P} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classGameObject_a2e858346bacb7c0c078284dee036a927}
+\-Return the location of the object. \hypertarget{classGameObject_ac3ab6708ce47b4ef8fd35d8bb43149dc}{\index{\-Game\-Object@{\-Game\-Object}!init@{init}}
+\index{init@{init}!GameObject@{\-Game\-Object}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Game\-Object\-::init} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Room} $\ast$}]{room}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}\label{classGameObject_ac3ab6708ce47b4ef8fd35d8bb43149dc}
+(\-Re)initializes the \hyperlink{classGameObject}{\-Game\-Object} and the specified \hyperlink{classRoom}{\-Room} for a new game session. 
+
+\-Reimplemented in \hyperlink{classTreasure_a5fcd48652f78053fcb0c84e6a89415fe}{\-Treasure}, \hyperlink{classLock_a357536468a884a9c2943b15b5fc6b39c}{\-Lock}, \hyperlink{classDoor_a6d9a56dd103f3f26b4beaf5682c22187}{\-Door}, and \hyperlink{classKey_a2c7e2bc5cc7099a52676ec8885142fde}{\-Key}.
+
+\hypertarget{classGameObject_a5b3972654914248d6e757d409b596a96}{\index{\-Game\-Object@{\-Game\-Object}!is\-Initialized@{is\-Initialized}}
+\index{is\-Initialized@{is\-Initialized}!GameObject@{\-Game\-Object}}
+\subsubsection[{is\-Initialized}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Game\-Object\-::is\-Initialized} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classGameObject_a5b3972654914248d6e757d409b596a96}
+\-Return if the object was initialized with init(...). \hypertarget{classGameObject_aa9a2c30e2cc2f6a7ddbb55d46dd9b45d}{\index{\-Game\-Object@{\-Game\-Object}!place\-Object\-On\-W\-P@{place\-Object\-On\-W\-P}}
+\index{place\-Object\-On\-W\-P@{place\-Object\-On\-W\-P}!GameObject@{\-Game\-Object}}
+\subsubsection[{place\-Object\-On\-W\-P}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Game\-Object\-::place\-Object\-On\-W\-P} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Way\-Point} $\ast$}]{location}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classGameObject_aa9a2c30e2cc2f6a7ddbb55d46dd9b45d}
+\-Places the object on the specified \hyperlink{classWayPoint}{\-Way\-Point} and sets the scene node's visibility to true. \hypertarget{classGameObject_afaea76d5acbb65e5f808bce98d8fda20}{\index{\-Game\-Object@{\-Game\-Object}!reset\-Init@{reset\-Init}}
+\index{reset\-Init@{reset\-Init}!GameObject@{\-Game\-Object}}
+\subsubsection[{reset\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Game\-Object\-::reset\-Init} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classGameObject_afaea76d5acbb65e5f808bce98d8fda20}
+\-Make the object ready for reinitialization. \-Has to be called before init every time after the first. \hypertarget{classGameObject_a1f5648272592844af52605d1c83cc347}{\index{\-Game\-Object@{\-Game\-Object}!set\-Visible@{set\-Visible}}
+\index{set\-Visible@{set\-Visible}!GameObject@{\-Game\-Object}}
+\subsubsection[{set\-Visible}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Game\-Object\-::set\-Visible} (
+\begin{DoxyParamCaption}
+\item[{bool}]{val}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classGameObject_a1f5648272592844af52605d1c83cc347}
+\-Sets the scene node visibility. 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classGameObject_af98cecb661e1ffaa19d0d92041020319}{\index{\-Game\-Object@{\-Game\-Object}!initialized@{initialized}}
+\index{initialized@{initialized}!GameObject@{\-Game\-Object}}
+\subsubsection[{initialized}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Game\-Object\-::initialized}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameObject_af98cecb661e1ffaa19d0d92041020319}
+\-Remember if this object was initialized with the init(...) method. \hypertarget{classGameObject_a44fbbf424125cebcb1e9a071946b6567}{\index{\-Game\-Object@{\-Game\-Object}!my\-Node@{my\-Node}}
+\index{my\-Node@{my\-Node}!GameObject@{\-Game\-Object}}
+\subsubsection[{my\-Node}]{\setlength{\rightskip}{0pt plus 5cm}\-Scene\-Node$\ast$ {\bf \-Game\-Object\-::my\-Node}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameObject_a44fbbf424125cebcb1e9a071946b6567}
+\-Each \hyperlink{classGameObject}{\-Game\-Object} has its own \-Scene\-Node. \hypertarget{classGameObject_ae8983dfdcfe7bcd2e81fe20a674bb3e6}{\index{\-Game\-Object@{\-Game\-Object}!place@{place}}
+\index{place@{place}!GameObject@{\-Game\-Object}}
+\subsubsection[{place}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Game\-Object\-::place}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameObject_ae8983dfdcfe7bcd2e81fe20a674bb3e6}
+\-Remember the waypoint this object is placed at. \hypertarget{classGameObject_a9f63419cc03f2513f757a317a2e37557}{\index{\-Game\-Object@{\-Game\-Object}!room@{room}}
+\index{room@{room}!GameObject@{\-Game\-Object}}
+\subsubsection[{room}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Room}$\ast$ {\bf \-Game\-Object\-::room}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameObject_a9f63419cc03f2513f757a317a2e37557}
+\-The room this object is associated with. \hypertarget{classGameObject_ace2db5f1940d0489b8766a77f0832069}{\index{\-Game\-Object@{\-Game\-Object}!trigger@{trigger}}
+\index{trigger@{trigger}!GameObject@{\-Game\-Object}}
+\subsubsection[{trigger}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Way\-Point}$\ast$ {\bf \-Game\-Object\-::trigger}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameObject_ace2db5f1940d0489b8766a77f0832069}
+\-The waypoint this object responds to (the one that causes the \-Game\-State to change). \hypertarget{classGameObject_a6f5c85c8b3a4cb373efb1faa229fc9f3}{\index{\-Game\-Object@{\-Game\-Object}!type@{type}}
+\index{type@{type}!GameObject@{\-Game\-Object}}
+\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}\-Game\-Object\-Type {\bf \-Game\-Object\-::type}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classGameObject_a6f5c85c8b3a4cb373efb1faa229fc9f3}
+\-Type of this object. \-Set in the child class. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Game\-Object.\-h\end{DoxyCompactItemize}

@@ -1,0 +1,99 @@
+\hypertarget{classTreasure}{\section{\-Treasure \-Class \-Reference}
+\label{classTreasure}\index{\-Treasure@{\-Treasure}}
+}
+
+
+\-Describes the appearance and behaviour of a \hyperlink{classTreasure}{\-Treasure} in the \hyperlink{classGame}{\-Game}. \-This class is similar to the other \-Game\-Objects.  
+
+
+
+
+{\ttfamily \#include $<$\-Treasure.\-h$>$}
+
+\-Inheritance diagram for \-Treasure\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classTreasure}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTreasure_a315282461bc05e7989fe6facbe6a1b43}{\-Treasure} (\-Scene\-Manager $\ast$)
+\item 
+virtual \-Game\-State \hyperlink{classTreasure_a31089b8e8c8478e7c3e950b80bdb3785}{frame\-Event\-Queued} (\hyperlink{classWayPoint}{\-Way\-Point} $\ast$current\-W\-P, \-Game\-State gs)
+\item 
+virtual void \hyperlink{classTreasure_a5fcd48652f78053fcb0c84e6a89415fe}{init} (\hyperlink{classRoom}{\-Room} $\ast$\hyperlink{classGameObject_a9f63419cc03f2513f757a317a2e37557}{room})
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTreasure_ac8a58fbc1d42bd355d9fdb2b5b8ba5e2}{\-Treasure} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\-Particle\-System $\ast$ \hyperlink{classTreasure_a81c9f96d7d58e6181a2e1fef8e815c65}{gold}
+\item 
+\-Particle\-System $\ast$ \hyperlink{classTreasure_a03e1ea9a9e71f70f453b8bd7e46d5a02}{fireworks}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Describes the appearance and behaviour of a \hyperlink{classTreasure}{\-Treasure} in the \hyperlink{classGame}{\-Game}. \-This class is similar to the other \-Game\-Objects. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classTreasure_ac8a58fbc1d42bd355d9fdb2b5b8ba5e2}{\index{\-Treasure@{\-Treasure}!\-Treasure@{\-Treasure}}
+\index{\-Treasure@{\-Treasure}!Treasure@{\-Treasure}}
+\subsubsection[{\-Treasure}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Treasure\-::\-Treasure} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classTreasure_ac8a58fbc1d42bd355d9fdb2b5b8ba5e2}
+\-Default constructor. \-Not to be used outside class scope. \hypertarget{classTreasure_a315282461bc05e7989fe6facbe6a1b43}{\index{\-Treasure@{\-Treasure}!\-Treasure@{\-Treasure}}
+\index{\-Treasure@{\-Treasure}!Treasure@{\-Treasure}}
+\subsubsection[{\-Treasure}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Treasure\-::\-Treasure} (
+\begin{DoxyParamCaption}
+\item[{\-Scene\-Manager $\ast$}]{}
+\end{DoxyParamCaption}
+)}}\label{classTreasure_a315282461bc05e7989fe6facbe6a1b43}
+\-Initialize the \hyperlink{classTreasure}{\-Treasure} object with the scene manager for object creation. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classTreasure_a31089b8e8c8478e7c3e950b80bdb3785}{\index{\-Treasure@{\-Treasure}!frame\-Event\-Queued@{frame\-Event\-Queued}}
+\index{frame\-Event\-Queued@{frame\-Event\-Queued}!Treasure@{\-Treasure}}
+\subsubsection[{frame\-Event\-Queued}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Game\-State {\bf \-Treasure\-::frame\-Event\-Queued} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Way\-Point} $\ast$}]{current\-W\-P, }
+\item[{\-Game\-State}]{gs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classTreasure_a31089b8e8c8478e7c3e950b80bdb3785}
+\-Process the current robot \hyperlink{classWayPoint}{\-Way\-Point} and \-Game\-State for the \hyperlink{classTreasure}{\-Treasure} behaviour. 
+
+\-Reimplemented from \hyperlink{classGameObject_aa643df342c50df77f053eee2c703c619}{\-Game\-Object}.
+
+\hypertarget{classTreasure_a5fcd48652f78053fcb0c84e6a89415fe}{\index{\-Treasure@{\-Treasure}!init@{init}}
+\index{init@{init}!Treasure@{\-Treasure}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Treasure\-::init} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Room} $\ast$}]{room}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classTreasure_a5fcd48652f78053fcb0c84e6a89415fe}
+(\-Re)initialize the treasure for a new game session. 
+
+\-Reimplemented from \hyperlink{classGameObject_ac3ab6708ce47b4ef8fd35d8bb43149dc}{\-Game\-Object}.
+
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classTreasure_a03e1ea9a9e71f70f453b8bd7e46d5a02}{\index{\-Treasure@{\-Treasure}!fireworks@{fireworks}}
+\index{fireworks@{fireworks}!Treasure@{\-Treasure}}
+\subsubsection[{fireworks}]{\setlength{\rightskip}{0pt plus 5cm}\-Particle\-System $\ast$ {\bf \-Treasure\-::fireworks}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classTreasure_a03e1ea9a9e71f70f453b8bd7e46d5a02}
+\-Fireworks as eye-\/candy, when the treasure is found. \hypertarget{classTreasure_a81c9f96d7d58e6181a2e1fef8e815c65}{\index{\-Treasure@{\-Treasure}!gold@{gold}}
+\index{gold@{gold}!Treasure@{\-Treasure}}
+\subsubsection[{gold}]{\setlength{\rightskip}{0pt plus 5cm}\-Particle\-System$\ast$ {\bf \-Treasure\-::gold}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classTreasure_a81c9f96d7d58e6181a2e1fef8e815c65}
+\-Sparkling particle effect as eye-\/candy when the treasure is found. 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+roculus/include/\-Treasure.\-h\end{DoxyCompactItemize}

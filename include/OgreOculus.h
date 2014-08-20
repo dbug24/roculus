@@ -44,6 +44,7 @@ namespace Ogre
 	class CompositorInstance;
 }
 
+/** \brief Handler for the Oculus Rift using SDK1. Written by Kojack 2013 (C). Slightly modified to take the PlaberBody scene node as parent to the camera setup. */
 class Oculus
 {
 public:
