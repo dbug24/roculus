@@ -59,7 +59,8 @@ As mentioned there are several configs and resources used by the application:
   \item media/vertexColor.material: contains the materials for the thesis application, (blank material, video stream texture, snapshot texture)
   \item media/projection3D.cg: the cg shader programs that actually perform the reprojection from camera geometry to 3D snapshot. The color transformation for the sepia look if defined here as well.
   \end{itemize}
-\item map directory: using the simpleXMLparser from Rares and the multiroom parser, all patrol-recordings in this folder are loaded into the environment during start-up 
+\item map directory: using the simpleXMLparser from Rares and the multiroom parser, all patrol-recordings in this folder are loaded into the environment during start-up
+\item game.cfg: the configuration of your game environment. How many waypoints, how many keys, what are the rooms/corridors, which waypoints can be used for keys/locks/etc. Take a look at the comments inside the file.
 \end{itemize}
 
 \section{Functions on the Keyboard}
@@ -85,7 +86,5 @@ The gamepad has 4 possible functions:
 \item cross-joystick (x-direction): look 120deg behind you (to the left/right)
 \item only if the supervisor unmouted the player from first-person: you can fly around with the joysticks (left: forward+backward/turn, right: up+down and step left/right)
 \end{itemize}
-
-
 
 \end{document}
