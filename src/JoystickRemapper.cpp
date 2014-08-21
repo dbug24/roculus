@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
 #include <iostream>
+#include <boost/shared_ptr.hpp>
 using namespace std;
 using namespace ros;
 using namespace sensor_msgs;
@@ -72,7 +73,7 @@ int JoystickRemapper::spin() {
 
 void JoystickRemapper::joyCallback( const Joy::ConstPtr &joy ) {
 	if (joy->buttons[MODE_SELECT] == 1) {
-		joyROBOT->publish(joy);
+		//~ joyROBOT->publish(joy);
 	} else {
 		joyVISUAL->publish(joy);
 	}

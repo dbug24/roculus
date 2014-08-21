@@ -419,13 +419,14 @@ bool BaseApplication::frameEnded(const Ogre::FrameEvent& evt) {
 //---------------------------Event Management------------------------------------------
 bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 {
+	static size_t escCounter = 0;
 	if (mTrayMgr->isDialogVisible()) return true;   // don't process any more keys if dialog is up
  
-	if (arg.key == OIS::KC_F)   // toggle visibility of advanced frame stats
+	if (arg.key == OIS::KC_F3)   // toggle visibility of advanced frame stats
 	{
 		mTrayMgr->toggleAdvancedFrameStats();
 	}
-	else if (arg.key == OIS::KC_G)   // toggle visibility of even rarer debugging details
+	else if (arg.key == OIS::KC_F4)   // toggle visibility of even rarer debugging details
 	{
 		if (mDetailsPanel->getTrayLocation() == OgreBites::TL_NONE)
 		{
@@ -437,8 +438,8 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 			mTrayMgr->removeWidgetFromTray(mDetailsPanel);
 			mDetailsPanel->hide();
 		}
-	} else if (arg.key == OIS::KC_T) { // take a snapshot
-		//~ takeSnapshot = true;
+	} else if (arg.key == OIS::KC_V) {
+		rsLib->flipVisibility();
 	}
 	else if(arg.key == OIS::KC_F5)   // refresh all textures
 	{
@@ -455,22 +456,15 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 	{
 		mWindow->writeContentsToTimestampedFile("screenshot", ".jpg");
 	}
-	else if (arg.key == OIS::KC_ESCAPE)
+	else if (arg.key == OIS::KC_ESCAPE) // you have to hit ESC three times to shut down
 	{
-		mShutDown = true;
+		escCounter++;
+		if (escCounter>=3)
+			mShutDown = true;
 	}
 	/* keys added for the GAME */
 	else if (arg.key == OIS::KC_SPACE) {
-		if (targetWPName != Ogre::StringUtil::BLANK && NULL != rosieActionClient) {
-			Game::getInstance().placePersistentMarker(targetWPName);
-			rosieActionClient->waitForServer();
-			topological_navigation::GotoNodeGoal goal;
-			goal.target = targetWPName;
-			rosieActionClient->cancelAllGoals();
-			rosieActionClient->sendGoal(goal);
-			LogManager::getSingletonPtr()->logMessage("SendGoal: " + targetWPName);
-			//~ LogManager::getSingletonPtr()->logMessage("!!!I am not sending any goals right now!!!");
-		}
+		sendNavigationTarget();
 	} else if (arg.key == OIS::KC_I) {
 		
 		/* Code to reinitiate game with the robot driving the the initWP */
@@ -483,6 +477,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 		
 		/* Reinitiate the GAME */
 		Game::getInstance().startGameSession();
+		escCounter = 0;
 	}
 
 	mPlayer->injectKeyDown(arg);
@@ -503,6 +498,7 @@ bool BaseApplication::mouseMoved( const OIS::MouseEvent &arg )
  
 bool BaseApplication::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
+	sendNavigationTarget();
     if (mTrayMgr->injectMouseDown(arg, id)) return true;
 	return true;
 }
@@ -511,6 +507,19 @@ bool BaseApplication::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButto
 {
     if (mTrayMgr->injectMouseUp(arg, id)) return true;
 	return true;
+}
+
+void BaseApplication::sendNavigationTarget() {
+	if (targetWPName != Ogre::StringUtil::BLANK && NULL != rosieActionClient) {
+			Game::getInstance().placePersistentMarker(targetWPName);
+			rosieActionClient->waitForServer();
+			topological_navigation::GotoNodeGoal goal;
+			goal.target = targetWPName;
+			rosieActionClient->cancelAllGoals();
+			rosieActionClient->sendGoal(goal);
+			LogManager::getSingletonPtr()->logMessage("SendGoal: " + targetWPName);
+			//~ LogManager::getSingletonPtr()->logMessage("!!!I am not sending any goals right now!!!");
+		}
 }
  
 void BaseApplication::windowResized(Ogre::RenderWindow* rw)
@@ -710,32 +719,36 @@ void BaseApplication::joyCallback(const sensor_msgs::Joy::ConstPtr &joy ) {
 	
 	if (l_button0 == false && joy->buttons[0] != 0 && takeSnapshot == false) {
 		// request recording of a Snapshot
-		takeSnapshot = true;
+		//~ takeSnapshot = true;
+		sendNavigationTarget();
 	}
 	else if (l_button1 == false && joy->buttons[1] != 0) {
 		// make all manually taken Snapshots invisible (effectively you can record a second set of images)
-		snLib->flipVisibility();
+		//~ snLib->flipVisibility();
+		sendNavigationTarget();
 	}
 	else if (l_button2 == false && joy->buttons[2] != 0) {
 		// make all room sweep Snapshots invisible (effectively you can record a second set of images)
-		rsLib->flipVisibility();
+		//~ rsLib->flipVisibility();
+		sendNavigationTarget();
 	}
 	else if (l_button3 == false && joy->buttons[3] != 0) {
 		// trigger a room sweep
 		//~ boost::thread tmpThread(boost::bind(&BaseApplication::triggerPanoramaPTUScan, this));
+		sendNavigationTarget();
 	}
 	else if (l_button5 == false && joy->buttons[5] != 0) {
 		// switch between first person and free viewpoint
-		mPlayer->toggleFirstPersonMode();
+		//~ mPlayer->toggleFirstPersonMode();
 	}
 	else if (joy->buttons[7] != 0) {
 		// set the oculus orientation back to IDENTITY (effectively looking into the direction the PlayerBody has)
 		oculus->resetOrientation();
 	}
-	else if (l_button9 == false && joy->buttons[9] != 0) {
-		// toggle the map
-		globalMap->flipVisibility();
-	}
+	//~ else if (l_button9 == false && joy->buttons[9] != 0) {
+		//~ // toggle the map
+		//~ globalMap->flipVisibility();
+	//~ }
 	
 	// make sure that button is released before triggering an event repeatedly
 	l_button0 = (joy->buttons[0] != 0);

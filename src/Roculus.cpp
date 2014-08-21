@@ -154,7 +154,7 @@ void Roculus::createScene(void)
     rsLib = new SnapshotLibrary(mSceneMgr, Ogre::String("CamGeometry"), Ogre::String("roculus3D/DynamicTextureMaterialSepia"), 10);
     
     // Load the prerecorded environment    
-	//~ loadRecordedScene();
+	loadRecordedScene();
     
 }
 

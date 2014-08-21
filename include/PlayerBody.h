@@ -2,6 +2,11 @@
 #define _PLAYER_BODY_H_
 
 #include <Ogre.h>
+#include <OgreVector4.h>
+#include <OgreQuaternion.h>
+#include <OgreVector3.h>
+#include <OgreSceneNode.h>
+#include <OgreMath.h>
 #include <OIS.h>
 #include <sensor_msgs/Joy.h>
 #include "Robot.h"
@@ -33,6 +38,7 @@ class PlayerBody {
   Ogre::SceneNode* mStereoCameraParent;	/**< The scene node for the plaber body movement. Camera/Oculus Rift movement is applied on top of this.*/
   Ogre::Quaternion quad;	/**< The player orientation.*/
   bool firstPerson;			/**< True if in first-person mode.*/
+  int offset;				/**< Offset for the head orientation. =0:none, >0: right-turn, <0: left turn.*/
 
  public:
   static const int JOY_TRIGGER_LIMIT = 256; 

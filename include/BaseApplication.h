@@ -183,6 +183,8 @@ protected:
 	/**< Receive the waypoint markers from ROS, extract and set the required parameters for the Game. */
 	virtual void closestWayPointCB(const std_msgs::String::ConstPtr& );
 	/**< Update the closest waypoint (or current waypoint) the Robot is located at. */
+	void sendNavigationTarget();
+	/**< Utility method to clear all robot task and send a new target WayPoint to the robot.*/
  
 	//Adjust mouse clipping area
 	virtual void windowResized(Ogre::RenderWindow* rw);	

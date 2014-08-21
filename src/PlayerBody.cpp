@@ -11,7 +11,8 @@ PlayerBody::PlayerBody(Ogre::SceneNode* mStereoCameraParent)
     turnX(0.0f),
     turnY(0.0f),
     firstPerson(false),
-    quad(Ogre::Quaternion::IDENTITY)
+    quad(Ogre::Quaternion::IDENTITY),
+    offset(0)
 {
   this->mStereoCameraParent = mStereoCameraParent;
 }
@@ -136,8 +137,17 @@ void PlayerBody::frameRenderingQueued(Robot *robot) {
 	// (The mesh coordinates could be corrected with blender to match the Ogre coords, in order to avoid the transforms)
 	// (... this was done for all following models, like the game objects)
 	static Ogre::Quaternion qRot(Ogre::Degree(-90), Ogre::Vector3::UNIT_Y);
+	static Ogre::Quaternion lOffset(Ogre::Degree(-120), Ogre::Vector3::UNIT_Y);
+	static Ogre::Quaternion rOffset(Ogre::Degree(120), Ogre::Vector3::UNIT_Y);
+	
 	mStereoCameraParent->setPosition(Ogre::Vector3::UNIT_Y*0.7+robot->getSceneNode()->getPosition());
-	mStereoCameraParent->setOrientation(qRot*robot->getSceneNode()->getOrientation());
+	if (offset > 0) {
+		mStereoCameraParent->setOrientation(rOffset*qRot*robot->getSceneNode()->getOrientation());
+	} else if (offset < 0) {
+		mStereoCameraParent->setOrientation(lOffset*qRot*robot->getSceneNode()->getOrientation());
+	} else {
+		mStereoCameraParent->setOrientation(qRot*robot->getSceneNode()->getOrientation());
+	}
 }
 
 void PlayerBody::injectROSJoy( const sensor_msgs::Joy::ConstPtr &joy ) {
@@ -146,6 +156,7 @@ void PlayerBody::injectROSJoy( const sensor_msgs::Joy::ConstPtr &joy ) {
 	udSpeed = joy->axes[ROS_LJOY_Y];
 	fwdSpeed = -joy->axes[ROS_RJOY_Y];
 	turnY = -joy->axes[ROS_RJOY_X]*2.0f;
+	offset = joy->axes[ROS_POV_X];
 }
 
 void PlayerBody::toggleFirstPersonMode() {
