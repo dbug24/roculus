@@ -137,8 +137,8 @@ void PlayerBody::frameRenderingQueued(Robot *robot) {
 	// (The mesh coordinates could be corrected with blender to match the Ogre coords, in order to avoid the transforms)
 	// (... this was done for all following models, like the game objects)
 	static Ogre::Quaternion qRot(Ogre::Degree(-90), Ogre::Vector3::UNIT_Y);
-	static Ogre::Quaternion lOffset(Ogre::Degree(-120), Ogre::Vector3::UNIT_Y);
-	static Ogre::Quaternion rOffset(Ogre::Degree(120), Ogre::Vector3::UNIT_Y);
+	static Ogre::Quaternion lOffset(Ogre::Degree(-160), Ogre::Vector3::UNIT_Y);
+	static Ogre::Quaternion rOffset(Ogre::Degree(160), Ogre::Vector3::UNIT_Y);
 	
 	mStereoCameraParent->setPosition(Ogre::Vector3::UNIT_Y*0.7+robot->getSceneNode()->getPosition());
 	if (offset > 0) {

@@ -2,10 +2,15 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[margin=1.0in]{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
 
-\title{How to use the Roculus visualization for ROSIE.}
+\title{How2Use the Roculus Visualization for ROSIE.}
 \date{2014-08-21}
 \author{Daniel Bug}
+
+\setlength{\parindent}{0pt}
 
 \begin{document}
 \maketitle
@@ -86,5 +91,56 @@ The gamepad has 4 possible functions:
 \item cross-joystick (x-direction): look 120deg behind you (to the left/right)
 \item only if the supervisor unmouted the player from first-person: you can fly around with the joysticks (left: forward+backward/turn, right: up+down and step left/right)
 \end{itemize}
+
+\section{Creating a new Scenario (Map)}
+The default for now is the CVAP institute's map on floor 6, but eventually it can be necessary to get the robot running in a different environment.  Here're the changes that will effect the application: Roculus listens to the map topic and the interactive-marker topic on the robot to get the information for navigation and the environment is load from the recordings.  The obvious first steps are therefore to scan the new map with the robot and place the waypoints needed.  Furthermore, the surrounding has to be recorded as point clouds using the PTU. The resulting '.pcd' files will \emph{replace} the files in the map folder (save them in a different directory as backup).\\
+For the application it is essential that at least the '[GAME]' section in the game.cfg file reflects the map correctly. The application should still start if you do not define any rooms, but if the number of waypoints does not match reality it might crash. Furthermore, I currently see a problem if you try to initialize a game (pressing 'i'), while the game.cfg specifies more keys than the number of rooms-1 (one room must be used for the treasure).\\
+The way you can define rooms is quite easy: you just list the waypoint numbers that belong to the room. In addition, you need to declare at least one of them as a 'WP2Use'.  Door and DoorEvt together are used to place the virtual door (half way between the nodes).  The door waypoint can be a WP2Use at the same time.  The door event 'DoorEvt' must \emph{not} belong to the room (otherwise, it would be deactivated if the treasure is placed in this room and the game could therefore never be finished, since you can not trigger the door event).\\
+Corridors are areas never to be used for game objects, specifying them should be optional, since the application parses them, but does not use them for the locig right now.\\ Take a look at the game.cfg comments as well to understand the setup better.  In \autoref{fig:minigame} you see the minimum setup of a game.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{./minigame.pdf}
+  \caption{Minimalistic game setup: With one room for the treasure and up to two keys. This setup indicates that the rooms can be virtual areas in one physical room.}
+  \label{fig:minigame}
+\end{figure}
+\newpage
+The corresponding game.cfg would look like this:
+\begin{lstlisting}
+[Game]
+initWP = 1        #in case you want to use this -> BaseApplication 'i'
+cntKeys = 1       #logical limit is 2 for this example
+cntCorridors = 1  #index 0
+cntRooms = 3      #indices from 0..2
+cntWayPoints = 8  #indices from 0..7
+
+[Corridor0]
+WPs = 0 1 3 5
+
+[Room0]
+WPs = 2
+WPs2Use = 2
+Door = 2
+DoorEvt = 1
+
+[Room1]
+WPs = 4
+WPs2Use = 4
+Door = 4
+DoorEvt = 3
+
+[Room2]        #the rooms on floor6 usually have this setup
+WPs = 6 7
+WPs2Use = 6
+Door = 7
+DoorEvt = 5
+\end{lstlisting}
+
+\section*{Contact}
+Questions? Ask me:\\
+Name: Daniel Bug\\
+eMail: bug@kth.se\\
+
+Code: github.com/dbug24/roculus, branch tekniskaDemo
 
 \end{document}
