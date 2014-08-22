@@ -91,6 +91,7 @@ The gamepad has 4 possible functions:
 \item cross-joystick (x-direction): look 120deg behind you (to the left/right)
 \item only if the supervisor unmouted the player from first-person: you can fly around with the joysticks (left: forward+backward/turn, right: up+down and step left/right)
 \end{itemize}
+If another gamepad than the Logitec Rumble Pad is used, it will very likely be necessary to adapt the axis/button settings in BaseApplication::joyCallback(...), and PlayerBody::injectROSJoy(...). 
 
 \section{Creating a new Scenario (Map)}
 The default for now is the CVAP institute's map on floor 6, but eventually it can be necessary to get the robot running in a different environment.  Here're the changes that will effect the application: Roculus listens to the map topic and the interactive-marker topic on the robot to get the information for navigation and the environment is load from the recordings.  The obvious first steps are therefore to scan the new map with the robot and place the waypoints needed.  Furthermore, the surrounding has to be recorded as point clouds using the PTU. The resulting '.pcd' files will \emph{replace} the files in the map folder (save them in a different directory as backup).\\
@@ -104,7 +105,8 @@ Corridors are areas never to be used for game objects, specifying them should be
   \caption{Minimalistic game setup: With one room for the treasure and up to two keys. This setup indicates that the rooms can be virtual areas in one physical room.}
   \label{fig:minigame}
 \end{figure}
-\newpage
+
+\bigskip
 The corresponding game.cfg would look like this:
 \begin{lstlisting}
 [Game]
